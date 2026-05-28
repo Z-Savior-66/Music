@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-// import Vue from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 
@@ -9,7 +7,7 @@ const router = createRouter({
     {
       path: '/search',
       name: 'Search',
-      component: require('./views/Search/index.vue').default,
+      component: () => import('./views/Search/index.vue'),
       meta: {
         name: 'Search',
       },
@@ -17,7 +15,7 @@ const router = createRouter({
     {
       path: '/songList/list',
       name: 'SongList',
-      component: require('./views/songList/List/index.vue').default,
+      component: () => import('./views/songList/List/index.vue'),
       meta: {
         name: 'SongList',
       },
@@ -25,7 +23,7 @@ const router = createRouter({
     {
       path: '/songList/detail',
       name: 'SongListDetail',
-      component: require('./views/songList/Detail/index.vue').default,
+      component: () => import('./views/songList/Detail/index.vue'),
       meta: {
         name: 'SongList',
       },
@@ -33,7 +31,7 @@ const router = createRouter({
     {
       path: '/leaderboard',
       name: 'Leaderboard',
-      component: require('./views/Leaderboard/index.vue').default,
+      component: () => import('./views/Leaderboard/index.vue'),
       meta: {
         name: 'Leaderboard',
       },
@@ -41,7 +39,7 @@ const router = createRouter({
     {
       path: '/list',
       name: 'List',
-      component: require('./views/List/index.vue').default,
+      component: () => import('./views/List/index.vue'),
       meta: {
         name: 'List',
       },
@@ -49,7 +47,7 @@ const router = createRouter({
     {
       path: '/download',
       name: 'Download',
-      component: require('./views/Download/index.vue').default,
+      component: () => import('./views/Download/index.vue'),
       meta: {
         name: 'Download',
       },
@@ -57,7 +55,7 @@ const router = createRouter({
     {
       path: '/setting',
       name: 'Setting',
-      component: require('./views/Setting/index.vue').default,
+      component: () => import('./views/Setting/index.vue'),
       meta: {
         name: 'Setting',
       },

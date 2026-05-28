@@ -1,6 +1,5 @@
 import { getHotKeyConfig, onFocus, onKeyDown, onUpdateHotkey } from '@renderer/utils/ipc'
 import { registerKeyEvent, createKeyEventHub } from './keyEvent'
-// import { registerRendererEvents, unregisterRendererEvents } from './rendererEvent'
 import { createAppEventHub } from './appEvent'
 
 export const registerEvents = () => {
@@ -31,13 +30,7 @@ export const registerEvents = () => {
   })
 
   registerKeyEvent()
-  // registerRendererEvents()
 }
-
-// export const unregisterEvents = () => {
-//   unregisterKeyEvent()
-//   // unregisterRendererEvents()
-// }
 
 export { clearDownKeys } from './keyEvent'
 

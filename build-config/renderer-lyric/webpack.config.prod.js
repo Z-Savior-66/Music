@@ -16,6 +16,10 @@ const buildConfig = require('../webpack-build-config')
 module.exports = merge(baseConfig, {
   mode: 'production',
   devtool: 'source-map',
+  output: {
+    filename: '[name].[contenthash:8].js',
+    chunkFilename: '[name].[contenthash:8].chunk.js',
+  },
   externals: [
     // ...Object.keys(dependencies || {}).filter(d => !whiteListedModules.includes(d)),
   ],
@@ -44,6 +48,24 @@ module.exports = merge(baseConfig, {
       new TerserPlugin(),
       new CssMinimizerPlugin(),
     ],
+    splitChunks: {
+      chunks: 'all',
+      minChunks: 2,
+      cacheGroups: {
+        vendor: {
+          name: 'vendor-lyric',
+          test: /[\\/]node_modules[\\/]/,
+          priority: 10,
+          chunks: 'initial',
+        },
+        common: {
+          name: 'common-lyric',
+          minChunks: 3,
+          priority: 5,
+          reuseExistingChunk: true,
+        },
+      },
+    },
   },
   performance: {
     maxEntrypointSize: 1024 * 1024 * 10,

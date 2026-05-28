@@ -5,6 +5,10 @@ const isDev = process.env.NODE_ENV === 'development'
 
 module.exports = {
   target: 'electron-main',
+  cache: {
+    type: 'filesystem',
+    cacheDirectory: path.join(__dirname, '../../node_modules/.cache/webpack-main'),
+  },
   output: {
     filename: '[name].js',
     library: {

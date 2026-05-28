@@ -36,6 +36,10 @@ try {
 module.exports = merge(baseConfig, {
   mode: 'production',
   devtool: 'source-map',
+  output: {
+    filename: '[name].[contenthash:8].js',
+    chunkFilename: '[name].[contenthash:8].chunk.js',
+  },
   externals: [
     // ...Object.keys(dependencies || {}).filter(d => !whiteListedModules.includes(d)),
   ],
@@ -76,8 +80,22 @@ module.exports = merge(baseConfig, {
       new CssMinimizerPlugin(),
     ],
     splitChunks: {
-      chunks: 'initial',
+      chunks: 'all',
       minChunks: 2,
+      cacheGroups: {
+        vendor: {
+          name: 'vendor',
+          test: /[\\/]node_modules[\\/]/,
+          priority: 10,
+          chunks: 'initial',
+        },
+        common: {
+          name: 'common',
+          minChunks: 3,
+          priority: 5,
+          reuseExistingChunk: true,
+        },
+      },
     },
   },
   performance: {

@@ -1,7 +1,6 @@
 import { ref, computed, type ComputedRef } from '@common/utils/vueTools'
 import { isPlay } from '@renderer/store/player/state'
 import { appSetting } from '@renderer/store/setting'
-// import { interval, intervalCancel } from '@renderer/utils/ipc'
 import { pause } from './action'
 
 const time = ref(-1)
@@ -9,7 +8,6 @@ const time = ref(-1)
 
 const timeoutTools: {
   isRunning: boolean
-  // time: number
   interval: null | number
   timeout: NodeJS.Timeout | null
   endTime: number

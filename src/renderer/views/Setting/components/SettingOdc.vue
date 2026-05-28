@@ -7,17 +7,6 @@ dd
     base-checkbox(id="setting_odc_isAutoClearSearchList" :model-value="appSetting['odc.isAutoClearSearchList']" :label="$t('setting__odc_clear_search_list')" @update:model-value="updateSetting({'odc.isAutoClearSearchList': $event})")
 </template>
 
-<script>
-// import { ref, onBeforeUnmount } from '@common/utils/vueTools'
+<script setup lang="ts">
 import { appSetting, updateSetting } from '@renderer/store/setting'
-
-export default {
-  name: 'SettingOdc',
-  setup() {
-    return {
-      appSetting,
-      updateSetting,
-    }
-  },
-}
 </script>

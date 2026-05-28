@@ -18,27 +18,10 @@ SyncServer(v-else)
 
 </template>
 
-<script>
-// import { computed } from '@common/utils/vueTools'
+<script setup lang="ts">
 import { sync } from '@renderer/store'
 import { openUrl } from '@common/utils/electron'
 import { appSetting, updateSetting } from '@renderer/store/setting'
 import SyncServer from './SyncServer.vue'
 import SyncClient from './SyncClient.vue'
-
-export default {
-  name: 'SettingSync',
-  components: {
-    SyncServer,
-    SyncClient,
-  },
-  setup() {
-    return {
-      appSetting,
-      updateSetting,
-      sync,
-      openUrl,
-    }
-  },
-}
 </script>

@@ -49,3 +49,6 @@ publish/utils/githubToken.js
 # 内部源码与本地记录
 src/**/*-internal.js
 .codex/
+
+# 规划与规格文档
+/docs

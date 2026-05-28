@@ -11,6 +11,10 @@ const isDev = process.env.NODE_ENV === 'development'
 
 module.exports = {
   target: 'electron-renderer',
+  cache: {
+    type: 'filesystem',
+    cacheDirectory: path.join(__dirname, '../../node_modules/.cache/webpack-lyric'),
+  },
   entry: {
     'renderer-lyric': path.join(__dirname, '../../src/renderer-lyric/main.ts'),
   },

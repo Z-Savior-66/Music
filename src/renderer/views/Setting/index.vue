@@ -26,28 +26,13 @@
     <div ref="dom_content_ref" class="scroll" :class="$style.setting">
       <dl>
         <component :is="avtiveComponentName" />
-        <!-- <SettingBasic />
-        <SettingPlay />
-        <SettingPlayDetail />
-        <SettingDesktopLyric />
-        <SettingSearch />
-        <SettingList />
-        <SettingDownload />
-        <SettingSync />
-        <SettingHotKey />
-        <SettingNetwork />
-        <SettingOdc />
-        <SettingBackup />
-        <SettingOther />
-        <SettingUpdate /> -->
       </dl>
     </div>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import { ref, computed, nextTick } from '@common/utils/vueTools'
-// import { currentStting } from './setting'
 import { useI18n } from '@renderer/plugins/i18n'
 import { useRoute } from '@common/utils/vueRouter'
 
@@ -67,107 +52,48 @@ import SettingBackup from './components/SettingBackup.vue'
 import SettingOther from './components/SettingOther.vue'
 import SettingUpdate from './components/SettingUpdate.vue'
 
-export default {
-  name: 'Setting',
-  components: {
-    SettingBasic,
-    SettingPlay,
-    SettingPlayDetail,
-    SettingDesktopLyric,
-    SettingSearch,
-    SettingList,
-    SettingDownload,
-    SettingSync,
-    SettingOpenAPI,
-    SettingHotKey,
-    SettingNetwork,
-    SettingOdc,
-    SettingBackup,
-    SettingOther,
-    SettingUpdate,
-  },
-  setup() {
-    const t = useI18n()
-    const route = useRoute()
+const t = useI18n()
+const route = useRoute()
 
-    const dom_content_ref = ref(null)
+const dom_content_ref = ref<HTMLElement | null>(null)
 
-    const tocList = computed(() => {
-      return [
-        { id: 'SettingBasic', title: t('setting__basic') },
-        { id: 'SettingPlay', title: t('setting__play') },
-        { id: 'SettingPlayDetail', title: t('setting__play_detail') },
-        { id: 'SettingDesktopLyric', title: t('setting__desktop_lyric') },
-        { id: 'SettingSearch', title: t('setting__search') },
-        { id: 'SettingList', title: t('setting__list') },
-        { id: 'SettingDownload', title: t('setting__download') },
-        { id: 'SettingHotKey', title: t('setting__hot_key') },
-        { id: 'SettingSync', title: t('setting__sync') },
-        { id: 'SettingOpenAPI', title: t('setting__open_api') },
-        { id: 'SettingNetwork', title: t('setting__network') },
-        { id: 'SettingOdc', title: t('setting__odc') },
-        { id: 'SettingBackup', title: t('setting__backup') },
-        { id: 'SettingOther', title: t('setting__other') },
-        { id: 'SettingUpdate', title: t('setting__update') },
-      ]
+interface TocItem {
+  id: string
+  title: string
+}
+
+const tocList = computed<TocItem[]>(() => {
+  return [
+    { id: 'SettingBasic', title: t('setting__basic') },
+    { id: 'SettingPlay', title: t('setting__play') },
+    { id: 'SettingPlayDetail', title: t('setting__play_detail') },
+    { id: 'SettingDesktopLyric', title: t('setting__desktop_lyric') },
+    { id: 'SettingSearch', title: t('setting__search') },
+    { id: 'SettingList', title: t('setting__list') },
+    { id: 'SettingDownload', title: t('setting__download') },
+    { id: 'SettingHotKey', title: t('setting__hot_key') },
+    { id: 'SettingSync', title: t('setting__sync') },
+    { id: 'SettingOpenAPI', title: t('setting__open_api') },
+    { id: 'SettingNetwork', title: t('setting__network') },
+    { id: 'SettingOdc', title: t('setting__odc') },
+    { id: 'SettingBackup', title: t('setting__backup') },
+    { id: 'SettingOther', title: t('setting__other') },
+    { id: 'SettingUpdate', title: t('setting__update') },
+  ]
+})
+
+const avtiveComponentName = ref(route.query.name && tocList.value.some(t => t.id == route.query.name)
+  ? route.query.name
+  : tocList.value[0].id)
+
+const toggleTab = (id: string) => {
+  avtiveComponentName.value = id
+  void nextTick(() => {
+    dom_content_ref.value?.scrollTo({
+      top: 0,
+      behavior: 'smooth',
     })
-
-    const avtiveComponentName = ref(route.query.name && tocList.value.some(t => t.id == route.query.name)
-      ? route.query.name
-      : tocList.value[0].id)
-
-    const toggleTab = id => {
-      avtiveComponentName.value = id
-      void nextTick(() => {
-        dom_content_ref.value?.scrollTo({
-          top: 0,
-          behavior: 'smooth',
-        })
-      })
-    }
-
-    return {
-      tocList,
-      avtiveComponentName,
-      dom_content_ref,
-      toggleTab,
-    }
-  },
-  // mounted() {
-  //   this.initTOC()
-  // },
-  // methods: {
-  //   initTOC() {
-  //     const list = this.$refs.dom_setting_list.children
-  //     const toc = []
-  //     let prevTitle
-  //     for (const item of list) {
-  //       if (item.tagName == 'DT') {
-  //         prevTitle = {
-  //           title: item.innerText.replace(/[（(].+?[)）]/, ''),
-  //           id: item.getAttribute('id'),
-  //           dom: item,
-  //           children: [],
-  //         }
-  //         toc.push(prevTitle)
-  //         continue
-  //       }
-  //       const h3 = item.querySelector('h3')
-  //       if (h3) {
-  //         prevTitle.children.push({
-  //           title: h3.innerText.replace(/[（(].+?[)）]/, ''),
-  //           id: h3.getAttribute('id'),
-  //           dom: h3,
-  //         })
-  //       }
-  //     }
-  //     console.log(toc)
-  //     this.toc.list = toc
-  //   },
-  //   handleListScroll(event) {
-  //     // console.log(event.target.scrollTop)
-  //   },
-  // },
+  })
 }
 </script>
 
@@ -210,19 +136,6 @@ export default {
   margin-left: -0.45em;
   vertical-align: -0.05em;
 }
-// .tocH3 {
-//   font-size: 13px;
-//   opacity: .8;
-// }
-
-// .tocList {
-//   .tocList {
-//     // padding-left: 15px;
-//   }
-// }
-// .tocSubListItem {
-//   padding-top: 10px;
-// }
 
 .setting {
   padding: 0 15px 15px;
@@ -245,8 +158,6 @@ export default {
     }
 
     dd {
-      // margin-left: 15px;
-      // font-size: 13px;
       > div {
         padding: 0 15px;
       }
@@ -283,29 +194,5 @@ export default {
     }
   }
 }
-
-// .btn-content {
-//   display: inline-block;
-//   transition: @transition-theme;
-//   transition-property: opacity, transform;
-//   opacity: 1;
-//   transform: scale(1);
-
-//   &.hide {
-//     opacity: 0;
-//     transform: scale(0);
-//   }
-// }
-
-
-// :global(dt):target, :global(h3):target {
-//   animation: highlight 1s ease;
-// }
-
-// @keyframes highlight {
-//   from { background: yellow; }
-//   to { background: transparent; }
-// }
-
 </style>
 

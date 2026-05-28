@@ -3,6 +3,10 @@ const ESLintPlugin = require('eslint-webpack-plugin')
 
 module.exports = {
   target: 'electron-renderer',
+  cache: {
+    type: 'filesystem',
+    cacheDirectory: path.join(__dirname, '../../node_modules/.cache/webpack-scripts'),
+  },
   entry: {
     'user-api-preload': path.join(__dirname, '../../src/main/modules/userApi/renderer/preload.js'),
   },

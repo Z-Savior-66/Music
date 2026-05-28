@@ -11,6 +11,10 @@ const isDev = process.env.NODE_ENV === 'development'
 
 module.exports = {
   target: 'electron-renderer',
+  cache: {
+    type: 'filesystem',
+    cacheDirectory: path.join(__dirname, '../../node_modules/.cache/webpack-renderer'),
+  },
   entry: {
     renderer: path.join(__dirname, '../../src/renderer/main.ts'),
   },

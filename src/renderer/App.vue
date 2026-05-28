@@ -17,25 +17,13 @@
 
 <script setup>
 import { onMounted } from '@common/utils/vueTools'
-// import BubbleCursor from '@common/utils/effects/cursor-effects/bubbleCursor'
-// import '@common/utils/effects/snow.min'
 import useApp from '@renderer/core/useApp'
 
 useApp()
 
 onMounted(() => {
   document.getElementById('root').style.display = 'block'
-
-  // const styles = getComputedStyle(document.documentElement)
-  // window.lxData.bubbleCursor = new BubbleCursor({
-  //   fillStyle: styles.getPropertyValue('--color-primary-alpha-900'),
-  //   strokeStyle: styles.getPropertyValue('--color-primary-alpha-700'),
-  // })
 })
-
-// onBeforeUnmount(() => {
-//   window.lxData.bubbleCursor?.destroy()
-// })
 
 </script>
 
@@ -48,7 +36,6 @@ html {
   height: 100vh;
 }
 html, body {
-  // overflow: hidden;
   box-sizing: border-box;
 }
 
@@ -76,13 +63,6 @@ body {
 .transparent {
   background: transparent;
   padding: @shadow-app;
-  // #waiting-mask {
-  //   border-radius: @radius-border;
-  //   left: @shadow-app;
-  //   right: @shadow-app;
-  //   top: @shadow-app;
-  //   bottom: @shadow-app;
-  // }
   #body {
     border-radius: @radius-border;
   }
@@ -90,10 +70,6 @@ body {
     box-shadow: 0 0 @shadow-app rgba(0, 0, 0, 0.5);
     border-radius: @radius-border;
   }
-  // #container {
-    // border-radius: @radius-border;
-    // background-color: transparent;
-  // }
 }
 .disableTransparent {
   background-color: var(--color-content-background);
@@ -106,10 +82,6 @@ body {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
-
-  // #view { // 偏移5px距离解决非透明模式下右侧滚动条无法拖动的问题
-  //   margin-right: 5Px;
-  // }
 }
 .fullscreen {
   background-color: var(--color-content-background);

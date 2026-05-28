@@ -17,17 +17,6 @@ dd
 
 </template>
 
-<script>
-// import { ref, onBeforeUnmount } from '@common/utils/vueTools'
+<script setup lang="ts">
 import { appSetting, updateSetting } from '@renderer/store/setting'
-
-export default {
-  name: 'SettingPlayDetail',
-  setup() {
-    return {
-      appSetting,
-      updateSetting,
-    }
-  },
-}
 </script>

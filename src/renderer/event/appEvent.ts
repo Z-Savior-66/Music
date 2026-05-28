@@ -1,15 +1,5 @@
 import Event from './Event'
 
-
-// {
-//   // sync: {
-//   //   send_action_list: 'send_action_list',
-//   //   handle_action_list: 'handle_action_list',
-//   //   send_sync_list: 'send_sync_list',
-//   //   handle_sync_list: 'handle_sync_list',
-//   // },
-// }
-
 export class AppEvent extends Event {
   configUpdate(setting: Partial<LX.AppSetting>) {
     this.emit('configUpdate', setting)
@@ -162,11 +152,6 @@ export class AppEvent extends Event {
   downloadListUpdate() {
     this.emit('downloadListUpdate')
   }
-
-  // 列表里的音乐信息改变事件
-  // musicInfoUpdate(musicInfo: LX.Music.MusicInfo) {
-  //   this.emit('musicInfoUpdate', musicInfo)
-  // }
 
   keyDown(event: LX.KeyDownEevent) {
     this.emit('keyDown', event)

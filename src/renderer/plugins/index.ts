@@ -1,4 +1,3 @@
-// import './axios'
 import { type App } from 'vue'
 import dialog from './Dialog'
 import './Tips'

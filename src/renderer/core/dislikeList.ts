@@ -1,4 +1,3 @@
-// import { toRaw } from '@common/utils/vueTools'
 import { DISLIKE_EVENT_NAME } from '@common/ipcNames'
 import { rendererInvoke, rendererOff, rendererOn } from '@common/rendererIpc'
 import { action } from '@renderer/store/dislikeList'

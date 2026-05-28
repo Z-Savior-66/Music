@@ -114,7 +114,6 @@
         <div :class="$style.subContent" style="flex: none;">
           <base-btn v-if="themeId" :class="$style.btn" @click="handleRemove">{{ $t('theme_edit_modal__remove') }}</base-btn>
           <base-btn v-if="themeId" :class="$style.btn" @click="handleSaveNew">{{ $t('theme_edit_modal__save_new') }}</base-btn>
-          <!-- <base-btn :class="$style.btn" @click="handleCancel">{{ $t('btn_cancel') }}</base-btn> -->
           <base-btn :class="$style.btn" @click="handleSubmit">{{ $t('btn_save') }}</base-btn>
         </div>
       </div>
@@ -127,8 +126,6 @@ import { joinPath, extname, copyFile, checkPath, createDir, removeFile, moveFile
 import { nextTick, ref, watch } from '@common/utils/vueTools'
 import { applyTheme, buildThemeColors, getThemes, copyTheme } from '@renderer/store/utils'
 import { isUrl, encodePath } from '@common/utils/common'
-// import { appSetting, updateSetting } from '@renderer/store/setting'
-// import { applyTheme, getThemes } from '@renderer/store/utils'
 import { createThemeColors } from '@common/theme/utils'
 import useMainColor from './useMainColor'
 import useFontColor from './useFontColor'

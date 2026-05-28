@@ -22,29 +22,15 @@ dd.gap-top
       strong.hover.underline(aria-label="https://lyswhut.github.io/lx-music-doc/desktop/faq/open-api" @click="openUrl('https://lyswhut.github.io/lx-music-doc/desktop/open-api')") {{ $t('setting__open_api_tip_link') }}
 </template>
 
-<script>
-// import { computed } from '@common/utils/vueTools'
+<script setup lang="ts">
 import { openAPI } from '@renderer/store'
 import { openUrl } from '@common/utils/electron'
 import { appSetting, updateSetting } from '@renderer/store/setting'
 import { debounce } from '@common/utils'
 
-export default {
-  name: 'SettingOpenAPI',
-  setup() {
-    const setPort = debounce(port => {
-      updateSetting({ 'openAPI.port': port.trim() })
-    }, 500)
-
-    return {
-      appSetting,
-      updateSetting,
-      openAPI,
-      openUrl,
-      setPort,
-    }
-  },
-}
+const setPort = debounce((port: string) => {
+  updateSetting({ 'openAPI.port': port.trim() })
+}, 500)
 </script>
 
 <style lang="less" module>

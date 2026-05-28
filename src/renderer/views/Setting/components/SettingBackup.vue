@@ -21,12 +21,8 @@ dd
 
 <script>
 import { toRaw } from '@common/utils/vueTools'
-// import { mergeSetting } from '@common/utils'
-// import { base as eventBaseName } from '@renderer/event/names'
-// import { defaultList, loveList, userLists } from '@renderer/core/share/list'
 import {
   toNewMusicInfo,
-  // toOldMusicInfo,
   filterMusicList,
   fixNewMusicInfoQuality,
 } from '@renderer/utils'
@@ -34,7 +30,6 @@ import {
   showSelectDialog,
   openSaveDir,
 } from '@renderer/utils/ipc'
-// import { currentStting } from '../setting'
 import { dialog } from '@renderer/plugins/Dialog'
 import useImportTip from '@renderer/utils/compositions/useImportTip'
 import { useI18n } from '@renderer/plugins/i18n'
@@ -49,10 +44,6 @@ export default {
   name: 'SettingUpdate',
   setup() {
     const t = useI18n()
-    // const setting = useRefGetter('setting')
-    // const settingVersion = useRefGetter('settingVersion')
-    // const setSettingVersion = useCommit('setSettingVersion')
-    // const setList = useCommit('list', 'setList')
     const showImportTip = useImportTip()
 
     const getAllLists = async() => {
@@ -322,7 +313,6 @@ export default {
       } else {
         void showSelectDialog({
           title: t('setting__backup_other_export_dir'),
-          // defaultPath: currentStting.value.download.savePath,
           properties: ['openDirectory'],
         }).then(result => {
           if (result.canceled) return
@@ -354,7 +344,6 @@ export default {
       } else {
         void showSelectDialog({
           title: t('setting__backup_other_export_dir'),
-          // defaultPath: currentStting.value.download.savePath,
           properties: ['openDirectory'],
         }).then(result => {
           if (result.canceled) return
@@ -363,14 +352,7 @@ export default {
       }
     }
 
-    // window.eventHub.on(eventBaseName.set_config, handleUpdateSetting)
-
-    // onBeforeUnmount(() => {
-    //   window.eventHub.off(eventBaseName.set_config, handleUpdateSetting)
-    // })
-
     return {
-      // currentStting,
       handleExportPlayList,
       handleImportPlayList,
       handleExportSetting,

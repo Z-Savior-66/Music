@@ -23,17 +23,6 @@ dd(:aria-label="$t('setting__basic_sourcename_title')")
 
 </template>
 
-<script>
-// import { ref, onBeforeUnmount } from '@common/utils/vueTools'
+<script setup lang="ts">
 import { appSetting, updateSetting } from '@renderer/store/setting'
-
-export default {
-  name: 'SettingList',
-  setup() {
-    return {
-      appSetting,
-      updateSetting,
-    }
-  },
-}
 </script>
