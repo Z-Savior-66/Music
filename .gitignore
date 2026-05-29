@@ -52,3 +52,6 @@ src/**/*-internal.js
 
 # 规划与规格文档
 /docs
+
+# 开发准则
+AGENTS.md
