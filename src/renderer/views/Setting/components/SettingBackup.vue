@@ -123,7 +123,7 @@ export default {
     const importAllData = async(path) => {
       let allData
       try {
-        allData = await window.lx.worker.main.readLxConfigFile(path)
+        allData = await window.s.worker.main.readSConfigFile(path)
       } catch (error) {
         return
       }
@@ -147,7 +147,7 @@ export default {
         title: t('setting__backup_all_import_desc'),
         properties: ['openFile'],
         filters: [
-          { name: 'Setting', extensions: ['json', 'lxmc'] },
+          { name: 'Setting', extensions: ['json', 'smc'] },
           { name: 'All Files', extensions: ['*'] },
         ],
       }).then(result => {
@@ -169,12 +169,12 @@ export default {
         setting: { ...appSetting },
         playList: await getAllLists(),
       }
-      void window.lx.worker.main.saveLxConfigFile(path, allData)
+      void window.s.worker.main.saveSConfigFile(path, allData)
     }
     const handleExportAllData = () => {
       void openSaveDir({
         title: t('setting__backup_all_export_desc'),
-        defaultPath: 'lx_datas_v2.lxmc',
+        defaultPath: 's_datas_v2.smc',
       }).then(result => {
         if (result.canceled) return
         void exportAllData(result.filePath)
@@ -186,12 +186,12 @@ export default {
         type: 'setting_v2',
         data: { ...appSetting },
       }
-      void window.lx.worker.main.saveLxConfigFile(path, data)
+      void window.s.worker.main.saveSConfigFile(path, data)
     }
     const handleExportSetting = () => {
       void openSaveDir({
         title: t('setting__backup_part_export_setting_desc'),
-        defaultPath: 'lx_setting_v2.lxmc',
+        defaultPath: 's_setting_v2.smc',
       }).then(result => {
         if (result.canceled) return
         exportSetting(result.filePath)
@@ -201,7 +201,7 @@ export default {
     const importSetting = async(path) => {
       let settingData
       try {
-        settingData = await window.lx.worker.main.readLxConfigFile(path)
+        settingData = await window.s.worker.main.readSConfigFile(path)
       } catch (error) {
         return
       }
@@ -221,7 +221,7 @@ export default {
         title: t('setting__backup_part_import_setting_desc'),
         properties: ['openFile'],
         filters: [
-          { name: 'Setting', extensions: ['json', 'lxmc'] },
+          { name: 'Setting', extensions: ['json', 'smc'] },
           { name: 'All Files', extensions: ['*'] },
         ],
       }).then(result => {
@@ -235,12 +235,12 @@ export default {
         type: 'playList_v2',
         data: await getAllLists(),
       }
-      void window.lx.worker.main.saveLxConfigFile(path, data)
+      void window.s.worker.main.saveSConfigFile(path, data)
     }
     const handleExportPlayList = () => {
       void openSaveDir({
         title: t('setting__backup_part_export_list_desc'),
-        defaultPath: 'lx_list.lxmc',
+        defaultPath: 's_list.smc',
       }).then(result => {
         if (result.canceled) return
         void exportPlayList(result.filePath)
@@ -250,7 +250,7 @@ export default {
     const importPlayList = async(path) => {
       let listData
       try {
-        listData = await window.lx.worker.main.readLxConfigFile(path)
+        listData = await window.s.worker.main.readSConfigFile(path)
       } catch (error) {
         return
       }
@@ -274,7 +274,7 @@ export default {
         title: t('setting__backup_part_import_list_desc'),
         properties: ['openFile'],
         filters: [
-          { name: 'Play List', extensions: ['json', 'lxmc'] },
+          { name: 'Play List', extensions: ['json', 'smc'] },
           { name: 'All Files', extensions: ['*'] },
         ],
       }).then(result => {
@@ -292,7 +292,7 @@ export default {
 
     const exportPlayListToText = async(savePath, isMerge) => {
       const lists = await getAllLists()
-      await window.lx.worker.main.exportPlayListToText(savePath, lists, isMerge)
+      await window.s.worker.main.exportPlayListToText(savePath, lists, isMerge)
     }
     const handleExportPlayListToText = async() => {
       const confirm = await dialog.confirm({
@@ -303,7 +303,7 @@ export default {
       if (confirm) {
         void openSaveDir({
           title: t('setting__backup_other_export_dir'),
-          defaultPath: 'lx_list_all.txt',
+          defaultPath: 's_list_all.txt',
         }).then(result => {
           if (result.canceled) return
           let path = result.filePath
@@ -323,7 +323,7 @@ export default {
 
     const exportPlayListToCsv = async(savePath, isMerge) => {
       const lists = await getAllLists()
-      await window.lx.worker.main.exportPlayListToCSV(savePath, lists, isMerge, `${t('music_name')},${t('music_singer')},${t('music_album')}\n`)
+      await window.s.worker.main.exportPlayListToCSV(savePath, lists, isMerge, `${t('music_name')},${t('music_singer')},${t('music_album')}\n`)
     }
     const handleExportPlayListToCsv = async() => {
       const confirm = await dialog.confirm({
@@ -334,7 +334,7 @@ export default {
       if (confirm) {
         void openSaveDir({
           title: t('setting__backup_other_export_dir'),
-          defaultPath: 'lx_list_all.csv',
+          defaultPath: 's_list_all.csv',
         }).then(result => {
           if (result.canceled) return
           let path = result.filePath

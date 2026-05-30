@@ -72,7 +72,7 @@ export default () => {
   }
   const setPauseStatus = () => {
     setPlay(false)
-    if (window.lx.isPlayedStop) pause()
+    if (window.s.isPlayedStop) pause()
     removePowerSaveBlocker()
   }
 
@@ -81,14 +81,14 @@ export default () => {
   }
 
   const handleCanplay = () => {
-    if (window.lx.isPlayedStop) {
+    if (window.s.isPlayedStop) {
       setPause()
     }
   }
   const handleEnded = () => {
     // setTimeout(() => {
     setAllStatus(t('player__end'))
-    if (window.lx.isPlayedStop) {
+    if (window.s.isPlayedStop) {
       console.log('played stop')
       return
     }
@@ -127,7 +127,7 @@ export default () => {
   watch(() => appSetting['player.togglePlayMethod'], newValue => {
     // setLoopPlay(newValue == 'singleLoop')
     if (playedList.length) clearPlayedList()
-    if (newValue == 'random' && playMusicInfo.musicInfo && !playMusicInfo.isTempPlay) addPlayedList({ ...(playMusicInfo as LX.Player.PlayMusicInfo) })
+    if (newValue == 'random' && playMusicInfo.musicInfo && !playMusicInfo.isTempPlay) addPlayedList({ ...(playMusicInfo as S.Player.PlayMusicInfo) })
   })
 
   // setLoopPlay(appSetting['player.togglePlayMethod'] == 'singleLoop')

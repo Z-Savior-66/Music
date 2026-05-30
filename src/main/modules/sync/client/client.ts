@@ -12,13 +12,13 @@ import { createMsg2call } from 'message2call'
 import { SYNC_CLOSE_CODE, SYNC_CODE } from '@common/constants_sync'
 import { getAddress } from '@common/utils/nodejs'
 
-let status: LX.Sync.ClientStatus = {
+let status: S.Sync.ClientStatus = {
   status: false,
   message: '',
   address: [],
 }
 
-export const sendSyncStatus = (newStatus: Omit<LX.Sync.ClientStatus, 'address'>) => {
+export const sendSyncStatus = (newStatus: Omit<S.Sync.ClientStatus, 'address'>) => {
   status.status = newStatus.status
   status.message = newStatus.message
   if (status.status) {
@@ -101,7 +101,7 @@ const heartbeatTools = {
       this.pingTimeout = null
     }
   },
-  connect(socket: LX.Sync.Client.Socket) {
+  connect(socket: S.Sync.Client.Socket) {
     console.log('heartbeatTools connect')
     this.connectTimeout = setTimeout(() => {
       this.connectTimeout = null
@@ -147,11 +147,11 @@ const heartbeatTools = {
 }
 
 
-let client: LX.Sync.Client.Socket | null
+let client: S.Sync.Client.Socket | null
 // let listSyncPromise: Promise<void>
-export const connect = (urlInfo: LX.Sync.Client.UrlInfo, keyInfo: LX.Sync.ClientKeyInfo) => {
+export const connect = (urlInfo: S.Sync.Client.UrlInfo, keyInfo: S.Sync.ClientKeyInfo) => {
   client = new WebSocket(`${urlInfo.wsProtocol}//${urlInfo.hostPath}/socket?i=${encodeURIComponent(keyInfo.clientId)}&t=${encodeURIComponent(aesEncrypt(SYNC_CODE.msgConnect, keyInfo.key))}`, {
-  }) as LX.Sync.Client.Socket
+  }) as S.Sync.Client.Socket
   client.data = {
     keyInfo,
     urlInfo,
@@ -161,7 +161,7 @@ export const connect = (urlInfo: LX.Sync.Client.UrlInfo, keyInfo: LX.Sync.Client
   let closeEvents: Array<(err: Error) => (void | Promise<void>)> = []
   let disconnected = true
 
-  const message2read = createMsg2call<LX.Sync.ServerSyncActions>({
+  const message2read = createMsg2call<S.Sync.ServerSyncActions>({
     funcsObj: {
       ...callObj,
       finished() {
@@ -207,7 +207,7 @@ export const connect = (urlInfo: LX.Sync.Client.UrlInfo, keyInfo: LX.Sync.Client
     if (data == 'ping') return
     if (typeof data === 'string') {
       void decryptMsg(keyInfo, data).then((data) => {
-        let syncData: LX.Sync.ServerSyncActions
+        let syncData: S.Sync.ServerSyncActions
         try {
           syncData = JSON.parse(data)
         } catch (err) {
@@ -233,7 +233,7 @@ export const connect = (urlInfo: LX.Sync.Client.UrlInfo, keyInfo: LX.Sync.Client
   client.addEventListener('open', () => {
     log.info('connect')
     // const store = getStore()
-    // global.lx.syncKeyInfo = keyInfo
+    // global.s.syncKeyInfo = keyInfo
     client!.isReady = false
     client!.moduleReadys = {
       list: false,
@@ -290,4 +290,4 @@ export const disconnect = async() => {
   heartbeatTools.failedNum = 0
 }
 
-export const getStatus = (): LX.Sync.ClientStatus => status
+export const getStatus = (): S.Sync.ClientStatus => status

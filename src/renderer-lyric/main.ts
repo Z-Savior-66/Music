@@ -14,7 +14,7 @@ import { init as initMainWindowChannel } from './core/mainWindowChannel'
 window.ELECTRON_DISABLE_SECURITY_WARNINGS = process.env.ELECTRON_DISABLE_SECURITY_WARNINGS
 
 void getSetting().then((setting) => {
-  // window.lx.appSetting = setting
+  // window.s.appSetting = setting
   // Set language automatically
   const languageId = setting['common.langId']
   if (window.i18n.locale !== languageId && languageId != null) {

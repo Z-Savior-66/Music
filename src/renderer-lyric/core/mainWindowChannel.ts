@@ -5,14 +5,14 @@ import { pause, play, setLyric, setLyricOffset, setPlaybackRate, stop } from './
 import { lyrics } from '@lyric/store/lyric'
 
 let mainWindowPort: Electron.IpcRendererEvent['ports'][0] | null = null
-export const sendDesktopLyricInfo = (info: LX.DesktopLyric.WinMainActions) => {
+export const sendDesktopLyricInfo = (info: S.DesktopLyric.WinMainActions) => {
   if (mainWindowPort == null) return
   mainWindowPort.postMessage({ action: info })
 }
 
-const listeners: Array<(event: LX.DesktopLyric.LyricActions) => void> = []
+const listeners: Array<(event: S.DesktopLyric.LyricActions) => void> = []
 
-const handleDesktopLyricMessage = (event: LX.DesktopLyric.LyricActions) => {
+const handleDesktopLyricMessage = (event: S.DesktopLyric.LyricActions) => {
   switch (event.action) {
     case 'set_info':
       setMusicInfo({
@@ -24,7 +24,7 @@ const handleDesktopLyricMessage = (event: LX.DesktopLyric.LyricActions) => {
       lyrics.lyric = event.data.lrc ?? ''
       lyrics.tlyric = event.data.tlrc
       lyrics.rlyric = event.data.rlrc
-      lyrics.lxlyric = event.data.lxlrc
+      lyrics.slyric = event.data.slrc
       setLyric()
       if (event.data.isPlay) {
         setImmediate(() => {
@@ -36,7 +36,7 @@ const handleDesktopLyricMessage = (event: LX.DesktopLyric.LyricActions) => {
       lyrics.lyric = event.data.lrc ?? ''
       lyrics.tlyric = event.data.tlrc
       lyrics.rlyric = event.data.rlrc
-      lyrics.lxlyric = event.data.lxlrc
+      lyrics.slyric = event.data.slrc
       setLyric()
       break
     case 'set_status':
@@ -90,7 +90,7 @@ export const init = () => {
   })
 }
 
-export const useEvent = (listener: (event: LX.DesktopLyric.LyricActions) => void) => {
+export const useEvent = (listener: (event: S.DesktopLyric.LyricActions) => void) => {
   listeners.push(listener)
 
   onBeforeUnmount(() => {

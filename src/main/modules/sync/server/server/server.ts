@@ -13,7 +13,7 @@ import type { Socket } from 'node:net'
 import { getAddress } from '@common/utils/nodejs'
 
 
-let status: LX.Sync.ServerStatus = {
+let status: S.Sync.ServerStatus = {
   status: false,
   message: '',
   address: [],
@@ -44,19 +44,19 @@ const codeTools: {
   },
 }
 
-const checkDuplicateClient = (newSocket: LX.Sync.Server.Socket) => {
+const checkDuplicateClient = (newSocket: S.Sync.Server.Socket) => {
   for (const client of [...wss!.clients]) {
     if (client === newSocket || client.keyInfo.clientId != newSocket.keyInfo.clientId) continue
     log.info('duplicate client', client.userInfo.name, client.keyInfo.deviceName)
     client.isReady = false
-    for (const name of Object.keys(client.moduleReadys) as Array<keyof LX.Sync.Server.Socket['moduleReadys']>) {
+    for (const name of Object.keys(client.moduleReadys) as Array<keyof S.Sync.Server.Socket['moduleReadys']>) {
       client.moduleReadys[name] = false
     }
     client.close(SYNC_CLOSE_CODE.normal)
   }
 }
 
-const handleConnection = async(socket: LX.Sync.Server.Socket, request: IncomingMessage) => {
+const handleConnection = async(socket: S.Sync.Server.Socket, request: IncomingMessage) => {
   const queryData = new URL(request.url!, host).searchParams
   const clientId = queryData.get('i')
 
@@ -69,7 +69,7 @@ const handleConnection = async(socket: LX.Sync.Server.Socket, request: IncomingM
   }
   keyInfo.lastConnectDate = Date.now()
   userSpace.dataManage.saveClientKeyInfo(keyInfo)
-  //   // socket.lx_keyInfo = keyInfo
+  //   // socket.s_keyInfo = keyInfo
   socket.keyInfo = keyInfo
   socket.userInfo = { name: 'default' }
 
@@ -113,7 +113,7 @@ const authConnection = (req: http.IncomingMessage, callback: (err: string | null
   })
 }
 
-let wss: LX.Sync.Server.SocketServer | null
+let wss: S.Sync.Server.SocketServer | null
 let httpServer: http.Server
 let sockets = new Set<Socket>()
 
@@ -168,12 +168,12 @@ const handleStartServer = async(port = 9527, ip = '0.0.0.0') => await new Promis
       socket.isAlive = true
     })
 
-    // const events = new Map<keyof ActionsType, Array<(err: Error | null, data: LX.Sync.ActionSyncType[keyof LX.Sync.ActionSyncType]) => void>>()
-    // const events = new Map<keyof LX.Sync.ActionSyncType, Array<(err: Error | null, data: LX.Sync.ActionSyncType[keyof LX.Sync.ActionSyncType]) => void>>()
-    // let events: Partial<{ [K in keyof LX.Sync.ActionSyncType]: Array<(data: LX.Sync.ActionSyncType[K]) => void> }> = {}
+    // const events = new Map<keyof ActionsType, Array<(err: Error | null, data: S.Sync.ActionSyncType[keyof S.Sync.ActionSyncType]) => void>>()
+    // const events = new Map<keyof S.Sync.ActionSyncType, Array<(err: Error | null, data: S.Sync.ActionSyncType[keyof S.Sync.ActionSyncType]) => void>>()
+    // let events: Partial<{ [K in keyof S.Sync.ActionSyncType]: Array<(data: S.Sync.ActionSyncType[K]) => void> }> = {}
     let closeEvents: Array<(err: Error) => (void | Promise<void>)> = []
     let disconnected = false
-    const msg2call = createMsg2call<LX.Sync.ClientSyncActions>({
+    const msg2call = createMsg2call<S.Sync.ClientSyncActions>({
       funcsObj: callObj,
       timeout: 120 * 1000,
       sendMessage(data) {
@@ -368,7 +368,7 @@ export const startServer = async(port: number) => {
   if (stopingServer) return
   if (status.status) await handleStopServer()
 
-  await migrateData(global.lxDataPath)
+  await migrateData(global.sDataPath)
   await initServerInfo()
 
   log.info('starting sync server')
@@ -391,7 +391,7 @@ export const startServer = async(port: number) => {
   })
 }
 
-export const getStatus = (): LX.Sync.ServerStatus => status
+export const getStatus = (): S.Sync.ServerStatus => status
 
 export const generateCode = async() => {
   status.code = handleGenerateCode()

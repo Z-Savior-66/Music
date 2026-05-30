@@ -100,7 +100,7 @@ export default {
       lyric: '',
       tlyric: '',
       rlyric: '',
-      lxlyric: '',
+      slyric: '',
       rawlyric: '',
       musicInfo: null,
     })
@@ -108,7 +108,7 @@ export default {
       lyricInfo.lyric = playerMusicInfo.lrc
       lyricInfo.tlyric = playerMusicInfo.tlrc
       lyricInfo.rlyric = playerMusicInfo.rlrc
-      lyricInfo.lxlyric = playerMusicInfo.lxlrc
+      lyricInfo.slyric = playerMusicInfo.slrc
       lyricInfo.rawlyric = playerMusicInfo.rawlrc
       lyricInfo.musicInfo = playMusicInfo.musicInfo
     }
@@ -121,12 +121,12 @@ export default {
         lyricMenuVisible.value = true
       })
     }
-    const handleUpdateLyric = ({ lyric, tlyric, rlyric, lxlyric, offset }) => {
+    const handleUpdateLyric = ({ lyric, tlyric, rlyric, slyric, offset }) => {
       setMusicInfo({
         lrc: lyric,
         tlrc: tlyric,
         rlrc: rlyric,
-        lxlrc: lxlyric,
+        slrc: slyric,
       })
       console.log(offset)
       setLyricOffset(offset)

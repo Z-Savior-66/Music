@@ -13,42 +13,42 @@ import {
 import { sendEvent } from '@main/modules/winMain/main'
 
 export default () => {
-  mainHandle<string, LX.UserApi.ImportUserApi>(WIN_MAIN_RENDERER_EVENT_NAME.import_user_api, async({ params: script }) => {
+  mainHandle<string, S.UserApi.ImportUserApi>(WIN_MAIN_RENDERER_EVENT_NAME.import_user_api, async({ params: script }) => {
     return importApi(script)
   })
 
-  mainHandle<string[], LX.UserApi.UserApiInfo[]>(WIN_MAIN_RENDERER_EVENT_NAME.remove_user_api, async({ params: apiIds }) => {
+  mainHandle<string[], S.UserApi.UserApiInfo[]>(WIN_MAIN_RENDERER_EVENT_NAME.remove_user_api, async({ params: apiIds }) => {
     return removeApi(apiIds)
   })
 
-  mainHandle<LX.UserApi.UserApiSetApiParams>(WIN_MAIN_RENDERER_EVENT_NAME.set_user_api, async({ params: apiId }) => {
+  mainHandle<S.UserApi.UserApiSetApiParams>(WIN_MAIN_RENDERER_EVENT_NAME.set_user_api, async({ params: apiId }) => {
     await setApi(apiId)
   })
 
-  mainHandle<LX.UserApi.UserApiInfo[]>(WIN_MAIN_RENDERER_EVENT_NAME.get_user_api_list, async() => {
+  mainHandle<S.UserApi.UserApiInfo[]>(WIN_MAIN_RENDERER_EVENT_NAME.get_user_api_list, async() => {
     return getApiList()
   })
 
-  mainHandle<LX.UserApi.UserApiStatus>(WIN_MAIN_RENDERER_EVENT_NAME.get_user_api_status, async() => {
+  mainHandle<S.UserApi.UserApiStatus>(WIN_MAIN_RENDERER_EVENT_NAME.get_user_api_status, async() => {
     return getStatus()
   })
 
-  mainHandle<LX.UserApi.UserApiSetAllowUpdateAlertParams>(WIN_MAIN_RENDERER_EVENT_NAME.user_api_set_allow_update_alert, async({ params: { id, enable } }) => {
+  mainHandle<S.UserApi.UserApiSetAllowUpdateAlertParams>(WIN_MAIN_RENDERER_EVENT_NAME.user_api_set_allow_update_alert, async({ params: { id, enable } }) => {
     setAllowShowUpdateAlert(id, enable)
   })
 
-  mainHandle<LX.UserApi.UserApiRequestParams>(WIN_MAIN_RENDERER_EVENT_NAME.request_user_api, async({ params }) => {
+  mainHandle<S.UserApi.UserApiRequestParams>(WIN_MAIN_RENDERER_EVENT_NAME.request_user_api, async({ params }) => {
     return request(params)
   })
-  mainHandle<LX.UserApi.UserApiRequestCancelParams>(WIN_MAIN_RENDERER_EVENT_NAME.request_user_api_cancel, async({ params: requestKey }) => {
+  mainHandle<S.UserApi.UserApiRequestCancelParams>(WIN_MAIN_RENDERER_EVENT_NAME.request_user_api_cancel, async({ params: requestKey }) => {
     cancelRequest(requestKey)
   })
 }
 
-export const sendStatusChange = (status: LX.UserApi.UserApiStatus) => {
+export const sendStatusChange = (status: S.UserApi.UserApiStatus) => {
   sendEvent(WIN_MAIN_RENDERER_EVENT_NAME.user_api_status, status)
 }
-export const sendShowUpdateAlert = (info: LX.UserApi.UserApiUpdateInfo) => {
+export const sendShowUpdateAlert = (info: S.UserApi.UserApiUpdateInfo) => {
   sendEvent(WIN_MAIN_RENDERER_EVENT_NAME.user_api_show_update_alert, info)
 }
 

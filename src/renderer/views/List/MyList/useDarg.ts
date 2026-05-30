@@ -21,7 +21,7 @@ export default ({ dom_lists_list, handleSaveListName, handleMenuClick }: {
     },
   })
 
-  const handle_key_mod_down = ({ event }: LX.KeyDownEevent) => {
+  const handle_key_mod_down = ({ event }: S.KeyDownEevent) => {
     if (!isModDown.value) {
       // console.log(event)
       switch ((event!.target as HTMLElement).tagName) {

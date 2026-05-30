@@ -17,15 +17,15 @@ export default () => {
   // })
   common(sendEvent)
 
-  mainHandle<Partial<LX.AppSetting>>(WIN_LYRIC_RENDERER_EVENT_NAME.set_config, async({ params: config }) => {
-    global.lx.event_app.update_config(config)
+  mainHandle<Partial<S.AppSetting>>(WIN_LYRIC_RENDERER_EVENT_NAME.set_config, async({ params: config }) => {
+    global.s.event_app.update_config(config)
   })
 
-  mainHandle<LX.DesktopLyric.Config>(WIN_LYRIC_RENDERER_EVENT_NAME.get_config, async() => {
-    return buildLyricConfig(global.lx.appSetting) as LX.DesktopLyric.Config
+  mainHandle<S.DesktopLyric.Config>(WIN_LYRIC_RENDERER_EVENT_NAME.get_config, async() => {
+    return buildLyricConfig(global.s.appSetting) as S.DesktopLyric.Config
   })
 
-  mainOn<LX.DesktopLyric.NewBounds>(WIN_LYRIC_RENDERER_EVENT_NAME.set_win_bounds, ({ params: options }) => {
+  mainOn<S.DesktopLyric.NewBounds>(WIN_LYRIC_RENDERER_EVENT_NAME.set_win_bounds, ({ params: options }) => {
     setBounds(getLyricWindowBounds(getBounds(), options))
   })
 
@@ -47,7 +47,7 @@ export default () => {
   })
 }
 
-export const sendConfigChange = (setting: Partial<LX.DesktopLyric.Config>) => {
+export const sendConfigChange = (setting: Partial<S.DesktopLyric.Config>) => {
   sendEvent(WIN_LYRIC_RENDERER_EVENT_NAME.on_config_change, setting)
 }
 

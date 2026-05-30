@@ -1,4 +1,4 @@
-declare namespace LX {
+declare namespace S {
 
   namespace Sync {
     namespace Dislike {
@@ -14,8 +14,8 @@ declare namespace LX {
         data: D
       }
       type SyncAction<A, D = undefined> = D extends undefined ? SyncActionBase<A> : SyncActionData<A, D>
-      type ActionList = SyncAction<'dislike_data_overwrite', LX.Dislike.DislikeRules>
-      | SyncAction<'dislike_music_add', LX.Dislike.DislikeMusicInfo[]>
+      type ActionList = SyncAction<'dislike_data_overwrite', S.Dislike.DislikeRules>
+      | SyncAction<'dislike_music_add', S.Dislike.DislikeMusicInfo[]>
       | SyncAction<'dislike_music_clear'>
 
       type SyncMode = 'merge_local_remote'

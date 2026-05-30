@@ -53,7 +53,7 @@ const unGzip = async(data: string) => new Promise<string>((resolve, reject) => {
   })
 })
 
-export const encryptMsg = async(keyInfo: LX.Sync.ServerKeyInfo | null, msg: string): Promise<string> => {
+export const encryptMsg = async(keyInfo: S.Sync.ServerKeyInfo | null, msg: string): Promise<string> => {
   return msg.length > 1024
     ? 'cg_' + await gzip(msg)
     : msg
@@ -61,7 +61,7 @@ export const encryptMsg = async(keyInfo: LX.Sync.ServerKeyInfo | null, msg: stri
   // return aesEncrypt(msg, keyInfo.key, keyInfo.iv)
 }
 
-export const decryptMsg = async(keyInfo: LX.Sync.ServerKeyInfo | null, enMsg: string): Promise<string> => {
+export const decryptMsg = async(keyInfo: S.Sync.ServerKeyInfo | null, enMsg: string): Promise<string> => {
   return enMsg.substring(0, 3) == 'cg_'
     ? await unGzip(enMsg.replace('cg_', ''))
     : enMsg
@@ -77,11 +77,11 @@ export const decryptMsg = async(keyInfo: LX.Sync.ServerKeyInfo | null, enMsg: st
   // return msg
 }
 
-// export const getSnapshotFilePath = (keyInfo: LX.Sync.KeyInfo): string => {
-//   return join(global.lx.snapshotPath, `snapshot_${keyInfo.snapshotKey}.json`)
+// export const getSnapshotFilePath = (keyInfo: S.Sync.KeyInfo): string => {
+//   return join(global.s.snapshotPath, `snapshot_${keyInfo.snapshotKey}.json`)
 // }
 
-// export const sendStatus = (status: LX.Sync.ServerStatus) => {
+// export const sendStatus = (status: S.Sync.ServerStatus) => {
 //   syncLog.info('status', status.devices.map(d => `${getUserName(d.clientId) ?? ''} ${d.deviceName}`))
 // }
 

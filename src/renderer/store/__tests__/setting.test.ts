@@ -17,7 +17,7 @@ describe('store/setting', () => {
   beforeEach(async () => {
     vi.resetModules()
     ;(globalThis as any).window = {
-      lxData: {},
+      sData: {},
     }
     mockSaveSetting.mockReset()
     setting = await import('../setting')
@@ -34,8 +34,8 @@ describe('store/setting', () => {
       expect(setting.appSetting['common.isAgreePact']).toBe(true)
     })
 
-    it('应挂载到 window.lxData.appSetting', () => {
-      expect((globalThis as any).window.lxData.appSetting).toBe(setting.appSetting)
+    it('应挂载到 window.sData.appSetting', () => {
+      expect((globalThis as any).window.sData.appSetting).toBe(setting.appSetting)
     })
   })
 
@@ -101,8 +101,8 @@ describe('store/setting', () => {
       expect(mockSaveSetting).toHaveBeenCalledWith({ 'common.fontSize': 22 })
     })
 
-    it('应挂载到 window.lxData.updateSetting', () => {
-      expect((globalThis as any).window.lxData.updateSetting).toBe(setting.updateSetting)
+    it('应挂载到 window.sData.updateSetting', () => {
+      expect((globalThis as any).window.sData.updateSetting).toBe(setting.updateSetting)
     })
 
     it('应支持保存多个设置项', () => {

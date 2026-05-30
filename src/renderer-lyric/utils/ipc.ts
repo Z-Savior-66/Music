@@ -4,19 +4,19 @@ import { CMMON_EVENT_NAME, WIN_LYRIC_RENDERER_EVENT_NAME } from '@common/ipcName
 type RemoveListener = () => void
 
 export const getSetting = async() => {
-  return rendererInvoke<LX.DesktopLyric.Config>(WIN_LYRIC_RENDERER_EVENT_NAME.get_config)
+  return rendererInvoke<S.DesktopLyric.Config>(WIN_LYRIC_RENDERER_EVENT_NAME.get_config)
 }
-export const updateSetting = async(setting: Partial<LX.DesktopLyric.Config>) => {
+export const updateSetting = async(setting: Partial<S.DesktopLyric.Config>) => {
   await rendererInvoke(WIN_LYRIC_RENDERER_EVENT_NAME.set_config, setting)
 }
-export const onSettingChanged = (listener: LX.IpcRendererEventListenerParams<Partial<LX.DesktopLyric.Config>>): RemoveListener => {
-  rendererOn<Partial<LX.DesktopLyric.Config>>(WIN_LYRIC_RENDERER_EVENT_NAME.on_config_change, listener)
+export const onSettingChanged = (listener: S.IpcRendererEventListenerParams<Partial<S.DesktopLyric.Config>>): RemoveListener => {
+  rendererOn<Partial<S.DesktopLyric.Config>>(WIN_LYRIC_RENDERER_EVENT_NAME.on_config_change, listener)
   return () => {
     rendererOff(WIN_LYRIC_RENDERER_EVENT_NAME.on_config_change, listener)
   }
 }
-export const setWindowBounds = (bounds: LX.DesktopLyric.NewBounds) => {
-  rendererSend<LX.DesktopLyric.NewBounds>(WIN_LYRIC_RENDERER_EVENT_NAME.set_win_bounds, bounds)
+export const setWindowBounds = (bounds: S.DesktopLyric.NewBounds) => {
+  rendererSend<S.DesktopLyric.NewBounds>(WIN_LYRIC_RENDERER_EVENT_NAME.set_win_bounds, bounds)
 }
 let previousResizable: boolean | null = null
 export const setWindowResizeable = (resizable: boolean) => {
@@ -29,13 +29,13 @@ export const setWindowResizeable = (resizable: boolean) => {
 export const sendConnectMainWindowEvent = () => {
   rendererSend(WIN_LYRIC_RENDERER_EVENT_NAME.request_main_window_channel)
 }
-export const onProvideMainWindowChannel = (listener: LX.IpcRendererEventListener): RemoveListener => {
+export const onProvideMainWindowChannel = (listener: S.IpcRendererEventListener): RemoveListener => {
   rendererOn(WIN_LYRIC_RENDERER_EVENT_NAME.provide_main_window_channel, listener)
   return () => {
     rendererOff(WIN_LYRIC_RENDERER_EVENT_NAME.provide_main_window_channel, listener)
   }
 }
-export const onMainWindowInited = (listener: LX.IpcRendererEventListener): RemoveListener => {
+export const onMainWindowInited = (listener: S.IpcRendererEventListener): RemoveListener => {
   rendererOn(WIN_LYRIC_RENDERER_EVENT_NAME.main_window_inited, listener)
   return () => {
     rendererOff(WIN_LYRIC_RENDERER_EVENT_NAME.main_window_inited, listener)
@@ -44,10 +44,10 @@ export const onMainWindowInited = (listener: LX.IpcRendererEventListener): Remov
 
 /**
  * On Theme Change
- * @param listener LX.IpcRendererEventListenerParams<shouldUseDarkColors: boolean>
+ * @param listener S.IpcRendererEventListenerParams<shouldUseDarkColors: boolean>
  * @returns RemoveListener Fn
  */
-export const onThemeChange = (listener: LX.IpcRendererEventListenerParams<LX.ThemeSetting>): RemoveListener => {
+export const onThemeChange = (listener: S.IpcRendererEventListenerParams<S.ThemeSetting>): RemoveListener => {
   rendererOn(CMMON_EVENT_NAME.theme_change, listener)
   return () => {
     rendererOff(CMMON_EVENT_NAME.theme_change, listener)

@@ -24,7 +24,7 @@ import { sources, listInfo, isVisibleListDetail } from '@renderer/store/songList
 import { sourceNames } from '@renderer/store'
 import { useRoute, useRouter } from '@common/utils/vueRouter'
 
-const source = ref<LX.OnlineSource>('kw')
+const source = ref<S.OnlineSource>('kw')
 const tagId = ref<string>('')
 const sortId = ref<string>('')
 const page = ref<number>(1)
@@ -67,7 +67,7 @@ const verifyQueryParams = async function(this: any, to: { query: Query, path: st
     return
   }
   next()
-  source.value = _source as LX.OnlineSource
+  source.value = _source as S.OnlineSource
   tagId.value = _tagId ?? ''
   sortId.value = _sortId ?? ''
   page.value = _page ? parseInt(_page) : 1
@@ -88,12 +88,12 @@ export default {
     const visibleOpenSongListModal = ref(false)
 
     const sourceList = computed(() => {
-      const sourceOrder: LX.OnlineSource[] = ['wy', 'kg', 'tx', 'kw', 'mg']
+      const sourceOrder: S.OnlineSource[] = ['wy', 'kg', 'tx', 'kw', 'mg']
       return sourceOrder.filter(s => sources.includes(s)).map(s => ({ id: s, name: sourceNames.value[s] }))
     })
     const router = useRouter()
     const route = useRoute()
-    const handleToggleSource = (id: LX.OnlineSource) => {
+    const handleToggleSource = (id: S.OnlineSource) => {
       if (id == source.value) return
       void router.replace({
         path: route.path,

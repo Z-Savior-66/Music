@@ -1,10 +1,10 @@
-declare namespace LX {
+declare namespace S {
   namespace List {
     interface UserListInfo {
       id: string
       name: string
-      // list: LX.Music.MusicInfo[]
-      source?: LX.OnlineSource
+      // list: S.Music.MusicInfo[]
+      source?: S.OnlineSource
       sourceListId?: string
       // position?: number
       locationUpdateTime: number | null
@@ -14,20 +14,20 @@ declare namespace LX {
       id: 'default'
       name: 'list__name_default'
       // name: '试听列表'
-      // list: LX.Music.MusicInfo[]
+      // list: S.Music.MusicInfo[]
     }
 
     interface MyLoveListInfo {
       id: 'love'
       name: 'list__name_love'
       // name: '我的收藏'
-      // list: LX.Music.MusicInfo[]
+      // list: S.Music.MusicInfo[]
     }
 
     interface MyTempListInfo {
       id: 'temp'
       name: '临时列表'
-      // list: LX.Music.MusicInfo[]
+      // list: S.Music.MusicInfo[]
       // TODO: save default lists info
       meta: {
         id?: string
@@ -57,11 +57,11 @@ declare namespace LX {
       data: Partial<MyAllList>
     } | {
       type: 'downloadList'
-      data: LX.Download.ListItem[]
+      data: S.Download.ListItem[]
     }
 
 
-    type ListActionDataOverwrite = MakeOptional<LX.List.ListDataFull, 'tempList'>
+    type ListActionDataOverwrite = MakeOptional<S.List.ListDataFull, 'tempList'>
     interface ListActionAdd {
       position: number
       listInfos: UserListInfo[]
@@ -81,15 +81,15 @@ declare namespace LX {
 
     interface ListActionMusicAdd {
       id: string
-      musicInfos: LX.Music.MusicInfo[]
-      addMusicLocationType: LX.AddMusicLocationType
+      musicInfos: S.Music.MusicInfo[]
+      addMusicLocationType: S.AddMusicLocationType
     }
 
     interface ListActionMusicMove {
       fromId: string
       toId: string
-      musicInfos: LX.Music.MusicInfo[]
-      addMusicLocationType: LX.AddMusicLocationType
+      musicInfos: S.Music.MusicInfo[]
+      addMusicLocationType: S.AddMusicLocationType
     }
 
     interface ListActionCheckMusicExistList {
@@ -104,7 +104,7 @@ declare namespace LX {
 
     type ListActionMusicUpdate = Array<{
       id: string
-      musicInfo: LX.Music.MusicInfo
+      musicInfo: S.Music.MusicInfo
     }>
 
     interface ListActionMusicUpdatePosition {
@@ -115,29 +115,29 @@ declare namespace LX {
 
     interface ListActionMusicOverwrite {
       listId: string
-      musicInfos: LX.Music.MusicInfo[]
+      musicInfos: S.Music.MusicInfo[]
     }
 
     type ListActionMusicClear = string[]
 
     interface MyDefaultListInfoFull extends MyDefaultListInfo {
-      list: LX.Music.MusicInfo[]
+      list: S.Music.MusicInfo[]
     }
     interface MyLoveListInfoFull extends MyLoveListInfo {
-      list: LX.Music.MusicInfo[]
+      list: S.Music.MusicInfo[]
     }
     interface UserListInfoFull extends UserListInfo {
-      list: LX.Music.MusicInfo[]
+      list: S.Music.MusicInfo[]
     }
     interface MyTempListInfoFull extends MyTempListInfo {
-      list: LX.Music.MusicInfo[]
+      list: S.Music.MusicInfo[]
     }
 
     interface ListDataFull {
-      defaultList: LX.Music.MusicInfo[]
-      loveList: LX.Music.MusicInfo[]
+      defaultList: S.Music.MusicInfo[]
+      loveList: S.Music.MusicInfo[]
       userList: UserListInfoFull[]
-      tempList: LX.Music.MusicInfo[]
+      tempList: S.Music.MusicInfo[]
     }
   }
 }

@@ -9,7 +9,7 @@ import { toMD5 } from '@renderer/utils'
 
 const getListId = (id: string) => `board__${id}`
 
-export const addSongListDetail = async(id: string, name: string, source: LX.OnlineSource) => {
+export const addSongListDetail = async(id: string, name: string, source: S.OnlineSource) => {
   // console.log(this.listDetail.info)
   // if (!this.listDetail.info.name) return
   const listId = getListId(id)
@@ -35,7 +35,7 @@ export const addSongListDetail = async(id: string, name: string, source: LX.Onli
   })
 }
 
-export const playSongListDetail = async(id: string, list?: LX.Music.MusicInfoOnline[], index: number = 0) => {
+export const playSongListDetail = async(id: string, list?: S.Music.MusicInfoOnline[], index: number = 0) => {
   let isPlayingList = false
   // console.log(list)
   const listId = getListId(id)

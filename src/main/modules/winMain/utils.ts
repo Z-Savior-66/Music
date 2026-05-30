@@ -17,7 +17,7 @@ export const createTaskBarButtons = ({
   play = false,
   next = true,
   prev = true,
-}: LX.TaskBarButtonFlags, onClick: (action: LX.Player.StatusButtonActions) => void): Electron.ThumbarButton[] => {
+}: S.TaskBarButtonFlags, onClick: (action: S.Player.StatusButtonActions) => void): Electron.ThumbarButton[] => {
   const buttons: Electron.ThumbarButton[] = [
     collect
       ? {

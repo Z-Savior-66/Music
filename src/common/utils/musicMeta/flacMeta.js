@@ -42,7 +42,7 @@ const writeMeta = async(filePath, meta, picPath) => {
   }
 
   const reader = fs.createReadStream(filePath)
-  const tempPath = filePath + '.lxmtemp'
+  const tempPath = filePath + '.smtemp'
   const writer = fs.createWriteStream(tempPath)
   const flacProcessor = new FlacProcessor()
   flacProcessor.writeMeta(data)

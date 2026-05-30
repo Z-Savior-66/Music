@@ -75,13 +75,13 @@ export const generateRsaKey = async() => new Promise<{ publicKey: string, privat
   )
 })
 
-export const encryptMsg = async(keyInfo: LX.Sync.ClientKeyInfo, msg: string): Promise<string> => {
+export const encryptMsg = async(keyInfo: S.Sync.ClientKeyInfo, msg: string): Promise<string> => {
   return encodeData(msg)
   // if (!keyInfo) return ''
   // return aesEncrypt(msg, keyInfo.key, keyInfo.iv)
 }
 
-export const decryptMsg = async(keyInfo: LX.Sync.ClientKeyInfo, enMsg: string): Promise<string> => {
+export const decryptMsg = async(keyInfo: S.Sync.ClientKeyInfo, enMsg: string): Promise<string> => {
   return decodeData(enMsg)
   // if (!keyInfo) return ''
   // let msg = ''
@@ -94,7 +94,7 @@ export const decryptMsg = async(keyInfo: LX.Sync.ClientKeyInfo, enMsg: string): 
 }
 
 
-export const parseUrl = (host: string): LX.Sync.Client.UrlInfo => {
+export const parseUrl = (host: string): S.Sync.Client.UrlInfo => {
   const url = new URL(host)
   let hostPath = url.host + url.pathname
   let href = url.href
@@ -110,6 +110,6 @@ export const parseUrl = (host: string): LX.Sync.Client.UrlInfo => {
 }
 
 
-export const sendStatus = (status: LX.Sync.ClientStatus) => {
+export const sendStatus = (status: S.Sync.ClientStatus) => {
   // syncLog.log(JSON.stringify(status))
 }

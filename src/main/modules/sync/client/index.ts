@@ -30,7 +30,7 @@ const connectServer = async(host: string, authCode?: string) => {
     message: SYNC_CODE.connecting,
   })
   const id = connectId
-  await migrateData(global.lxDataPath)
+  await migrateData(global.sDataPath)
 
   return handleConnect(host, authCode).catch(async err => {
     if (id != connectId) return

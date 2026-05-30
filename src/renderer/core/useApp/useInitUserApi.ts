@@ -31,14 +31,14 @@ export default () => {
     if (status) {
       if (apiInfo.sources) {
         let apis: any = {}
-        let qualitys: LX.QualityList = {}
+        let qualitys: S.QualityList = {}
         for (const [source, { actions, type, qualitys: sourceQualitys }] of Object.entries(apiInfo.sources)) {
           if (type != 'music') continue
-          apis[source as LX.Source] = {}
+          apis[source as S.Source] = {}
           for (const action of actions) {
             switch (action) {
               case 'musicUrl':
-                apis[source].getMusicUrl = (songInfo: LX.Music.MusicInfo, type: LX.Quality) => {
+                apis[source].getMusicUrl = (songInfo: S.Music.MusicInfo, type: S.Quality) => {
                   const requestKey = `request__${Math.random().toString().substring(2)}`
                   return {
                     canceleFn() {
@@ -66,7 +66,7 @@ export default () => {
                 }
                 break
               case 'lyric':
-                apis[source].getLyric = (songInfo: LX.Music.MusicInfo) => {
+                apis[source].getLyric = (songInfo: S.Music.MusicInfo) => {
                   const requestKey = `request__${Math.random().toString().substring(2)}`
                   return {
                     canceleFn() {
@@ -94,7 +94,7 @@ export default () => {
                 }
                 break
               case 'pic':
-                apis[source].getPic = (songInfo: LX.Music.MusicInfo) => {
+                apis[source].getPic = (songInfo: S.Music.MusicInfo) => {
                   const requestKey = `request__${Math.random().toString().substring(2)}`
                   return {
                     canceleFn() {
@@ -125,7 +125,7 @@ export default () => {
                 break
             }
           }
-          qualitys[source as LX.Source] = sourceQualitys
+          qualitys[source as S.Source] = sourceQualitys
         }
         qualityList.value = qualitys
         userApi.apis = apis
@@ -139,7 +139,7 @@ export default () => {
         })
       }
     }
-    if (!window.lx.apiInitPromise[1]) window.lx.apiInitPromise[2](status)
+    if (!window.s.apiInitPromise[1]) window.s.apiInitPromise[2](status)
   })
 
   const rUserApiShowUpdateAlert = onShowUserApiUpdateAlert(({ params: { name, log, updateUrl } }) => {

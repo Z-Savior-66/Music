@@ -2,8 +2,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 // 完整环境 mock
 ;(globalThis as any).window = (globalThis as any).window || {} as any
-;(globalThis as any).window.lxData = {} as any
-;(globalThis as any).window.lx = { rootOffset: 0 } as any
+;(globalThis as any).window.sData = {} as any
+;(globalThis as any).window.s = { rootOffset: 0 } as any
 ;(globalThis as any).window.dt = false
 ;(globalThis as any).window.requestIdleCallback = vi.fn()
 ;(globalThis as any).window.addEventListener = vi.fn()
@@ -14,7 +14,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 describe('store/search/state', () => {
   beforeEach(async () => {
     vi.resetModules()
-    ;(globalThis as any).window.lxData = {} as any
+    ;(globalThis as any).window.sData = {} as any
   })
 
   it('searchText 默认应为空字符串', async () => {
@@ -49,7 +49,7 @@ describe('store/search/state', () => {
 describe('store/download/state', () => {
   beforeEach(async () => {
     vi.resetModules()
-    ;(globalThis as any).window.lxData = {} as any
+    ;(globalThis as any).window.sData = {} as any
   })
 
   it('isInitedList 默认应为 false', async () => {

@@ -1,18 +1,18 @@
 import { setting, musicInfo, isPlay } from './state'
 import { updateSetting as saveSetting } from '@lyric/utils/ipc'
 
-export const initSetting = (newSetting: LX.DesktopLyric.Config) => {
+export const initSetting = (newSetting: S.DesktopLyric.Config) => {
   mergeSetting(newSetting)
 }
 
-export const mergeSetting = (newSetting: Partial<LX.DesktopLyric.Config>) => {
+export const mergeSetting = (newSetting: Partial<S.DesktopLyric.Config>) => {
   for (const [key, value] of Object.entries(newSetting)) {
     // @ts-expect-error
     setting[key] = value
   }
 }
 
-export const updateSetting = (setting: Partial<LX.DesktopLyric.Config>) => {
+export const updateSetting = (setting: Partial<S.DesktopLyric.Config>) => {
   void saveSetting(setting)
 }
 

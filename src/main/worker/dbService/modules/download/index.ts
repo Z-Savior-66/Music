@@ -7,9 +7,9 @@ import {
   clearDownloadList,
 } from './dbHelper'
 
-let list: LX.Download.ListItem[]
+let list: S.Download.ListItem[]
 
-const toDBDownloadInfo = (musicInfos: LX.Download.ListItem[], offset: number = 0): LX.DBService.DownloadMusicInfo[] => {
+const toDBDownloadInfo = (musicInfos: S.Download.ListItem[], offset: number = 0): S.DBService.DownloadMusicInfo[] => {
   return musicInfos.map((info, index) => {
     return {
       id: info.id,
@@ -31,7 +31,7 @@ const toDBDownloadInfo = (musicInfos: LX.Download.ListItem[], offset: number = 0
 
 const initDownloadList = () => {
   list = queryDownloadList().map(item => {
-    const musicInfo = JSON.parse(item.musicInfo) as LX.Music.MusicInfoOnline
+    const musicInfo = JSON.parse(item.musicInfo) as S.Music.MusicInfoOnline
     return {
       id: item.id,
       isComplate: item.isComplate == 1,
@@ -58,7 +58,7 @@ const initDownloadList = () => {
  * 获取下载列表
  * @returns 下载列表
  */
-export const getDownloadList = (): LX.Download.ListItem[] => {
+export const getDownloadList = (): S.Download.ListItem[] => {
   if (!list) initDownloadList()
   return list
 }
@@ -67,7 +67,7 @@ export const getDownloadList = (): LX.Download.ListItem[] => {
  * 添加下载歌曲信息
  * @param downloadInfos url信息
  */
-export const downloadInfoSave = (downloadInfos: LX.Download.ListItem[], addMusicLocationType: LX.AddMusicLocationType) => {
+export const downloadInfoSave = (downloadInfos: S.Download.ListItem[], addMusicLocationType: S.AddMusicLocationType) => {
   if (!list) initDownloadList()
   if (addMusicLocationType == 'top') {
     let newList = [...list]
@@ -86,7 +86,7 @@ export const downloadInfoSave = (downloadInfos: LX.Download.ListItem[], addMusic
  * 批量更新列表信息
  * @param lists 列表信息
  */
-export const downloadInfoUpdate = (lists: LX.Download.ListItem[]) => {
+export const downloadInfoUpdate = (lists: S.Download.ListItem[]) => {
   updateDownloadList(toDBDownloadInfo(lists))
   if (list) {
     for (const item of lists) {

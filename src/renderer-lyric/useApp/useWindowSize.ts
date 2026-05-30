@@ -26,7 +26,7 @@ export default () => {
     if (!resize.origin || setting['desktopLyric.isLock']) return
     // if (!event.target.classList.contains('resize-' + resize.origin)) return
     // console.log(event.target)
-    let bounds: LX.DesktopLyric.NewBounds = {
+    let bounds: S.DesktopLyric.NewBounds = {
       w: 0,
       h: 0,
       x: 0,

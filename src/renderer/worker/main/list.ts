@@ -11,7 +11,7 @@ export const filterMusicList = async({ playedList, listId, list, playerMusicInfo
   /**
    * 已播放列表
    */
-  playedList: LX.Player.PlayMusicInfo[]
+  playedList: S.Player.PlayMusicInfo[]
   /**
    * 列表id
    */
@@ -19,7 +19,7 @@ export const filterMusicList = async({ playedList, listId, list, playerMusicInfo
   /**
    * 播放列表
    */
-  list: Array<LX.Music.MusicInfo | LX.Download.ListItem>
+  list: Array<S.Music.MusicInfo | S.Download.ListItem>
   /**
    * 下载目录
    */
@@ -27,19 +27,19 @@ export const filterMusicList = async({ playedList, listId, list, playerMusicInfo
   /**
    * 播放器内当前歌曲（`playInfo.playerPlayIndex`指向的歌曲）
    */
-  playerMusicInfo?: LX.Music.MusicInfo | LX.Download.ListItem
+  playerMusicInfo?: S.Music.MusicInfo | S.Download.ListItem
   /**
    * 不喜欢的歌曲名字列表
    */
-  dislikeInfo: Omit<LX.Dislike.DislikeInfo, 'rules'>
+  dislikeInfo: Omit<S.Dislike.DislikeInfo, 'rules'>
 
   isNext: boolean
 }) => {
   let playerIndex = -1
 
-  let canPlayList: Array<LX.Music.MusicInfo | LX.Download.ListItem> = []
+  let canPlayList: Array<S.Music.MusicInfo | S.Download.ListItem> = []
   const filteredPlayedList = playedList.filter(pmInfo => pmInfo.listId == listId && !pmInfo.isTempPlay).map(({ musicInfo }) => musicInfo)
-  const hasDislike = (info: LX.Music.MusicInfo) => {
+  const hasDislike = (info: S.Music.MusicInfo) => {
     const name = info.name?.replaceAll(SPLIT_CHAR.DISLIKE_NAME, SPLIT_CHAR.DISLIKE_NAME_ALIAS).toLocaleLowerCase().trim() ?? ''
     const singer = info.singer?.replaceAll(SPLIT_CHAR.DISLIKE_NAME, SPLIT_CHAR.DISLIKE_NAME_ALIAS).toLocaleLowerCase().trim() ?? ''
 
@@ -48,7 +48,7 @@ export const filterMusicList = async({ playedList, listId, list, playerMusicInfo
   }
 
   let isDislike = false
-  const filteredList: Array<LX.Music.MusicInfo | LX.Download.ListItem> = list.filter(s => {
+  const filteredList: Array<S.Music.MusicInfo | S.Download.ListItem> = list.filter(s => {
     // if (!assertApiSupport(s.source)) return false
     if ('progress' in s) {
       if (!s.isComplate) return false
@@ -103,7 +103,7 @@ export const filterMusicList = async({ playedList, listId, list, playerMusicInfo
   }
 }
 
-const getIntv = (musicInfo: LX.Music.MusicInfo) => {
+const getIntv = (musicInfo: S.Music.MusicInfo) => {
   if (!musicInfo.interval) return 0
   // if (musicInfo._interval) return musicInfo._interval
   let intvArr = musicInfo.interval.split(':')
@@ -126,7 +126,7 @@ export type SortFieldType = 'up' | 'down' | 'random'
  * @param localeId 排序语言
  * @returns
  */
-export const sortListMusicInfo = async(list: LX.Music.MusicInfo[], sortType: SortFieldType, fieldName: SortFieldName, localeId: string) => {
+export const sortListMusicInfo = async(list: S.Music.MusicInfo[], sortType: SortFieldType, fieldName: SortFieldName, localeId: string) => {
   switch (sortType) {
     case 'random':
       arrShuffle(list)
@@ -199,11 +199,11 @@ const variantRxp2 = /\s|'|\.|,|，|&|"|、|\(|\)|（|）|`|~|-|<|>|\||\/|\]|\[/g
  * @param isFilterVariant 是否过滤 Live Explicit 等歌曲名
  * @returns
  */
-export const filterDuplicateMusic = async(list: LX.Music.MusicInfo[], isFilterVariant: boolean = true) => {
-  type ListMapValue = Array<{ id: string, index: number, musicInfo: LX.Music.MusicInfo }>
+export const filterDuplicateMusic = async(list: S.Music.MusicInfo[], isFilterVariant: boolean = true) => {
+  type ListMapValue = Array<{ id: string, index: number, musicInfo: S.Music.MusicInfo }>
   const listMap = new Map<string, ListMapValue>()
   const duplicateList = new Set<string>()
-  const handleFilter = (name: string, index: number, musicInfo: LX.Music.MusicInfo) => {
+  const handleFilter = (name: string, index: number, musicInfo: S.Music.MusicInfo) => {
     if (listMap.has(name)) {
       const targetMusicInfo = listMap.get(name)
       targetMusicInfo!.push({
@@ -238,15 +238,15 @@ export const filterDuplicateMusic = async(list: LX.Music.MusicInfo[], isFilterVa
   return duplicateNames.map(name => listMap.get(name)!).flat()
 }
 
-export const searchListMusic = (list: LX.Music.MusicInfo[], text: string) => {
-  let result: LX.Music.MusicInfo[] = []
+export const searchListMusic = (list: S.Music.MusicInfo[], text: string) => {
+  let result: S.Music.MusicInfo[] = []
   let rxp = new RegExp(text.split('').map(s => s.replace(/[.*+?^${}()|[\]\\]/, '\\$&')).join('.*') + '.*', 'i')
   for (const mInfo of list) {
     const str = `${mInfo.name}${mInfo.singer}${mInfo.meta.albumName ? mInfo.meta.albumName : ''}`
     if (rxp.test(str)) result.push(mInfo)
   }
 
-  const sortedList: Array<{ num: number, data: LX.Music.MusicInfo }> = []
+  const sortedList: Array<{ num: number, data: S.Music.MusicInfo }> = []
 
   for (const mInfo of result) {
     sortInsert(sortedList, {
@@ -264,9 +264,9 @@ export const searchListMusic = (list: LX.Music.MusicInfo[], text: string) => {
  * @param ids 要调整顺序的歌曲id
  * @returns
  */
-export const createSortedList = (list: LX.Music.MusicInfo[], position: number, ids: string[]) => {
-  const infos: LX.Music.MusicInfo[] = []
-  const map = new Map<string, LX.Music.MusicInfo>()
+export const createSortedList = (list: S.Music.MusicInfo[], position: number, ids: string[]) => {
+  const infos: S.Music.MusicInfo[] = []
+  const map = new Map<string, S.Music.MusicInfo>()
   for (const item of list) map.set(item.id, item)
   for (const id of ids) {
     infos.push(map.get(id)!)
@@ -282,8 +282,8 @@ export const createSortedList = (list: LX.Music.MusicInfo[], position: number, i
  * 创建本地列表音乐信息
  * @param filePaths 文件路径
  */
-export const createLocalMusicInfos = async(filePaths: string[]): Promise<LX.Music.MusicInfoLocal[]> => {
-  const list: LX.Music.MusicInfoLocal[] = []
+export const createLocalMusicInfos = async(filePaths: string[]): Promise<S.Music.MusicInfoLocal[]> => {
+  const list: S.Music.MusicInfoLocal[] = []
   for await (const path of filePaths) {
     const musicInfo = await createLocalMusicInfo(path)
     if (!musicInfo) continue
@@ -299,7 +299,7 @@ export const createLocalMusicInfos = async(filePaths: string[]): Promise<LX.Musi
  * @param lists 列表数据
  * @param isMerge 是否合并
  */
-export const exportPlayListToText = async(savePath: string, lists: Array<LX.List.MyDefaultListInfoFull | LX.List.MyLoveListInfoFull | LX.List.UserListInfoFull>, isMerge: boolean) => {
+export const exportPlayListToText = async(savePath: string, lists: Array<S.List.MyDefaultListInfoFull | S.List.MyLoveListInfoFull | S.List.UserListInfoFull>, isMerge: boolean) => {
   const iconv = (await import('iconv-lite')).default
 
   if (isMerge) {
@@ -307,7 +307,7 @@ export const exportPlayListToText = async(savePath: string, lists: Array<LX.List
       iconv.encode(lists.map(l => l.list.map(m => `${m.name}  ${m.singer}  ${m.meta.albumName ?? ''}`).join('\n')).join('\n\n'), 'utf8', { addBOM: true }))
   } else {
     for await (const list of lists) {
-      await saveStrToFile(joinPath(savePath, `lx_list_${filterFileName(list.name)}.txt`),
+      await saveStrToFile(joinPath(savePath, `s_list_${filterFileName(list.name)}.txt`),
         iconv.encode(list.list.map(m => `${m.name}  ${m.singer}  ${m.meta.albumName ?? ''}`).join('\n'), 'utf8', { addBOM: true }))
     }
   }
@@ -321,7 +321,7 @@ export const exportPlayListToText = async(savePath: string, lists: Array<LX.List
  * @param header 表头名称
  */
 export const exportPlayListToCSV = async(savePath: string,
-  lists: Array<LX.List.MyDefaultListInfoFull | LX.List.MyLoveListInfoFull | LX.List.UserListInfoFull>,
+  lists: Array<S.List.MyDefaultListInfoFull | S.List.MyLoveListInfoFull | S.List.UserListInfoFull>,
   isMerge: boolean,
   header: string) => {
   const iconv = (await import('iconv-lite')).default
@@ -337,7 +337,7 @@ export const exportPlayListToCSV = async(savePath: string,
     await saveStrToFile(savePath, iconv.encode(header + lists.map(l => l.list.map(m => `${filterStr(m.name)},${filterStr(m.singer)},${filterStr(m.meta.albumName ?? '')}`).join('\n')).join('\n'), 'utf8', { addBOM: true }))
   } else {
     for await (const list of lists) {
-      await saveStrToFile(joinPath(savePath, `lx_list_${filterFileName(list.name)}.csv`), iconv.encode(header + list.list.map(m => `${filterStr(m.name)},${filterStr(m.singer)},${filterStr(m.meta.albumName ?? '')}`).join('\n'), 'utf8', { addBOM: true }))
+      await saveStrToFile(joinPath(savePath, `s_list_${filterFileName(list.name)}.csv`), iconv.encode(header + list.list.map(m => `${filterStr(m.name)},${filterStr(m.singer)},${filterStr(m.meta.albumName ?? '')}`).join('\n'), 'utf8', { addBOM: true }))
     }
   }
 }

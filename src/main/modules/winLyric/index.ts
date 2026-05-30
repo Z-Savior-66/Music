@@ -10,14 +10,14 @@ let isMainWidnowFullscreen = false
 
 export default () => {
   initRendererEvent()
-  // global.lx.event_app.winLyric = new Event()
+  // global.s.event_app.winLyric = new Event()
   // global.app_event.winMain.
 
-  global.lx.event_app.on('main_window_inited', () => {
-    isMainWidnowFullscreen = global.lx.appSetting['common.startInFullscreen']
+  global.s.event_app.on('main_window_inited', () => {
+    isMainWidnowFullscreen = global.s.appSetting['common.startInFullscreen']
 
-    if (global.lx.appSetting['desktopLyric.enable']) {
-      if (global.lx.appSetting['desktopLyric.fullscreenHide'] && isMainWidnowFullscreen) {
+    if (global.s.appSetting['desktopLyric.enable']) {
+      if (global.s.appSetting['desktopLyric.fullscreenHide'] && isMainWidnowFullscreen) {
         closeWindow()
       } else {
         if (isExistWindow()) sendMainWindowInitedEvent()
@@ -25,35 +25,35 @@ export default () => {
       }
     }
   })
-  global.lx.event_app.on('updated_config', (keys, setting) => {
+  global.s.event_app.on('updated_config', (keys, setting) => {
     setLrcConfig(keys, setting)
-    if (keys.includes('desktopLyric.fullscreenHide') && global.lx.appSetting['desktopLyric.enable'] && isMainWidnowFullscreen) {
-      if (global.lx.appSetting['desktopLyric.fullscreenHide']) closeWindow()
+    if (keys.includes('desktopLyric.fullscreenHide') && global.s.appSetting['desktopLyric.enable'] && isMainWidnowFullscreen) {
+      if (global.s.appSetting['desktopLyric.fullscreenHide']) closeWindow()
       else if (!isExistWindow()) createWindow()
     }
   })
-  global.lx.event_app.on('main_window_close', () => {
+  global.s.event_app.on('main_window_close', () => {
     closeWindow()
   })
-  global.lx.event_app.on('main_window_fullscreen', (isFullscreen) => {
+  global.s.event_app.on('main_window_fullscreen', (isFullscreen) => {
     isMainWidnowFullscreen = isFullscreen
-    if (global.lx.appSetting['desktopLyric.enable'] && global.lx.appSetting['desktopLyric.fullscreenHide']) {
+    if (global.s.appSetting['desktopLyric.enable'] && global.s.appSetting['desktopLyric.fullscreenHide']) {
       if (isFullscreen) closeWindow()
       else if (!isExistWindow()) createWindow()
     }
   })
 
 
-  // global.lx_event.mainWindow.on(MAIN_WINDOW_EVENT_NAME.setLyricInfo, info => {
+  // global.s_event.mainWindow.on(MAIN_WINDOW_EVENT_NAME.setLyricInfo, info => {
   //   if (!global.modules.lyricWindow) return
   //   mainSend(global.modules.lyricWindow, ipcWinLyricNames.set_lyric_info, info)
   // })
 
-  global.lx.event_app.on('hot_key_down', ({ type, key }) => {
-    let info = global.lx.hotKey.config.global.keys[key]
+  global.s.event_app.on('hot_key_down', ({ type, key }) => {
+    let info = global.s.hotKey.config.global.keys[key]
     if (!info || info.type != APP_EVENT_NAMES.winLyricName) return
-    let newSetting: Partial<LX.AppSetting> = {}
-    let settingKey: keyof LX.AppSetting
+    let newSetting: Partial<S.AppSetting> = {}
+    let settingKey: keyof S.AppSetting
     switch (info.action) {
       case HOTKEY_DESKTOP_LYRIC.toggle_visible.action:
         settingKey = 'desktopLyric.enable'
@@ -66,9 +66,9 @@ export default () => {
         break
       default: return
     }
-    newSetting[settingKey] = !global.lx.appSetting[settingKey]
+    newSetting[settingKey] = !global.s.appSetting[settingKey]
 
-    global.lx.event_app.update_config(newSetting)
+    global.s.event_app.update_config(newSetting)
   })
 }
 export * from './main'

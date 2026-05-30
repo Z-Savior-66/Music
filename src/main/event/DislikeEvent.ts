@@ -11,8 +11,8 @@ export class Event extends EventEmitter {
    * @param dislikeData 列表数据
    * @param isRemote 是否属于远程操作
    */
-  async dislike_data_overwrite(dislikeData: LX.Dislike.DislikeRules, isRemote: boolean = false) {
-    await global.lx.worker.dbService.dislikeInfoOverwrite(dislikeData)
+  async dislike_data_overwrite(dislikeData: S.Dislike.DislikeRules, isRemote: boolean = false) {
+    await global.s.worker.dbService.dislikeInfoOverwrite(dislikeData)
     this.emit('dislike_data_overwrite', dislikeData, isRemote)
     this.dislike_changed()
   }
@@ -24,9 +24,9 @@ export class Event extends EventEmitter {
    * @param addMusicLocationType 添加在到列表的位置
    * @param isRemote 是否属于远程操作
    */
-  async dislike_music_add(musicInfo: LX.Dislike.DislikeMusicInfo[], isRemote: boolean = false) {
+  async dislike_music_add(musicInfo: S.Dislike.DislikeMusicInfo[], isRemote: boolean = false) {
     // const changedIds =
-    await global.lx.worker.dbService.dislikeInfoAdd(musicInfo)
+    await global.s.worker.dbService.dislikeInfoAdd(musicInfo)
     // await checkUpdateDislike(changedIds)
     this.emit('dislike_music_add', musicInfo, isRemote)
     this.dislike_changed()
@@ -39,7 +39,7 @@ export class Event extends EventEmitter {
    */
   async dislike_music_clear(isRemote: boolean = false) {
     // const changedIds =
-    await global.lx.worker.dbService.dislikeInfoOverwrite('')
+    await global.s.worker.dbService.dislikeInfoOverwrite('')
     // await checkUpdateDislike(changedIds)
     this.emit('dislike_music_clear', isRemote)
     this.dislike_changed()

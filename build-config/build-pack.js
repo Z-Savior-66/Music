@@ -59,7 +59,7 @@ const options = {
 const winOptions = {
   win: {
     icon: './resources/icons/icon.ico',
-    legalTrademarks: 'Savior',
+    legalTrademarks: 'S',
     // artifactName: '${productName}-v${version}-${env.ARCH}-${env.TARGET}.${ext}',
   },
   nsis: {
@@ -77,7 +77,7 @@ const winOptions = {
  */
 const linuxOptions = {
   linux: {
-    maintainer: 'Savior <weixiong520@users.noreply.github.com>',
+    maintainer: 'S <weixiong520@users.noreply.github.com>',
     // artifactName: '${productName}-${version}.${env.ARCH}.${ext}',
     icon: './resources/icons',
     category: 'Utility;AudioVideo;Audio;Player;Music;',
@@ -87,9 +87,9 @@ const linuxOptions = {
       // https://specifications.freedesktop.org/desktop-entry-spec/latest/example.html
       // https://developer.gnome.org/documentation/guidelines/maintainer/integrating.html#desktop-files
       entry: {
-        Name: 'Savior Music',
-        'Name[zh_CN]': 'Savior Music',
-        'Name[zh_TW]': 'Savior Music',
+        Name: 'S Music',
+        'Name[zh_CN]': 'S Music',
+        'Name[zh_TW]': 'S Music',
         Encoding: 'UTF-8',
         MimeType: 'x-scheme-handler/saviormusic',
         StartupNotify: 'false',
@@ -128,7 +128,7 @@ const macOptions = {
         path: '/Applications',
       },
     ],
-    title: 'Savior Music v${version}',
+    title: 'S Music v${version}',
   },
 }
 
@@ -174,31 +174,31 @@ const createTarget = {
   win(arch, packageType) {
     switch (packageType) {
       case 'setup':
-        winOptions.artifactName = `Savior-music-v\${version}-${arch}-Setup.\${ext}`
+        winOptions.artifactName = `S-music-v\${version}-${arch}-Setup.\${ext}`
         return {
           buildOptions: { win: ['nsis'] },
           options: winOptions,
         }
       case 'green':
-        winOptions.artifactName = `Savior-music-v\${version}-win_${arch}-green.\${ext}`
+        winOptions.artifactName = `S-music-v\${version}-win_${arch}-green.\${ext}`
         return {
           buildOptions: { win: ['7z'] },
           options: winOptions,
         }
       case 'win7_setup':
-        winOptions.artifactName = `Savior-music-v\${version}-win7_${arch}-Setup.\${ext}`
+        winOptions.artifactName = `S-music-v\${version}-win7_${arch}-Setup.\${ext}`
         return {
           buildOptions: { win: ['nsis'] },
           options: winOptions,
         }
       case 'win7_green':
-        winOptions.artifactName = `Savior-music-v\${version}-win7_${arch}-green.\${ext}`
+        winOptions.artifactName = `S-music-v\${version}-win7_${arch}-green.\${ext}`
         return {
           buildOptions: { win: ['7z'] },
           options: winOptions,
         }
       case 'portable':
-        winOptions.artifactName = `Savior-music-v\${version}-${arch}-portable.\${ext}`
+        winOptions.artifactName = `S-music-v\${version}-${arch}-portable.\${ext}`
         return {
           buildOptions: { win: ['portable'] },
           options: winOptions,

@@ -9,7 +9,7 @@ import { handleRemoteDislikeAction } from '@main/modules/sync/dislikeEvent'
 // import { encryptMsg } from '@/utils/tools'
 
 
-const handler: LX.Sync.ServerSyncHandlerDislikeActions<LX.Sync.Server.Socket> = {
+const handler: S.Sync.ServerSyncHandlerDislikeActions<S.Sync.Server.Socket> = {
   async onDislikeSyncAction(socket, action) {
     if (!socket.moduleReadys.dislike) return
     await handleRemoteDislikeAction(action)

@@ -21,9 +21,9 @@ export const registerAction = (onListChanged: (listIds: string[]) => void) => {
  * @param listId 列表ID
  * @returns
  */
-export const getListMusicsFromCache = (listId: string | null): LX.Music.MusicInfo[] => {
+export const getListMusicsFromCache = (listId: string | null): S.Music.MusicInfo[] => {
   if (!listId) return []
-  if (allMusicList.has(listId)) return allMusicList.get(listId) as LX.Music.MusicInfo[]
+  if (allMusicList.has(listId)) return allMusicList.get(listId) as S.Music.MusicInfo[]
   return []
 }
 
@@ -35,7 +35,7 @@ export const setUpdateTime = (id: string, time: string) => {
   listUpdateTimes[id] = time
 }
 
-export const addListMusics = async(id: string, musicInfos: LX.Music.MusicInfo[], addMusicLocationType?: LX.AddMusicLocationType) => {
+export const addListMusics = async(id: string, musicInfos: S.Music.MusicInfo[], addMusicLocationType?: S.AddMusicLocationType) => {
   return addListMusicsAction({
     id,
     musicInfos: toRaw(musicInfos),
@@ -43,7 +43,7 @@ export const addListMusics = async(id: string, musicInfos: LX.Music.MusicInfo[],
   })
 }
 
-export const moveListMusics = async(fromId: string, toId: string, musicInfos: LX.Music.MusicInfo[], addMusicLocationType?: LX.AddMusicLocationType) => {
+export const moveListMusics = async(fromId: string, toId: string, musicInfos: S.Music.MusicInfo[], addMusicLocationType?: S.AddMusicLocationType) => {
   return moveListMusicsAction({
     fromId,
     toId,
@@ -55,8 +55,8 @@ export const moveListMusics = async(fromId: string, toId: string, musicInfos: LX
 export const createUserList = async({ name, id = `userlist_${Date.now()}`, list = [], source, sourceListId, position = -1 }: {
   name?: string
   id?: string
-  list?: LX.Music.MusicInfo[]
-  source?: LX.OnlineSource
+  list?: S.Music.MusicInfo[]
+  source?: S.OnlineSource
   sourceListId?: string
   position?: number
 }) => {
@@ -76,7 +76,7 @@ export const createUserList = async({ name, id = `userlist_${Date.now()}`, list 
 }
 
 
-export const setTempList = async(id: string, list: LX.Music.MusicInfoOnline[]) => {
+export const setTempList = async(id: string, list: S.Music.MusicInfoOnline[]) => {
   tempListMeta.id = id
   await overwriteListMusics({
     listId: LIST_IDS.TEMP,

@@ -38,12 +38,12 @@ const analyserTools: {
   },
 }
 
-export const sendDesktopLyricInfo = (info: LX.DesktopLyric.LyricActions, transferList?: Transferable[]) => {
+export const sendDesktopLyricInfo = (info: S.DesktopLyric.LyricActions, transferList?: Transferable[]) => {
   if (desktopLyricPort == null) return
   if (transferList) desktopLyricPort.postMessage(info, transferList)
   else desktopLyricPort.postMessage(info)
 }
-const handleDesktopLyricMessage = (action: LX.DesktopLyric.WinMainActions) => {
+const handleDesktopLyricMessage = (action: S.DesktopLyric.WinMainActions) => {
   switch (action) {
     case 'get_info':
       sendDesktopLyricInfo({
@@ -56,7 +56,7 @@ const handleDesktopLyricMessage = (action: LX.DesktopLyric.WinMainActions) => {
           lrc: musicInfo.lrc,
           tlrc: musicInfo.tlrc,
           rlrc: musicInfo.rlrc,
-          lxlrc: musicInfo.lxlrc,
+          slrc: musicInfo.slrc,
           // pic: musicInfo.pic,
           isPlay: isPlay.value,
           line: lyric.line,
@@ -165,7 +165,7 @@ export const setLyric = () => {
     if (appSetting['player.isSwapLyricTranslationAndRoma']) extendedLyrics.reverse()
 
     lrc.setLyric(
-      appSetting['player.isPlayLxlrc'] && musicInfo.lxlrc ? musicInfo.lxlrc : musicInfo.lrc,
+      appSetting['player.isPlaySlrc'] && musicInfo.slrc ? musicInfo.slrc : musicInfo.lrc,
       extendedLyrics,
     )
     sendDesktopLyricInfo({
@@ -174,7 +174,7 @@ export const setLyric = () => {
         lrc: musicInfo.lrc,
         tlrc: musicInfo.tlrc,
         rlrc: musicInfo.rlrc,
-        lxlrc: musicInfo.lxlrc,
+        slrc: musicInfo.slrc,
       },
     })
   }
@@ -233,7 +233,7 @@ export const sendInfo = () => {
       lrc: musicInfo.lrc,
       tlrc: musicInfo.tlrc,
       rlrc: musicInfo.rlrc,
-      lxlrc: musicInfo.lxlrc,
+      slrc: musicInfo.slrc,
       // pic: musicInfo.pic,
       isPlay: isPlay.value,
       line: lyric.line,

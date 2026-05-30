@@ -3,9 +3,9 @@ import music from '@renderer/utils/musicSdk'
 
 // import { deduplicationList } from '@common/utils/renderer'
 
-export type Source = LX.OnlineSource | 'all'
+export type Source = S.OnlineSource | 'all'
 
-interface SourceLists extends Partial<Record<LX.OnlineSource, string[]>> {
+interface SourceLists extends Partial<Record<S.OnlineSource, string[]>> {
   'all': string[]
 }
 
@@ -17,18 +17,18 @@ export const sourceList: SourceLists = markRaw({
 
 
 for (const source of music.sources) {
-  if (!music[source.id as LX.OnlineSource]?.hotSearch) continue
-  sources.push(source.id as LX.OnlineSource)
-  sourceList[source.id as LX.OnlineSource] = reactive<string[]>([])
+  if (!music[source.id as S.OnlineSource]?.hotSearch) continue
+  sources.push(source.id as S.OnlineSource)
+  sourceList[source.id as S.OnlineSource] = reactive<string[]>([])
 }
 sources.push('all')
 
 
-const setList = (source: LX.OnlineSource, list: string[]): string[] => {
+const setList = (source: S.OnlineSource, list: string[]): string[] => {
   return sourceList[source] = list.slice(0, 20)
 }
 
-const setLists = (lists: Array<{ source: LX.OnlineSource, list: string[] }>): string[] => {
+const setLists = (lists: Array<{ source: S.OnlineSource, list: string[] }>): string[] => {
   let wordsMap = new Map<string, number>()
   for (const { source, list } of lists) {
     if (!sourceList[source]?.length) sourceList[source] = list.slice(0, 20)

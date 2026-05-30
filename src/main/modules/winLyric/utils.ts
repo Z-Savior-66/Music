@@ -14,11 +14,11 @@ export let minHeight = 38
  * @param param 新设置（相对于当前设置）
  * @returns
  */
-export const getLyricWindowBounds = (bounds: Electron.Rectangle, { x, y, w, h }: LX.DesktopLyric.NewBounds): Electron.Rectangle => {
+export const getLyricWindowBounds = (bounds: Electron.Rectangle, { x, y, w, h }: S.DesktopLyric.NewBounds): Electron.Rectangle => {
   if (w < minWidth) w = minWidth
   if (h < minHeight) h = minHeight
 
-  if (global.lx.appSetting['desktopLyric.isLockScreen']) {
+  if (global.s.appSetting['desktopLyric.isLockScreen']) {
     if (!global.envParams.workAreaSize) return bounds
     const maxWinW = global.envParams.workAreaSize.width
     const maxWinH = global.envParams.workAreaSize.height
@@ -82,12 +82,12 @@ export const watchConfigKeys = [
   'player.isShowLyricTranslation',
   'player.isShowLyricRoma',
   'player.isSwapLyricTranslationAndRoma',
-  'player.isPlayLxlrc',
+  'player.isPlaySlrc',
   'player.playbackRate',
-] satisfies Array<keyof LX.AppSetting>
+] satisfies Array<keyof S.AppSetting>
 
-export const buildLyricConfig = (appSetting: Partial<LX.AppSetting>): Partial<LX.DesktopLyric.Config> => {
-  const setting: Partial<LX.DesktopLyric.Config> = {}
+export const buildLyricConfig = (appSetting: Partial<S.AppSetting>): Partial<S.DesktopLyric.Config> => {
+  const setting: Partial<S.DesktopLyric.Config> = {}
   for (const key of watchConfigKeys) {
     // @ts-expect-error
     if (key in appSetting) setting[key] = appSetting[key]
@@ -95,7 +95,7 @@ export const buildLyricConfig = (appSetting: Partial<LX.AppSetting>): Partial<LX
   return setting
 }
 
-export const initWindowSize = (x: LX.AppSetting['desktopLyric.x'], y: LX.AppSetting['desktopLyric.y'], width: LX.AppSetting['desktopLyric.width'], height: LX.AppSetting['desktopLyric.height']) => {
+export const initWindowSize = (x: S.AppSetting['desktopLyric.x'], y: S.AppSetting['desktopLyric.y'], width: S.AppSetting['desktopLyric.width'], height: S.AppSetting['desktopLyric.height']) => {
   if (x == null || y == null) {
     if (width < minWidth) width = minWidth
     if (height < minHeight) height = minHeight

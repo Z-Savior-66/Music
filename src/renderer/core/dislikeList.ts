@@ -4,16 +4,16 @@ import { action } from '@renderer/store/dislikeList'
 
 
 export const initDislikeInfo = async() => {
-  action.initDislikeInfo(await rendererInvoke<LX.Dislike.DislikeInfo>(DISLIKE_EVENT_NAME.get_dislike_music_infos))
+  action.initDislikeInfo(await rendererInvoke<S.Dislike.DislikeInfo>(DISLIKE_EVENT_NAME.get_dislike_music_infos))
 }
 
-export const hasDislike = (info: LX.Music.MusicInfo | LX.Download.ListItem | null) => {
+export const hasDislike = (info: S.Music.MusicInfo | S.Download.ListItem | null) => {
   if (!info) return false
   return action.hasDislike(info)
 }
 
-export const addDislikeInfo = async(infos: LX.Dislike.DislikeMusicInfo[]) => {
-  await rendererInvoke<LX.Dislike.DislikeMusicInfo[]>(DISLIKE_EVENT_NAME.add_dislike_music_infos, infos)
+export const addDislikeInfo = async(infos: S.Dislike.DislikeMusicInfo[]) => {
+  await rendererInvoke<S.Dislike.DislikeMusicInfo[]>(DISLIKE_EVENT_NAME.add_dislike_music_infos, infos)
 }
 
 export const overwirteDislikeInfo = async(rules: string) => {
@@ -28,10 +28,10 @@ export const clearDislikeInfo = async() => {
 const noop = () => {}
 
 export const registerRemoteDislikeAction = (onListChanged: (listIds: string[]) => void = noop) => {
-  const add_dislike_music_infos = ({ params: datas }: LX.IpcRendererEventParams<LX.Dislike.DislikeMusicInfo[]>) => {
+  const add_dislike_music_infos = ({ params: datas }: S.IpcRendererEventParams<S.Dislike.DislikeMusicInfo[]>) => {
     action.addDislikeInfo(datas)
   }
-  const overwrite_dislike_music_infos = ({ params: datas }: LX.IpcRendererEventParams<LX.Dislike.DislikeRules>) => {
+  const overwrite_dislike_music_infos = ({ params: datas }: S.IpcRendererEventParams<S.Dislike.DislikeRules>) => {
     action.overwirteDislikeInfo(datas)
   }
   const clear_dislike_music_infos = () => {

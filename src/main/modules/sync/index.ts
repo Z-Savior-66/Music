@@ -20,8 +20,8 @@ export {
 } from './client'
 
 export default () => {
-  global.lx.event_app.on('main_window_close', () => {
-    if (global.lx.appSetting['sync.mode'] == 'server') {
+  global.s.event_app.on('main_window_close', () => {
+    if (global.s.appSetting['sync.mode'] == 'server') {
       void stopServer()
     } else {
       void disconnectServer()

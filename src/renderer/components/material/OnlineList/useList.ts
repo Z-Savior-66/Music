@@ -24,7 +24,7 @@ const useKeyEvent = ({ handleSelectAllData, listRef }: {
   const handle_key_mod_up = () => {
     keyEvent.isModDown &&= false
   }
-  const handle_key_mod_a_down = ({ event }: LX.KeyDownEevent) => {
+  const handle_key_mod_a_down = ({ event }: S.KeyDownEevent) => {
     if (!event || (event.target as HTMLElement).tagName == 'INPUT' || document.activeElement != listRef.value?.$el) return
     event.preventDefault()
     if (event.repeat) return
@@ -51,11 +51,11 @@ const useKeyEvent = ({ handleSelectAllData, listRef }: {
 
 export default ({ props, listRef }: {
   props: {
-    list: LX.Music.MusicInfoOnline[]
+    list: S.Music.MusicInfoOnline[]
   }
   listRef: Ref<any>
 }) => {
-  const selectedList = ref<LX.Music.MusicInfoOnline[]>([])
+  const selectedList = ref<S.Music.MusicInfoOnline[]>([])
   let lastSelectIndex = -1
   const listItemHeight = computed(() => {
     return Math.ceil((isFullscreen.value ? getFontSizeWithScreen() : appSetting['common.fontSize']) * 2.3)

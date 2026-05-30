@@ -15,17 +15,17 @@ import {
  */
 export const queryMusicInfo = (id: string) => {
   const musicInfoQueryStatement = createMusicInfoQueryStatement()
-  return musicInfoQueryStatement.all(id) as LX.DBService.MusicInfoOtherSource[]
+  return musicInfoQueryStatement.all(id) as S.DBService.MusicInfoOtherSource[]
 }
 
 /**
  * 批量插入歌曲信息
  * @param musicInfos 列表
  */
-export const insertMusicInfo = (musicInfos: LX.DBService.MusicInfoOtherSource[]) => {
+export const insertMusicInfo = (musicInfos: S.DBService.MusicInfoOtherSource[]) => {
   const db = getDB()
   const musicInfoInsertStatement = createMusicInfoInsertStatement()
-  db.transaction((musicInfos: LX.DBService.MusicInfoOtherSource[]) => {
+  db.transaction((musicInfos: S.DBService.MusicInfoOtherSource[]) => {
     for (const info of musicInfos) musicInfoInsertStatement.run(info)
   })(musicInfos)
 }

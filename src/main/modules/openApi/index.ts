@@ -16,13 +16,13 @@ const sendResponse = (res: http.ServerResponse, code = 200, msg: string | Record
   }
 }
 
-let status: LX.OpenAPI.Status = {
+let status: S.OpenAPI.Status = {
   status: false,
   message: '',
   address: '',
 }
 
-type SubscribeKeys = keyof LX.Player.Status
+type SubscribeKeys = keyof S.Player.Status
 
 let httpServer: http.Server
 let sockets = new Set<Socket>()
@@ -49,15 +49,15 @@ const parseFilter = (filter: any) => {
 const handleSendStatus = (res: http.ServerResponse<http.IncomingMessage>, query?: string) => {
   const keys = parseFilter(querystring.parse(query ?? '').filter)
   const resp: Partial<Record<SubscribeKeys, any>> = {}
-  for (const k of keys) resp[k] = global.lx.player_status[k]
+  for (const k of keys) resp[k] = global.s.player_status[k]
   sendResponse(res, 200, resp, 'application/json; charset=utf-8')
 }
 const handleSendAllLyric = (res: http.ServerResponse<http.IncomingMessage>) => {
   const resp: Partial<Record<SubscribeKeys, any>> = {
-    lyric: global.lx.player_status.lyric,
-    tlyric: global.lx.player_status.tlyric,
-    rlyric: global.lx.player_status.rlyric,
-    lxlyric: global.lx.player_status.lxlyric,
+    lyric: global.s.player_status.lyric,
+    tlyric: global.s.player_status.tlyric,
+    rlyric: global.s.player_status.rlyric,
+    slyric: global.s.player_status.slyric,
   }
   sendResponse(res, 200, resp, 'application/json; charset=utf-8')
 }
@@ -75,7 +75,7 @@ const handleSubscribePlayerStatus = (req: http.IncomingMessage, res: http.Server
   })
   const keys = parseFilter(querystring.parse(query ?? '').filter)
   responses.set(res, keys)
-  for (const [k, v] of Object.entries(global.lx.player_status)) {
+  for (const [k, v] of Object.entries(global.s.player_status)) {
     if (!keys.includes(k as SubscribeKeys)) continue
     res.write(`event: ${k}\n`)
     res.write(`data: ${JSON.stringify(v)}\n\n`)
@@ -83,7 +83,7 @@ const handleSubscribePlayerStatus = (req: http.IncomingMessage, res: http.Server
 }
 
 const handleStartServer = async(port: number, ip: string) => new Promise<void>((resolve, reject) => {
-  playerStatusKeys = Object.keys(global.lx.player_status) as SubscribeKeys[]
+  playerStatusKeys = Object.keys(global.s.player_status) as SubscribeKeys[]
   httpServer = http.createServer((req, res): void => {
     const [endUrl, query] = `/${req.url?.split('/').at(-1) ?? ''}`.split('?')
     let code = 200
@@ -137,7 +137,7 @@ const handleStartServer = async(port: number, ip: string) => new Promise<void>((
       //   </html>`
       //   break
       case '/lyric':
-        msg = global.lx.player_status.lyric
+        msg = global.s.player_status.lyric
         break
       case '/lyric-all':
         handleSendAllLyric(res)
@@ -156,7 +156,7 @@ const handleStartServer = async(port: number, ip: string) => new Promise<void>((
         break
       case '/seek': {
         const offset = parseFloat(querystring.parse(query ?? '').offset as string)
-        if (Number.isNaN(offset) || offset < 0 || offset > global.lx.player_status.duration) {
+        if (Number.isNaN(offset) || offset < 0 || offset > global.s.player_status.duration) {
           code = 400
           msg = 'Invalid offset'
         } else {
@@ -248,7 +248,7 @@ const handleStopServer = async() => new Promise<void>((resolve, reject) => {
 })
 
 
-const sendStatus = (status: Partial<LX.Player.Status>) => {
+const sendStatus = (status: Partial<S.Player.Status>) => {
   if (!responses.size) return
   for (const [resp, keys] of responses) {
     for (const [k, v] of Object.entries(status)) {
@@ -259,7 +259,7 @@ const sendStatus = (status: Partial<LX.Player.Status>) => {
   }
 }
 export const stopServer = async() => {
-  global.lx.event_app.off('player_status', sendStatus)
+  global.s.event_app.off('player_status', sendStatus)
   if (!status.status) {
     status.status = false
     status.message = ''
@@ -290,8 +290,8 @@ export const startServer = async(port: number, bindLan: boolean) => {
     status.message = err.message
     status.address = ''
   })
-  global.lx.event_app.on('player_status', sendStatus)
+  global.s.event_app.on('player_status', sendStatus)
   return status
 }
 
-export const getStatus = (): LX.OpenAPI.Status => status
+export const getStatus = (): S.OpenAPI.Status => status

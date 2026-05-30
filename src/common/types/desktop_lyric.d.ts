@@ -1,42 +1,42 @@
-declare namespace LX {
+declare namespace S {
   namespace DesktopLyric {
     interface Config {
-      'desktopLyric.enable': LX.AppSetting['desktopLyric.enable']
-      'desktopLyric.isLock': LX.AppSetting['desktopLyric.isLock']
-      'desktopLyric.isAlwaysOnTop': LX.AppSetting['desktopLyric.isAlwaysOnTop']
-      'desktopLyric.isAlwaysOnTopLoop': LX.AppSetting['desktopLyric.isAlwaysOnTopLoop']
-      'desktopLyric.isShowTaskbar': LX.AppSetting['desktopLyric.isShowTaskbar']
-      'desktopLyric.pauseHide': LX.AppSetting['desktopLyric.pauseHide']
-      'desktopLyric.audioVisualization': LX.AppSetting['desktopLyric.audioVisualization']
-      'desktopLyric.width': LX.AppSetting['desktopLyric.width']
-      'desktopLyric.height': LX.AppSetting['desktopLyric.height']
-      'desktopLyric.x': LX.AppSetting['desktopLyric.x']
-      'desktopLyric.y': LX.AppSetting['desktopLyric.y']
-      'desktopLyric.isLockScreen': LX.AppSetting['desktopLyric.isLockScreen']
-      'desktopLyric.isDelayScroll': LX.AppSetting['desktopLyric.isDelayScroll']
-      'desktopLyric.scrollAlign': LX.AppSetting['desktopLyric.scrollAlign']
-      'desktopLyric.isHoverHide': LX.AppSetting['desktopLyric.isHoverHide']
-      'desktopLyric.direction': LX.AppSetting['desktopLyric.direction']
-      'desktopLyric.style.align': LX.AppSetting['desktopLyric.style.align']
-      'desktopLyric.style.font': LX.AppSetting['desktopLyric.style.font']
-      'desktopLyric.style.fontSize': LX.AppSetting['desktopLyric.style.fontSize']
-      'desktopLyric.style.lineGap': LX.AppSetting['desktopLyric.style.lineGap']
-      'desktopLyric.style.lyricUnplayColor': LX.AppSetting['desktopLyric.style.lyricUnplayColor']
-      'desktopLyric.style.lyricPlayedColor': LX.AppSetting['desktopLyric.style.lyricPlayedColor']
-      'desktopLyric.style.lyricShadowColor': LX.AppSetting['desktopLyric.style.lyricShadowColor']
-      // 'desktopLyric.style.fontWeight': LX.AppSetting['desktopLyric.style.fontWeight']
-      'desktopLyric.style.opacity': LX.AppSetting['desktopLyric.style.opacity']
-      'desktopLyric.style.ellipsis': LX.AppSetting['desktopLyric.style.ellipsis']
-      'desktopLyric.style.isFontWeightFont': LX.AppSetting['desktopLyric.style.isFontWeightFont']
-      'desktopLyric.style.isFontWeightLine': LX.AppSetting['desktopLyric.style.isFontWeightLine']
-      'desktopLyric.style.isFontWeightExtended': LX.AppSetting['desktopLyric.style.isFontWeightExtended']
-      'desktopLyric.style.isZoomActiveLrc': LX.AppSetting['desktopLyric.style.isZoomActiveLrc']
-      'common.langId': LX.AppSetting['common.langId']
-      'player.isShowLyricTranslation': LX.AppSetting['player.isShowLyricTranslation']
-      'player.isShowLyricRoma': LX.AppSetting['player.isShowLyricRoma']
-      'player.isSwapLyricTranslationAndRoma': LX.AppSetting['player.isSwapLyricTranslationAndRoma']
-      'player.isPlayLxlrc': LX.AppSetting['player.isPlayLxlrc']
-      'player.playbackRate': LX.AppSetting['player.playbackRate']
+      'desktopLyric.enable': S.AppSetting['desktopLyric.enable']
+      'desktopLyric.isLock': S.AppSetting['desktopLyric.isLock']
+      'desktopLyric.isAlwaysOnTop': S.AppSetting['desktopLyric.isAlwaysOnTop']
+      'desktopLyric.isAlwaysOnTopLoop': S.AppSetting['desktopLyric.isAlwaysOnTopLoop']
+      'desktopLyric.isShowTaskbar': S.AppSetting['desktopLyric.isShowTaskbar']
+      'desktopLyric.pauseHide': S.AppSetting['desktopLyric.pauseHide']
+      'desktopLyric.audioVisualization': S.AppSetting['desktopLyric.audioVisualization']
+      'desktopLyric.width': S.AppSetting['desktopLyric.width']
+      'desktopLyric.height': S.AppSetting['desktopLyric.height']
+      'desktopLyric.x': S.AppSetting['desktopLyric.x']
+      'desktopLyric.y': S.AppSetting['desktopLyric.y']
+      'desktopLyric.isLockScreen': S.AppSetting['desktopLyric.isLockScreen']
+      'desktopLyric.isDelayScroll': S.AppSetting['desktopLyric.isDelayScroll']
+      'desktopLyric.scrollAlign': S.AppSetting['desktopLyric.scrollAlign']
+      'desktopLyric.isHoverHide': S.AppSetting['desktopLyric.isHoverHide']
+      'desktopLyric.direction': S.AppSetting['desktopLyric.direction']
+      'desktopLyric.style.align': S.AppSetting['desktopLyric.style.align']
+      'desktopLyric.style.font': S.AppSetting['desktopLyric.style.font']
+      'desktopLyric.style.fontSize': S.AppSetting['desktopLyric.style.fontSize']
+      'desktopLyric.style.lineGap': S.AppSetting['desktopLyric.style.lineGap']
+      'desktopLyric.style.lyricUnplayColor': S.AppSetting['desktopLyric.style.lyricUnplayColor']
+      'desktopLyric.style.lyricPlayedColor': S.AppSetting['desktopLyric.style.lyricPlayedColor']
+      'desktopLyric.style.lyricShadowColor': S.AppSetting['desktopLyric.style.lyricShadowColor']
+      // 'desktopLyric.style.fontWeight': S.AppSetting['desktopLyric.style.fontWeight']
+      'desktopLyric.style.opacity': S.AppSetting['desktopLyric.style.opacity']
+      'desktopLyric.style.ellipsis': S.AppSetting['desktopLyric.style.ellipsis']
+      'desktopLyric.style.isFontWeightFont': S.AppSetting['desktopLyric.style.isFontWeightFont']
+      'desktopLyric.style.isFontWeightLine': S.AppSetting['desktopLyric.style.isFontWeightLine']
+      'desktopLyric.style.isFontWeightExtended': S.AppSetting['desktopLyric.style.isFontWeightExtended']
+      'desktopLyric.style.isZoomActiveLrc': S.AppSetting['desktopLyric.style.isZoomActiveLrc']
+      'common.langId': S.AppSetting['common.langId']
+      'player.isShowLyricTranslation': S.AppSetting['player.isShowLyricTranslation']
+      'player.isShowLyricRoma': S.AppSetting['player.isShowLyricRoma']
+      'player.isSwapLyricTranslationAndRoma': S.AppSetting['player.isSwapLyricTranslationAndRoma']
+      'player.isPlaySlrc': S.AppSetting['player.isPlaySlrc']
+      'player.playbackRate': S.AppSetting['player.playbackRate']
     }
 
     type WinMainActions = 'get_info' | 'get_status' | 'get_analyser_data_array'
@@ -57,7 +57,7 @@ declare namespace LX {
       lrc: string | null
       tlrc: string | null
       rlrc: string | null
-      lxlrc: string | null
+      slrc: string | null
       // pic: string | null
       isPlay: boolean
       line: number
@@ -72,7 +72,7 @@ declare namespace LX {
       lrc: string | null
       tlrc: string | null
       rlrc: string | null
-      lxlrc: string | null
+      slrc: string | null
     }>
     | LyricAction<'set_offset', number>
     | LyricAction<'set_playbackRate', number>

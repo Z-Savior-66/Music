@@ -3,7 +3,7 @@ import {
 } from 'music-metadata'
 
 declare global {
-  namespace LX {
+  namespace S {
     namespace MusicMetadataModule {
       type IAudioMetadata = iAudioMetadata
     }

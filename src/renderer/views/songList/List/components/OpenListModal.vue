@@ -22,8 +22,8 @@
               {{ $t('songlist__import_input_tip_4') }}
               <span
                 class="hover underline"
-                aria-label="https://lyswhut.github.io/lx-music-doc/desktop/faq/cannot-open-songlist"
-                @click="openUrl('https://lyswhut.github.io/lx-music-doc/desktop/faq/cannot-open-songlist')"
+                aria-label="https://lyswhut.github.io/s-music-doc/desktop/faq/cannot-open-songlist"
+                @click="openUrl('https://lyswhut.github.io/s-music-doc/desktop/faq/cannot-open-songlist')"
               >FAQ</span>
             </li>
           </ul>

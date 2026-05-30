@@ -13,11 +13,11 @@ import { initDislikeInfo, registerRemoteDislikeAction } from '@renderer/core/dis
 
 const initPrevPlayInfo = async() => {
   const info = await getPlayInfo()
-  window.lx.restorePlayInfo = null
+  window.s.restorePlayInfo = null
   if (!info?.listId || info.index < 0) return
   const list = await getListMusics(info.listId)
   if (!list[info.index]) return
-  window.lx.restorePlayInfo = info
+  window.s.restorePlayInfo = info
   playList(info.listId, info.index)
 
   if (appSetting['player.startupAutoPlay']) {
@@ -50,7 +50,7 @@ export default () => {
     unregister = registerAction((ids) => {
       window.app_event.myListUpdate(ids)
     })
-    window.lxData.userLists = await getUserLists() // 获取用户列表
+    window.sData.userLists = await getUserLists() // 获取用户列表
     unregisterDislikeEvent = registerRemoteDislikeAction()
     await initDislikeInfo() // 获取不喜欢列表
     await initPrevPlayInfo().catch(err => {

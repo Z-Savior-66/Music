@@ -18,12 +18,12 @@ const migrateSongListSetting = (setting: typeof DEFAULT_SETTING['songList']) => 
 }
 
 export const getSetting = async() => {
-  return rendererInvoke<LX.AppSetting>(CMMON_EVENT_NAME.get_app_setting)
+  return rendererInvoke<S.AppSetting>(CMMON_EVENT_NAME.get_app_setting)
 }
-export const updateSetting = async(setting: Partial<LX.AppSetting>) => {
+export const updateSetting = async(setting: Partial<S.AppSetting>) => {
   await rendererInvoke(CMMON_EVENT_NAME.set_app_setting, setting)
 }
-export const onSettingChanged = (listener: LX.IpcRendererEventListenerParams<Partial<LX.AppSetting>>): RemoveListener => {
+export const onSettingChanged = (listener: S.IpcRendererEventListenerParams<Partial<S.AppSetting>>): RemoveListener => {
   rendererOn(WIN_MAIN_RENDERER_EVENT_NAME.on_config_change, listener)
   return () => {
     rendererOff(WIN_MAIN_RENDERER_EVENT_NAME.on_config_change, listener)
@@ -34,11 +34,11 @@ export const sendInited = () => {
   rendererSend(WIN_MAIN_RENDERER_EVENT_NAME.inited)
 }
 
-export const getOtherSource = async(id: string): Promise<LX.Music.MusicInfoOnline[]> => {
-  return rendererInvoke<string, LX.Music.MusicInfoOnline[]>(WIN_MAIN_RENDERER_EVENT_NAME.get_other_source, id)
+export const getOtherSource = async(id: string): Promise<S.Music.MusicInfoOnline[]> => {
+  return rendererInvoke<string, S.Music.MusicInfoOnline[]>(WIN_MAIN_RENDERER_EVENT_NAME.get_other_source, id)
 }
-export const saveOtherSource = async(id: string, sourceInfo: LX.Music.MusicInfoOnline[]) => {
-  await rendererInvoke<LX.Music.MusicInfoOtherSourceSave>(WIN_MAIN_RENDERER_EVENT_NAME.save_other_source, {
+export const saveOtherSource = async(id: string, sourceInfo: S.Music.MusicInfoOnline[]) => {
+  await rendererInvoke<S.Music.MusicInfoOtherSourceSave>(WIN_MAIN_RENDERER_EVENT_NAME.save_other_source, {
     id,
     list: sourceInfo,
   })
@@ -50,8 +50,8 @@ export const getOtherSourceCount = async() => {
   return rendererInvoke<number>(WIN_MAIN_RENDERER_EVENT_NAME.get_other_source_count)
 }
 
-// export const updateDislikeInfo = async(dislikeInfo: LX.Dislike.ListItem[]) => {
-//   await rendererInvoke<LX.Dislike.ListItem[]>(WIN_MAIN_RENDERER_EVENT_NAME.update_dislike_music_infos, dislikeInfo)
+// export const updateDislikeInfo = async(dislikeInfo: S.Dislike.ListItem[]) => {
+//   await rendererInvoke<S.Dislike.ListItem[]>(WIN_MAIN_RENDERER_EVENT_NAME.update_dislike_music_infos, dislikeInfo)
 // }
 // export const removeDislikeInfo = async(ids: string[]) => {
 //   await rendererInvoke<string[]>(WIN_MAIN_RENDERER_EVENT_NAME.remove_dislike_music_infos, ids)
@@ -61,7 +61,7 @@ export const getOtherSourceCount = async() => {
 // }
 
 export const getHotKeyConfig = async() => {
-  return rendererInvoke<LX.HotKeyConfigAll>(WIN_MAIN_RENDERER_EVENT_NAME.get_hot_key)
+  return rendererInvoke<S.HotKeyConfigAll>(WIN_MAIN_RENDERER_EVENT_NAME.get_hot_key)
 }
 
 export const setIgnoreMouseEvents = (ignore: boolean) => {
@@ -69,14 +69,14 @@ export const setIgnoreMouseEvents = (ignore: boolean) => {
 }
 
 export const getEnvParams = async() => {
-  return rendererInvoke<LX.EnvParams>(CMMON_EVENT_NAME.get_env_params)
+  return rendererInvoke<S.EnvParams>(CMMON_EVENT_NAME.get_env_params)
 }
 
 export const clearEnvParamsDeeplink = () => {
   rendererSend(CMMON_EVENT_NAME.clear_env_params_deeplink)
 }
 
-export const onDeeplink = (listener: LX.IpcRendererEventListenerParams<string>): RemoveListener => {
+export const onDeeplink = (listener: S.IpcRendererEventListenerParams<string>): RemoveListener => {
   rendererOn(CMMON_EVENT_NAME.deeplink, listener)
   return () => {
     rendererOff(CMMON_EVENT_NAME.deeplink, listener)
@@ -95,35 +95,35 @@ export const quitUpdate = () => {
   rendererSend(WIN_MAIN_RENDERER_EVENT_NAME.quit_update)
 }
 
-export const onUpdateAvailable = (listener: LX.IpcRendererEventListenerParams<UpdateInfo>): RemoveListener => {
+export const onUpdateAvailable = (listener: S.IpcRendererEventListenerParams<UpdateInfo>): RemoveListener => {
   rendererOn(WIN_MAIN_RENDERER_EVENT_NAME.update_available, listener)
   return () => {
     rendererOff(WIN_MAIN_RENDERER_EVENT_NAME.update_available, listener)
   }
 }
 
-export const onUpdateError = (listener: LX.IpcRendererEventListenerParams<string>): RemoveListener => {
+export const onUpdateError = (listener: S.IpcRendererEventListenerParams<string>): RemoveListener => {
   rendererOn(WIN_MAIN_RENDERER_EVENT_NAME.update_error, listener)
   return () => {
     rendererOff(WIN_MAIN_RENDERER_EVENT_NAME.update_error, listener)
   }
 }
 
-export const onUpdateProgress = (listener: LX.IpcRendererEventListenerParams<ProgressInfo>): RemoveListener => {
+export const onUpdateProgress = (listener: S.IpcRendererEventListenerParams<ProgressInfo>): RemoveListener => {
   rendererOn(WIN_MAIN_RENDERER_EVENT_NAME.update_progress, listener)
   return () => {
     rendererOff(WIN_MAIN_RENDERER_EVENT_NAME.update_progress, listener)
   }
 }
 
-export const onUpdateDownloaded = (listener: LX.IpcRendererEventListenerParams<UpdateDownloadedEvent>): RemoveListener => {
+export const onUpdateDownloaded = (listener: S.IpcRendererEventListenerParams<UpdateDownloadedEvent>): RemoveListener => {
   rendererOn(WIN_MAIN_RENDERER_EVENT_NAME.update_downloaded, listener)
   return () => {
     rendererOff(WIN_MAIN_RENDERER_EVENT_NAME.update_downloaded, listener)
   }
 }
 
-export const onUpdateNotAvailable = (listener: LX.IpcRendererEventListenerParams<UpdateInfo>): RemoveListener => {
+export const onUpdateNotAvailable = (listener: S.IpcRendererEventListenerParams<UpdateInfo>): RemoveListener => {
   rendererOn(WIN_MAIN_RENDERER_EVENT_NAME.update_not_available, listener)
   return () => {
     rendererOff(WIN_MAIN_RENDERER_EVENT_NAME.update_not_available, listener)
@@ -132,15 +132,15 @@ export const onUpdateNotAvailable = (listener: LX.IpcRendererEventListenerParams
 
 
 export const importUserApi = async(fileText: string) => {
-  return rendererInvoke<string, LX.UserApi.ImportUserApi>(WIN_MAIN_RENDERER_EVENT_NAME.import_user_api, fileText)
+  return rendererInvoke<string, S.UserApi.ImportUserApi>(WIN_MAIN_RENDERER_EVENT_NAME.import_user_api, fileText)
 }
-export const setUserApi = async(source: LX.UserApi.UserApiSetApiParams): Promise<void> => {
-  return rendererInvoke<LX.UserApi.UserApiSetApiParams>(WIN_MAIN_RENDERER_EVENT_NAME.set_user_api, source)
+export const setUserApi = async(source: S.UserApi.UserApiSetApiParams): Promise<void> => {
+  return rendererInvoke<S.UserApi.UserApiSetApiParams>(WIN_MAIN_RENDERER_EVENT_NAME.set_user_api, source)
 }
 export const removeUserApi = async(ids: string[]) => {
-  return rendererInvoke<string[], LX.UserApi.UserApiInfo[]>(WIN_MAIN_RENDERER_EVENT_NAME.remove_user_api, ids)
+  return rendererInvoke<string[], S.UserApi.UserApiInfo[]>(WIN_MAIN_RENDERER_EVENT_NAME.remove_user_api, ids)
 }
-export const onShowUserApiUpdateAlert = (listener: LX.IpcRendererEventListenerParams<LX.UserApi.UserApiUpdateInfo>): RemoveListener => {
+export const onShowUserApiUpdateAlert = (listener: S.IpcRendererEventListenerParams<S.UserApi.UserApiUpdateInfo>): RemoveListener => {
   rendererOn(WIN_MAIN_RENDERER_EVENT_NAME.user_api_show_update_alert, listener)
   return () => {
     rendererOff(WIN_MAIN_RENDERER_EVENT_NAME.user_api_show_update_alert, listener)
@@ -149,22 +149,22 @@ export const onShowUserApiUpdateAlert = (listener: LX.IpcRendererEventListenerPa
 export const setAllowShowUserApiUpdateAlert = async(id: string, enable: boolean): Promise<void> => {
   return rendererInvoke(WIN_MAIN_RENDERER_EVENT_NAME.user_api_set_allow_update_alert, { id, enable })
 }
-export const onUserApiStatus = (listener: LX.IpcRendererEventListenerParams<LX.UserApi.UserApiStatus>): RemoveListener => {
+export const onUserApiStatus = (listener: S.IpcRendererEventListenerParams<S.UserApi.UserApiStatus>): RemoveListener => {
   rendererOn(WIN_MAIN_RENDERER_EVENT_NAME.user_api_status, listener)
   return () => {
     rendererOff(WIN_MAIN_RENDERER_EVENT_NAME.user_api_status, listener)
   }
 }
 export const getUserApiList = async() => {
-  return rendererInvoke<LX.UserApi.UserApiInfo[]>(WIN_MAIN_RENDERER_EVENT_NAME.get_user_api_list)
+  return rendererInvoke<S.UserApi.UserApiInfo[]>(WIN_MAIN_RENDERER_EVENT_NAME.get_user_api_list)
 }
-export const sendUserApiRequest = async({ requestKey, data }: LX.UserApi.UserApiRequestParams): Promise<any> => {
+export const sendUserApiRequest = async({ requestKey, data }: S.UserApi.UserApiRequestParams): Promise<any> => {
   return rendererInvoke(WIN_MAIN_RENDERER_EVENT_NAME.request_user_api, {
     requestKey,
     data,
   })
 }
-export const userApiRequestCancel = (requestKey: LX.UserApi.UserApiRequestCancelParams) => {
+export const userApiRequestCancel = (requestKey: S.UserApi.UserApiRequestCancelParams) => {
   rendererSend(WIN_MAIN_RENDERER_EVENT_NAME.request_user_api_cancel, requestKey)
 }
 
@@ -182,13 +182,13 @@ export const userApiRequestCancel = (requestKey: LX.UserApi.UserApiRequestCancel
 //   }
 // }
 
-export const sendPlayerStatus = (status: Partial<LX.Player.Status>) => {
-  rendererSend<Partial<LX.Player.Status>>(WIN_MAIN_RENDERER_EVENT_NAME.player_status, status)
+export const sendPlayerStatus = (status: Partial<S.Player.Status>) => {
+  rendererSend<Partial<S.Player.Status>>(WIN_MAIN_RENDERER_EVENT_NAME.player_status, status)
 }
 
 
-export const sendOpenAPIAction = async(action: LX.OpenAPI.Actions) => {
-  return rendererInvoke<LX.OpenAPI.Actions, LX.OpenAPI.Status>(WIN_MAIN_RENDERER_EVENT_NAME.open_api_action, action)
+export const sendOpenAPIAction = async(action: S.OpenAPI.Actions) => {
+  return rendererInvoke<S.OpenAPI.Actions, S.OpenAPI.Status>(WIN_MAIN_RENDERER_EVENT_NAME.open_api_action, action)
 }
 
 export const saveLastStartInfo = (version: string) => {
@@ -202,7 +202,7 @@ export const getLastStartInfo = async() => {
   return rendererInvoke<string, string | null>(WIN_MAIN_RENDERER_EVENT_NAME.get_data, DATA_KEYS.lastStartInfo)
 }
 
-export const savePlayInfo = (playInfo: LX.Player.SavedPlayInfo) => {
+export const savePlayInfo = (playInfo: S.Player.SavedPlayInfo) => {
   rendererSend(WIN_MAIN_RENDERER_EVENT_NAME.save_data, {
     path: DATA_KEYS.playInfo,
     data: playInfo,
@@ -210,10 +210,10 @@ export const savePlayInfo = (playInfo: LX.Player.SavedPlayInfo) => {
 }
 // 获取上次关闭时的当前歌曲播放信息
 export const getPlayInfo = async() => {
-  return rendererInvoke<string, LX.Player.SavedPlayInfo | null>(WIN_MAIN_RENDERER_EVENT_NAME.get_data, DATA_KEYS.playInfo)
+  return rendererInvoke<string, S.Player.SavedPlayInfo | null>(WIN_MAIN_RENDERER_EVENT_NAME.get_data, DATA_KEYS.playInfo)
 }
 
-export const saveSearchHistoryList = (list: LX.List.SearchHistoryList) => {
+export const saveSearchHistoryList = (list: S.List.SearchHistoryList) => {
   rendererSend(WIN_MAIN_RENDERER_EVENT_NAME.save_data, {
     path: DATA_KEYS.searchHistoryList,
     data: list,
@@ -224,7 +224,7 @@ export const getSearchHistoryList = async() => {
   return rendererInvoke<string, string[] | null>(WIN_MAIN_RENDERER_EVENT_NAME.get_data, DATA_KEYS.searchHistoryList)
 }
 
-export const saveListPositionInfo = (listPosition: LX.List.ListPositionInfo) => {
+export const saveListPositionInfo = (listPosition: S.List.ListPositionInfo) => {
   rendererSend(WIN_MAIN_RENDERER_EVENT_NAME.save_data, {
     path: DATA_KEYS.listScrollPosition,
     data: listPosition,
@@ -232,7 +232,7 @@ export const saveListPositionInfo = (listPosition: LX.List.ListPositionInfo) => 
 }
 // 获取搜索历史列表
 export const getListPositionInfo = async() => {
-  return rendererInvoke<string, LX.List.ListPositionInfo | null>(WIN_MAIN_RENDERER_EVENT_NAME.get_data, DATA_KEYS.listScrollPosition)
+  return rendererInvoke<string, S.List.ListPositionInfo | null>(WIN_MAIN_RENDERER_EVENT_NAME.get_data, DATA_KEYS.listScrollPosition)
 }
 
 export const saveListPrevSelectId = (listPosition: string | null) => {
@@ -246,7 +246,7 @@ export const getListPrevSelectId = async() => {
   return rendererInvoke<string, string | null>(WIN_MAIN_RENDERER_EVENT_NAME.get_data, DATA_KEYS.listPrevSelectId)
 }
 
-export const saveListUpdateInfo = (listPosition: LX.List.ListUpdateInfo) => {
+export const saveListUpdateInfo = (listPosition: S.List.ListUpdateInfo) => {
   rendererSend(WIN_MAIN_RENDERER_EVENT_NAME.save_data, {
     path: DATA_KEYS.listUpdateInfo,
     data: listPosition,
@@ -254,7 +254,7 @@ export const saveListUpdateInfo = (listPosition: LX.List.ListUpdateInfo) => {
 }
 // 获取列表更新记录
 export const getListUpdateInfo = async() => {
-  return rendererInvoke<string, LX.List.ListUpdateInfo | null>(WIN_MAIN_RENDERER_EVENT_NAME.get_data, DATA_KEYS.listUpdateInfo)
+  return rendererInvoke<string, S.List.ListUpdateInfo | null>(WIN_MAIN_RENDERER_EVENT_NAME.get_data, DATA_KEYS.listUpdateInfo)
 }
 
 export const saveIgnoreVersion = (version: string) => {
@@ -315,27 +315,27 @@ export const getSystemFonts = async() => {
 }
 
 export const getUserSoundEffectEQPresetList = async() => {
-  return rendererInvoke<LX.SoundEffect.EQPreset[]>(WIN_MAIN_RENDERER_EVENT_NAME.get_sound_effect_eq_preset)
+  return rendererInvoke<S.SoundEffect.EQPreset[]>(WIN_MAIN_RENDERER_EVENT_NAME.get_sound_effect_eq_preset)
 }
 
-export const saveUserSoundEffectEQPresetList = (list: LX.SoundEffect.EQPreset[]) => {
-  rendererSend<LX.SoundEffect.EQPreset[]>(WIN_MAIN_RENDERER_EVENT_NAME.save_sound_effect_eq_preset, list)
+export const saveUserSoundEffectEQPresetList = (list: S.SoundEffect.EQPreset[]) => {
+  rendererSend<S.SoundEffect.EQPreset[]>(WIN_MAIN_RENDERER_EVENT_NAME.save_sound_effect_eq_preset, list)
 }
 
 export const getUserSoundEffectConvolutionPresetList = async() => {
-  return rendererInvoke<LX.SoundEffect.ConvolutionPreset[]>(WIN_MAIN_RENDERER_EVENT_NAME.get_sound_effect_convolution_preset)
+  return rendererInvoke<S.SoundEffect.ConvolutionPreset[]>(WIN_MAIN_RENDERER_EVENT_NAME.get_sound_effect_convolution_preset)
 }
 
-export const saveUserSoundEffectConvolutionPresetList = (list: LX.SoundEffect.ConvolutionPreset[]) => {
-  rendererSend<LX.SoundEffect.ConvolutionPreset[]>(WIN_MAIN_RENDERER_EVENT_NAME.save_sound_effect_convolution_preset, list)
+export const saveUserSoundEffectConvolutionPresetList = (list: S.SoundEffect.ConvolutionPreset[]) => {
+  rendererSend<S.SoundEffect.ConvolutionPreset[]>(WIN_MAIN_RENDERER_EVENT_NAME.save_sound_effect_convolution_preset, list)
 }
 
 // export const getUserSoundEffectPitchShifterPresetList = async() => {
-//   return rendererInvoke<LX.SoundEffect.PitchShifterPreset[]>(WIN_MAIN_RENDERER_EVENT_NAME.get_sound_effect_pitch_shifter_preset)
+//   return rendererInvoke<S.SoundEffect.PitchShifterPreset[]>(WIN_MAIN_RENDERER_EVENT_NAME.get_sound_effect_pitch_shifter_preset)
 // }
 
-// export const saveUserSoundEffectPitchShifterPresetList = (list: LX.SoundEffect.PitchShifterPreset[]) => {
-//   rendererSend<LX.SoundEffect.PitchShifterPreset[]>(WIN_MAIN_RENDERER_EVENT_NAME.save_sound_effect_pitch_shifter_preset, list)
+// export const saveUserSoundEffectPitchShifterPresetList = (list: S.SoundEffect.PitchShifterPreset[]) => {
+//   rendererSend<S.SoundEffect.PitchShifterPreset[]>(WIN_MAIN_RENDERER_EVENT_NAME.save_sound_effect_pitch_shifter_preset, list)
 // }
 
 export const allHotKeys = markRaw({
@@ -479,17 +479,17 @@ export const hotKeySetEnable = async(enable: boolean) => {
   return rendererInvoke(HOTKEY_RENDERER_EVENT_NAME.enable, enable)
 }
 
-export const hotKeySetConfig = async(config: LX.HotKeyActions) => {
+export const hotKeySetConfig = async(config: S.HotKeyActions) => {
   return rendererInvoke(HOTKEY_RENDERER_EVENT_NAME.set_config, config)
 }
 
 export const hotKeyGetStatus = async() => {
-  return rendererInvoke<LX.HotKeyState>(HOTKEY_RENDERER_EVENT_NAME.status)
+  return rendererInvoke<S.HotKeyState>(HOTKEY_RENDERER_EVENT_NAME.status)
 }
 
 // 主进程操作播放器状态
-export const onPlayerAction = (listener: LX.IpcRendererEventListenerParams<{
-  action: LX.Player.StatusButtonActions
+export const onPlayerAction = (listener: S.IpcRendererEventListenerParams<{
+  action: S.Player.StatusButtonActions
   data?: unknown
 }>): RemoveListener => {
   rendererOn(WIN_MAIN_RENDERER_EVENT_NAME.player_action_on_button_click, listener)
@@ -501,16 +501,16 @@ export const onPlayerAction = (listener: LX.IpcRendererEventListenerParams<{
 //   await rendererInvoke(WIN_MAIN_RENDERER_EVENT_NAME.taskbar_set_thumbnail_clip, clip)
 // }
 // 播放器状态更新 通知主进程
-export const setPlayerAction = (buttons: LX.TaskBarButtonFlags) => {
+export const setPlayerAction = (buttons: S.TaskBarButtonFlags) => {
   rendererSend(WIN_MAIN_RENDERER_EVENT_NAME.player_action_set_buttons, buttons)
 }
 
 /**
  * On Theme Change
- * @param listener LX.IpcRendererEventListenerParams<shouldUseDarkColors: boolean>
+ * @param listener S.IpcRendererEventListenerParams<shouldUseDarkColors: boolean>
  * @returns RemoveListener Fn
  */
-export const onThemeChange = (listener: LX.IpcRendererEventListenerParams<LX.ThemeSetting>): RemoveListener => {
+export const onThemeChange = (listener: S.IpcRendererEventListenerParams<S.ThemeSetting>): RemoveListener => {
   rendererOn(CMMON_EVENT_NAME.theme_change, listener)
   return () => {
     rendererOff(CMMON_EVENT_NAME.theme_change, listener)
@@ -566,12 +566,12 @@ export const setWindowSize = (width: number, height: number) => {
 }
 
 
-export const getPlayerLyric = async(musicInfo: LX.Music.MusicInfo) => {
-  return rendererInvoke<string, LX.Player.LyricInfo>(WIN_MAIN_RENDERER_EVENT_NAME.get_palyer_lyric, musicInfo.id)
+export const getPlayerLyric = async(musicInfo: S.Music.MusicInfo) => {
+  return rendererInvoke<string, S.Player.LyricInfo>(WIN_MAIN_RENDERER_EVENT_NAME.get_palyer_lyric, musicInfo.id)
 }
 
-export const getLyricRaw = async(musicInfo: LX.Music.MusicInfo): Promise<LX.Music.LyricInfo> => {
-  return rendererInvoke<string, LX.Music.LyricInfo>(WIN_MAIN_RENDERER_EVENT_NAME.get_lyric_raw, musicInfo.id)
+export const getLyricRaw = async(musicInfo: S.Music.MusicInfo): Promise<S.Music.LyricInfo> => {
+  return rendererInvoke<string, S.Music.LyricInfo>(WIN_MAIN_RENDERER_EVENT_NAME.get_lyric_raw, musicInfo.id)
 }
 
 export const clearLyricRaw = async() => {
@@ -583,22 +583,22 @@ export const getLyricRawCount = async() => {
 }
 
 
-export const getLyricEdited = async(musicInfo: LX.Music.MusicInfo): Promise<LX.Music.LyricInfo> => {
-  return rendererInvoke<string, LX.Music.LyricInfo>(WIN_MAIN_RENDERER_EVENT_NAME.get_lyric_edited, musicInfo.id)
+export const getLyricEdited = async(musicInfo: S.Music.MusicInfo): Promise<S.Music.LyricInfo> => {
+  return rendererInvoke<string, S.Music.LyricInfo>(WIN_MAIN_RENDERER_EVENT_NAME.get_lyric_edited, musicInfo.id)
 }
 
-export const saveLyric = async(musicInfo: LX.Music.MusicInfo, lyricInfo: LX.Music.LyricInfo | LX.Player.LyricInfo) => {
+export const saveLyric = async(musicInfo: S.Music.MusicInfo, lyricInfo: S.Music.LyricInfo | S.Player.LyricInfo) => {
   // console.log(musicInfo)
   if ('rawlrcInfo' in lyricInfo) {
     const { rawlrcInfo, ...info } = lyricInfo
     const tasks = [
-      rendererInvoke<LX.Music.LyricInfoSave>(WIN_MAIN_RENDERER_EVENT_NAME.save_lyric_raw, {
+      rendererInvoke<S.Music.LyricInfoSave>(WIN_MAIN_RENDERER_EVENT_NAME.save_lyric_raw, {
         id: musicInfo.id,
         lyrics: rawlrcInfo,
       }),
     ]
     if (info.lyric != rawlrcInfo.lyric) {
-      tasks.push(rendererInvoke<LX.Music.LyricInfoSave>(WIN_MAIN_RENDERER_EVENT_NAME.save_lyric_edited, {
+      tasks.push(rendererInvoke<S.Music.LyricInfoSave>(WIN_MAIN_RENDERER_EVENT_NAME.save_lyric_edited, {
         id: musicInfo.id,
         lyrics: info,
       }))
@@ -606,19 +606,19 @@ export const saveLyric = async(musicInfo: LX.Music.MusicInfo, lyricInfo: LX.Musi
     console.log(tasks)
     await Promise.all(tasks)
   } else {
-    await rendererInvoke<LX.Music.LyricInfoSave>(WIN_MAIN_RENDERER_EVENT_NAME.save_lyric_raw, {
+    await rendererInvoke<S.Music.LyricInfoSave>(WIN_MAIN_RENDERER_EVENT_NAME.save_lyric_raw, {
       id: musicInfo.id,
       lyrics: lyricInfo,
     })
   }
 }
-export const saveLyricEdited = async(musicInfo: LX.Music.MusicInfo, lyricInfo: LX.Music.LyricInfo) => {
-  await rendererInvoke<LX.Music.LyricInfoSave>(WIN_MAIN_RENDERER_EVENT_NAME.save_lyric_edited, {
+export const saveLyricEdited = async(musicInfo: S.Music.MusicInfo, lyricInfo: S.Music.LyricInfo) => {
+  await rendererInvoke<S.Music.LyricInfoSave>(WIN_MAIN_RENDERER_EVENT_NAME.save_lyric_edited, {
     id: musicInfo.id,
     lyrics: lyricInfo,
   })
 }
-export const removeLyricEdited = async(musicInfo: LX.Music.MusicInfo) => {
+export const removeLyricEdited = async(musicInfo: S.Music.MusicInfo) => {
   await rendererInvoke(WIN_MAIN_RENDERER_EVENT_NAME.remove_lyric_edited, musicInfo.id)
 }
 
@@ -635,14 +635,14 @@ export const getLyricEditedCount = async() => {
 }
 
 
-export const saveTheme = async(theme: LX.Theme) => {
-  return rendererInvoke<LX.Theme>(WIN_MAIN_RENDERER_EVENT_NAME.save_theme, theme)
+export const saveTheme = async(theme: S.Theme) => {
+  return rendererInvoke<S.Theme>(WIN_MAIN_RENDERER_EVENT_NAME.save_theme, theme)
 }
 export const removeTheme = async(id: string) => {
   return rendererInvoke<string>(WIN_MAIN_RENDERER_EVENT_NAME.remove_theme, id)
 }
 export const getThemes = async() => {
-  return rendererInvoke<{ themes: LX.Theme[], userThemes: LX.Theme[], dataPath: string }>(WIN_MAIN_RENDERER_EVENT_NAME.get_themes)
+  return rendererInvoke<{ themes: S.Theme[], userThemes: S.Theme[], dataPath: string }>(WIN_MAIN_RENDERER_EVENT_NAME.get_themes)
 }
 
 /**
@@ -651,7 +651,7 @@ export const getThemes = async() => {
  * @param type URL音质
  * @returns
  */
-export const getMusicUrl = async(musicInfo: LX.Music.MusicInfo, type: LX.Quality): Promise<string> => {
+export const getMusicUrl = async(musicInfo: S.Music.MusicInfo, type: S.Quality): Promise<string> => {
   return rendererInvoke<string, string>(WIN_MAIN_RENDERER_EVENT_NAME.get_music_url, `${musicInfo.id}_${type}`)
 }
 
@@ -661,8 +661,8 @@ export const getMusicUrl = async(musicInfo: LX.Music.MusicInfo, type: LX.Quality
  * @param type URL音质
  * @param url 歌曲URL
  */
-export const saveMusicUrl = async(musicInfo: LX.Music.MusicInfo, type: LX.Quality, url: string) => {
-  await rendererInvoke<LX.Music.MusicUrlInfo>(WIN_MAIN_RENDERER_EVENT_NAME.save_music_url, {
+export const saveMusicUrl = async(musicInfo: S.Music.MusicInfo, type: S.Quality, url: string) => {
+  await rendererInvoke<S.Music.MusicUrlInfo>(WIN_MAIN_RENDERER_EVENT_NAME.save_music_url, {
     id: `${musicInfo.id}_${type}`,
     url,
   })
@@ -736,7 +736,7 @@ export const setPowerSaveBlocker = (enabled: boolean) => {
  * @param listener
  * @returns
  */
-export const onFocus = (listener: LX.IpcRendererEventListener): RemoveListener => {
+export const onFocus = (listener: S.IpcRendererEventListener): RemoveListener => {
   rendererOn(WIN_MAIN_RENDERER_EVENT_NAME.focus, listener)
   return () => {
     rendererOff(WIN_MAIN_RENDERER_EVENT_NAME.focus, listener)
@@ -748,7 +748,7 @@ export const onFocus = (listener: LX.IpcRendererEventListener): RemoveListener =
  * @param listener
  * @returns
  */
-export const onKeyDown = (listener: LX.IpcRendererEventListenerParams<LX.HotKeyEvent>): RemoveListener => {
+export const onKeyDown = (listener: S.IpcRendererEventListenerParams<S.HotKeyEvent>): RemoveListener => {
   rendererOn(WIN_MAIN_RENDERER_EVENT_NAME.key_down, listener)
   return () => {
     rendererOff(WIN_MAIN_RENDERER_EVENT_NAME.key_down, listener)
@@ -760,7 +760,7 @@ export const onKeyDown = (listener: LX.IpcRendererEventListenerParams<LX.HotKeyE
  * @param listener
  * @returns
  */
-export const onUpdateHotkey = (listener: LX.IpcRendererEventListenerParams<LX.HotKeyConfigAll>): RemoveListener => {
+export const onUpdateHotkey = (listener: S.IpcRendererEventListenerParams<S.HotKeyConfigAll>): RemoveListener => {
   rendererOn(WIN_MAIN_RENDERER_EVENT_NAME.set_hot_key_config, listener)
   return () => {
     rendererOff(WIN_MAIN_RENDERER_EVENT_NAME.set_hot_key_config, listener)
@@ -789,7 +789,7 @@ export const openDevTools = () => {
  * @param listener
  * @returns
  */
-export const onSyncAction = (listener: LX.IpcRendererEventListenerParams<LX.Sync.SyncMainWindowActions>): RemoveListener => {
+export const onSyncAction = (listener: S.IpcRendererEventListenerParams<S.Sync.SyncMainWindowActions>): RemoveListener => {
   rendererOn(WIN_MAIN_RENDERER_EVENT_NAME.sync_action, listener)
   return () => {
     rendererOff(WIN_MAIN_RENDERER_EVENT_NAME.sync_action, listener)
@@ -801,8 +801,8 @@ export const onSyncAction = (listener: LX.IpcRendererEventListenerParams<LX.Sync
  * @param action
  * @returns
  */
-export const sendSyncAction = async(action: LX.Sync.SyncServiceActions) => {
-  return rendererInvoke<LX.Sync.SyncServiceActions>(WIN_MAIN_RENDERER_EVENT_NAME.sync_action, action)
+export const sendSyncAction = async(action: S.Sync.SyncServiceActions) => {
+  return rendererInvoke<S.Sync.SyncServiceActions>(WIN_MAIN_RENDERER_EVENT_NAME.sync_action, action)
 }
 
 /**
@@ -810,7 +810,7 @@ export const sendSyncAction = async(action: LX.Sync.SyncServiceActions) => {
  * @returns
  */
 export const getSyncServerDevices = () => {
-  return rendererInvoke<LX.Sync.ServerDevices>(WIN_MAIN_RENDERER_EVENT_NAME.sync_get_server_devices)
+  return rendererInvoke<S.Sync.ServerDevices>(WIN_MAIN_RENDERER_EVENT_NAME.sync_get_server_devices)
 }
 
 /**
@@ -826,7 +826,7 @@ export const removeSyncServerDevice = (clientId: string) => {
 //   return rendererInvoke(WIN_MAIN_RENDERER_EVENT_NAME.sync_generate_code)
 // }
 
-// export const onSyncStatus = (listener: LX.IpcRendererEventListenerParams<LX.Sync.Status>): RemoveListener => {
+// export const onSyncStatus = (listener: S.IpcRendererEventListenerParams<S.Sync.Status>): RemoveListener => {
 //   rendererOn(WIN_MAIN_RENDERER_EVENT_NAME.sync_status, listener)
 
 //   return () => {
@@ -839,7 +839,7 @@ export const removeSyncServerDevice = (clientId: string) => {
  * @param listener
  * @returns
  */
-export const onNewDesktopLyricProcess = (listener: LX.IpcRendererEventListener): RemoveListener => {
+export const onNewDesktopLyricProcess = (listener: S.IpcRendererEventListener): RemoveListener => {
   rendererOn(WIN_MAIN_RENDERER_EVENT_NAME.process_new_desktop_lyric_client, listener)
   return () => {
     rendererOff(WIN_MAIN_RENDERER_EVENT_NAME.process_new_desktop_lyric_client, listener)
@@ -848,16 +848,16 @@ export const onNewDesktopLyricProcess = (listener: LX.IpcRendererEventListener):
 
 
 export const downloadTasksGet = async() => {
-  return rendererInvoke<LX.Download.ListItem[]>(WIN_MAIN_RENDERER_EVENT_NAME.download_list_get)
+  return rendererInvoke<S.Download.ListItem[]>(WIN_MAIN_RENDERER_EVENT_NAME.download_list_get)
 }
-export const downloadTasksCreate = async(list: LX.Download.ListItem[], addMusicLocationType: LX.AddMusicLocationType) => {
-  return rendererInvoke<LX.Download.saveDownloadMusicInfo>(WIN_MAIN_RENDERER_EVENT_NAME.download_list_add, {
+export const downloadTasksCreate = async(list: S.Download.ListItem[], addMusicLocationType: S.AddMusicLocationType) => {
+  return rendererInvoke<S.Download.saveDownloadMusicInfo>(WIN_MAIN_RENDERER_EVENT_NAME.download_list_add, {
     list,
     addMusicLocationType,
   })
 }
-export const downloadTasksUpdate = async(list: LX.Download.ListItem[]) => {
-  return rendererInvoke<LX.Download.ListItem[]>(WIN_MAIN_RENDERER_EVENT_NAME.download_list_update, list)
+export const downloadTasksUpdate = async(list: S.Download.ListItem[]) => {
+  return rendererInvoke<S.Download.ListItem[]>(WIN_MAIN_RENDERER_EVENT_NAME.download_list_update, list)
 }
 export const downloadTasksRemove = async(ids: string[]) => {
   return rendererInvoke<string[]>(WIN_MAIN_RENDERER_EVENT_NAME.download_list_remove, ids)

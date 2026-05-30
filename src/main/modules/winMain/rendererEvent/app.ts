@@ -65,7 +65,7 @@ export default () => {
   })
   // 全屏
   mainHandle<boolean, boolean>(WIN_MAIN_RENDERER_EVENT_NAME.fullscreen, async({ params: isFullscreen }) => {
-    global.lx.event_app.main_window_fullscreen(isFullscreen)
+    global.s.event_app.main_window_fullscreen(isFullscreen)
     return setFullScreen(isFullscreen)
   })
 
@@ -113,19 +113,19 @@ export default () => {
   //   return setThumbnailClip(params)
   // })
 
-  mainOn<LX.Player.Status>(WIN_MAIN_RENDERER_EVENT_NAME.player_status, ({ params }) => {
+  mainOn<S.Player.Status>(WIN_MAIN_RENDERER_EVENT_NAME.player_status, ({ params }) => {
     // setThumbarButtons(params)
-    global.lx.event_app.player_status(params)
+    global.s.event_app.player_status(params)
   })
 
   mainOn(WIN_MAIN_RENDERER_EVENT_NAME.inited, () => {
-    global.lx.event_app.main_window_inited()
+    global.s.event_app.main_window_inited()
   })
 
-  mainHandle<{ themes: LX.Theme[], userThemes: LX.Theme[] }>(WIN_MAIN_RENDERER_EVENT_NAME.get_themes, async() => {
+  mainHandle<{ themes: S.Theme[], userThemes: S.Theme[] }>(WIN_MAIN_RENDERER_EVENT_NAME.get_themes, async() => {
     return getAllThemes()
   })
-  mainHandle<LX.Theme>(WIN_MAIN_RENDERER_EVENT_NAME.save_theme, async({ params: theme }) => {
+  mainHandle<S.Theme>(WIN_MAIN_RENDERER_EVENT_NAME.save_theme, async({ params: theme }) => {
     saveTheme(theme)
   })
   mainHandle<string>(WIN_MAIN_RENDERER_EVENT_NAME.remove_theme, async({ params: id }) => {
@@ -137,9 +137,9 @@ export const sendFocus = () => {
   sendEvent(WIN_MAIN_RENDERER_EVENT_NAME.focus)
 }
 
-export const sendTaskbarButtonClick = (action: LX.Player.StatusButtonActions, data?: unknown) => {
+export const sendTaskbarButtonClick = (action: S.Player.StatusButtonActions, data?: unknown) => {
   sendEvent(WIN_MAIN_RENDERER_EVENT_NAME.player_action_on_button_click, { action, data })
 }
-export const sendConfigChange = (setting: Partial<LX.AppSetting>) => {
+export const sendConfigChange = (setting: Partial<S.AppSetting>) => {
   sendEvent(WIN_MAIN_RENDERER_EVENT_NAME.on_config_change, setting)
 }

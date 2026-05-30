@@ -1,6 +1,6 @@
 import createWorkers from '@renderer/worker'
 
-window.lx = {
+window.s = {
   isEditingHotKey: false,
   isPlayedStop: false,
   appHotKeyConfig: {
@@ -27,6 +27,6 @@ window.lx = {
   apiInitPromise: [Promise.resolve(false), true, () => {}],
 }
 
-window.lxData = {}
+window.sData = {}
 
 window.ELECTRON_DISABLE_SECURITY_WARNINGS = process.env.ELECTRON_DISABLE_SECURITY_WARNINGS

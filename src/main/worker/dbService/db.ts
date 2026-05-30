@@ -16,8 +16,8 @@ const initTables = (db: Database.Database) => {
 
 
 // 打开、初始化数据库
-export const init = (lxDataPath: string): boolean | null => {
-  const databasePath = path.join(lxDataPath, 'lx.data.db')
+export const init = (sDataPath: string): boolean | null => {
+  const databasePath = path.join(sDataPath, 's.data.db')
   const nativeBinding = path.join(__dirname, '../node_modules/better-sqlite3/build/Release/better_sqlite3.node')
   let dbFileExists = true
 

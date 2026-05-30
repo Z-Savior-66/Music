@@ -6,7 +6,7 @@ export const langS2t = (textBase64: string): string => {
 }
 
 export {
-  saveLxConfigFile,
-  readLxConfigFile,
+  saveSConfigFile,
+  readSConfigFile,
   saveStrToFile,
 } from '@common/utils/nodejs'

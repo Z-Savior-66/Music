@@ -6,7 +6,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 describe('store/player/state', () => {
   beforeEach(async () => {
     vi.resetModules()
-    ;(globalThis as any).window = { lxData: {} }
+    ;(globalThis as any).window = { sData: {} }
   })
 
   it('musicInfo 应使用默认初始值', async () => {
@@ -18,9 +18,9 @@ describe('store/player/state', () => {
     expect(musicInfo.album).toBe('')
   })
 
-  it('musicInfo 应挂载到 window.lxData.musicInfo', async () => {
+  it('musicInfo 应挂载到 window.sData.musicInfo', async () => {
     const { musicInfo } = await import('../player/state')
-    expect((globalThis as any).window.lxData.musicInfo).toBe(musicInfo)
+    expect((globalThis as any).window.sData.musicInfo).toBe(musicInfo)
   })
 
   it('isPlay 默认应为 false 且可切换', async () => {
@@ -30,10 +30,10 @@ describe('store/player/state', () => {
     expect(isPlay.value).toBe(true)
   })
 
-  it('status 默认应为空字符串并挂载到 window.lxData', async () => {
+  it('status 默认应为空字符串并挂载到 window.sData', async () => {
     const { status } = await import('../player/state')
     expect(status.value).toBe('')
-    expect((globalThis as any).window.lxData.status).toBe(status)
+    expect((globalThis as any).window.sData.status).toBe(status)
   })
 
   it('playInfo 应使用默认初始值', async () => {
@@ -53,7 +53,7 @@ describe('store/player/state', () => {
     const { playedList, tempPlayList } = await import('../player/state')
     expect(playedList).toHaveLength(0)
     expect(tempPlayList).toHaveLength(0)
-    expect((globalThis as any).window.lxData.playedList).toBe(playedList)
+    expect((globalThis as any).window.sData.playedList).toBe(playedList)
   })
 
   it('isShowPlayerDetail/isShowPlayComment/isShowLrcSelectContent 默认均为 false', async () => {

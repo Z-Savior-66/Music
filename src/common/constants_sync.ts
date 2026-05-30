@@ -7,7 +7,7 @@ export const ENV_PARAMS = [
   'PROXY_HEADER',
   'MAX_SNAPSHOT_NUM',
   'LIST_ADD_MUSIC_LOCATION_TYPE',
-  'LX_USER_',
+  'S_USER_',
 ] as const
 
 
@@ -22,10 +22,10 @@ export const LIST_IDS = {
 export const SYNC_CODE = {
   helloMsg: 'Hello~::^-^::~v4~',
   idPrefix: 'OjppZDo6',
-  authMsg: 'lx-music auth::',
+  authMsg: 's-music auth::',
   msgAuthFailed: 'Auth failed',
   msgBlockedIp: 'Blocked IP',
-  msgConnect: 'lx-music connect',
+  msgConnect: 's-music connect',
 
 
   authFailed: 'Auth failed',
@@ -41,7 +41,7 @@ export const SYNC_CLOSE_CODE = {
   failed: 4100,
 } as const
 
-export const TRANS_MODE: Readonly<Record<LX.Sync.List.SyncMode, LX.Sync.List.SyncMode>> = {
+export const TRANS_MODE: Readonly<Record<S.Sync.List.SyncMode, S.Sync.List.SyncMode>> = {
   merge_local_remote: 'merge_remote_local',
   merge_remote_local: 'merge_local_remote',
   overwrite_local_remote: 'overwrite_remote_local',

@@ -1,6 +1,6 @@
 import { ref, shallowReactive } from '@common/utils/vueTools'
 
-export const setting = shallowReactive<LX.DesktopLyric.Config>({
+export const setting = shallowReactive<S.DesktopLyric.Config>({
   'desktopLyric.enable': false,
   'desktopLyric.isLock': false,
   'desktopLyric.isAlwaysOnTop': false,
@@ -35,7 +35,7 @@ export const setting = shallowReactive<LX.DesktopLyric.Config>({
   'player.isShowLyricTranslation': false,
   'player.isShowLyricRoma': false,
   'player.isSwapLyricTranslationAndRoma': false,
-  'player.isPlayLxlrc': false,
+  'player.isPlaySlrc': false,
   'player.playbackRate': 1,
 })
 

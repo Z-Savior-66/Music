@@ -1,16 +1,16 @@
 import { ipcMain } from 'electron'
 
-export function mainOn(name: string, listener: LX.IpcMainEventListener): void
-export function mainOn<T>(name: string, listener: LX.IpcMainEventListenerParams<T>): void
-export function mainOn<T>(name: string, listener: LX.IpcMainEventListenerParams<T>): void {
+export function mainOn(name: string, listener: S.IpcMainEventListener): void
+export function mainOn<T>(name: string, listener: S.IpcMainEventListenerParams<T>): void
+export function mainOn<T>(name: string, listener: S.IpcMainEventListenerParams<T>): void {
   ipcMain.on(name, (event, params) => {
     listener({ event, params })
   })
 }
 
-export function mainOnce(name: string, listener: LX.IpcMainEventListener): void
-export function mainOnce<T>(name: string, listener: LX.IpcMainEventListenerParams<T>): void
-export function mainOnce<T>(name: string, listener: LX.IpcMainEventListenerParams<T>): void {
+export function mainOnce(name: string, listener: S.IpcMainEventListener): void
+export function mainOnce<T>(name: string, listener: S.IpcMainEventListenerParams<T>): void
+export function mainOnce<T>(name: string, listener: S.IpcMainEventListenerParams<T>): void {
   ipcMain.once(name, (event, params) => {
     listener({ event, params })
   })
@@ -24,21 +24,21 @@ export const mainOffAll = (name: string) => {
   ipcMain.removeAllListeners(name)
 }
 
-export function mainHandle(name: string, listener: LX.IpcMainInvokeEventListener): void
-export function mainHandle<T>(name: string, listener: LX.IpcMainInvokeEventListenerParams<T>): void
-export function mainHandle<V>(name: string, listener: LX.IpcMainInvokeEventListenerValue<V>): void
-export function mainHandle<T, V>(name: string, listener: LX.IpcMainInvokeEventListenerParamsValue<T, V>): void
-export function mainHandle<T, V>(name: string, listener: LX.IpcMainInvokeEventListenerParamsValue<T, V>): void {
+export function mainHandle(name: string, listener: S.IpcMainInvokeEventListener): void
+export function mainHandle<T>(name: string, listener: S.IpcMainInvokeEventListenerParams<T>): void
+export function mainHandle<V>(name: string, listener: S.IpcMainInvokeEventListenerValue<V>): void
+export function mainHandle<T, V>(name: string, listener: S.IpcMainInvokeEventListenerParamsValue<T, V>): void
+export function mainHandle<T, V>(name: string, listener: S.IpcMainInvokeEventListenerParamsValue<T, V>): void {
   ipcMain.handle(name, async(event, params) => {
     return listener({ event, params })
   })
 }
 
-export function mainHandleOnce(name: string, listener: LX.IpcMainInvokeEventListener): void
-export function mainHandleOnce<T>(name: string, listener: LX.IpcMainInvokeEventListenerParams<T>): void
-export function mainHandleOnce<V>(name: string, listener: LX.IpcMainInvokeEventListenerValue<V>): void
-export function mainHandleOnce<T, V>(name: string, listener: LX.IpcMainInvokeEventListenerParamsValue<T, V>): void
-export function mainHandleOnce<T, V>(name: string, listener: LX.IpcMainInvokeEventListenerParamsValue<T, V>): void {
+export function mainHandleOnce(name: string, listener: S.IpcMainInvokeEventListener): void
+export function mainHandleOnce<T>(name: string, listener: S.IpcMainInvokeEventListenerParams<T>): void
+export function mainHandleOnce<V>(name: string, listener: S.IpcMainInvokeEventListenerValue<V>): void
+export function mainHandleOnce<T, V>(name: string, listener: S.IpcMainInvokeEventListenerParamsValue<T, V>): void
+export function mainHandleOnce<T, V>(name: string, listener: S.IpcMainInvokeEventListenerParamsValue<T, V>): void {
   ipcMain.handleOnce(name, async(event, params) => {
     return listener({ event, params })
   })

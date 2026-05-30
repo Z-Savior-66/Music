@@ -1,11 +1,11 @@
-declare namespace LX {
+declare namespace S {
   namespace Music {
     interface MusicQualityType { // {"type": "128k", size: "3.56M"}
-      type: LX.Quality
+      type: S.Quality
       size: string | null
     }
     interface MusicQualityTypeKg { // {"type": "128k", size: "3.56M"}
-      type: LX.Quality
+      type: S.Quality
       size: string | null
       hash: string
     }
@@ -37,7 +37,7 @@ declare namespace LX {
     }
 
 
-    interface MusicInfoBase<S = LX.Source> {
+    interface MusicInfoBase<S = S.Source> {
       id: string
       name: string // 歌曲名
       singer: string // 艺术家名
@@ -93,7 +93,7 @@ declare namespace LX {
       // 罗马音歌词
       rlyric?: string | null
       // 逐字歌词
-      lxlyric?: string | null
+      slyric?: string | null
     }
 
     interface LyricInfoSave {

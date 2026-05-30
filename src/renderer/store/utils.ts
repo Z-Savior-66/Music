@@ -2,7 +2,7 @@
 // import { downloadList } from './download'
 
 
-// export const getList = (listId: string | null): LX.Download.ListItem[] | LX.Music.MusicInfo[] => {
+// export const getList = (listId: string | null): S.Download.ListItem[] | S.Music.MusicInfo[] => {
 //   return listId == 'download' ? downloadList : getListFromState(listId)
 // }
 import { encodePath, isUrl } from '@common/utils/common'
@@ -11,7 +11,7 @@ import { markRaw, shallowReactive } from '@common/utils/vueTools'
 import { getThemes as getTheme } from '@renderer/utils/ipc'
 import { qualityList, themeInfo, themeShouldUseDarkColors } from './index'
 
-export const assertApiSupport = (source: LX.Source): boolean => {
+export const assertApiSupport = (source: S.Source): boolean => {
   return source == 'local' || qualityList.value[source] != null
 }
 
@@ -21,7 +21,7 @@ export const buildBgUrl = (originUrl: string, dataPath: string): string => {
     : `url(file:///${encodePath(joinPath(dataPath, originUrl).replaceAll('\\', '/'))})`
 }
 
-export const getThemes = (callback: (themeInfo: LX.ThemeInfo) => void) => {
+export const getThemes = (callback: (themeInfo: S.ThemeInfo) => void) => {
   if (themeInfo.themes.length) {
     callback(themeInfo)
     return
@@ -33,7 +33,7 @@ export const getThemes = (callback: (themeInfo: LX.ThemeInfo) => void) => {
     callback(themeInfo)
   })
 }
-export const buildThemeColors = (theme: LX.Theme, dataPath: string) => {
+export const buildThemeColors = (theme: S.Theme, dataPath: string) => {
   if (theme.isCustom && theme.config.extInfo['--background-image'] != 'none') {
     theme = copyTheme(theme)
     theme.config.extInfo['--background-image'] = buildBgUrl(theme.config.extInfo['--background-image'], dataPath)
@@ -46,7 +46,7 @@ export const buildThemeColors = (theme: LX.Theme, dataPath: string) => {
   return colors
 }
 
-export const copyTheme = (theme: LX.Theme): LX.Theme => {
+export const copyTheme = (theme: S.Theme): S.Theme => {
   return {
     ...theme,
     config: {
@@ -57,7 +57,7 @@ export const copyTheme = (theme: LX.Theme): LX.Theme => {
   }
 }
 
-export const findTheme = (themeInfo: LX.ThemeInfo, id: string): LX.Theme | undefined => {
+export const findTheme = (themeInfo: S.ThemeInfo, id: string): S.Theme | undefined => {
   let theme = themeInfo.themes.find(theme => theme.id == id)
   if (theme) return theme
   theme = themeInfo.userThemes.find(theme => theme.id == id)

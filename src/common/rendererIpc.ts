@@ -20,17 +20,17 @@ export async function rendererInvoke <T, V>(name: string, params?: T): Promise<V
   return ipcRenderer.invoke(name, params)
 }
 
-export function rendererOn(name: string, listener: LX.IpcRendererEventListener): void
-export function rendererOn<T>(name: string, listener: LX.IpcRendererEventListenerParams<T>): void
-export function rendererOn<T>(name: string, listener: LX.IpcRendererEventListenerParams<T>): void {
+export function rendererOn(name: string, listener: S.IpcRendererEventListener): void
+export function rendererOn<T>(name: string, listener: S.IpcRendererEventListenerParams<T>): void
+export function rendererOn<T>(name: string, listener: S.IpcRendererEventListenerParams<T>): void {
   ipcRenderer.on(name, (event, params) => {
     listener({ event, params })
   })
 }
 
-export function rendererOnce(name: string, listener: LX.IpcRendererEventListener): void
-export function rendererOnce<T>(name: string, listener: LX.IpcRendererEventListenerParams<T>): void
-export function rendererOnce<T>(name: string, listener: LX.IpcRendererEventListenerParams<T>): void {
+export function rendererOnce(name: string, listener: S.IpcRendererEventListener): void
+export function rendererOnce<T>(name: string, listener: S.IpcRendererEventListenerParams<T>): void
+export function rendererOnce<T>(name: string, listener: S.IpcRendererEventListenerParams<T>): void {
   ipcRenderer.once(name, (event, params) => {
     listener({ event, params })
   })

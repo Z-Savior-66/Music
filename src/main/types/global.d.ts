@@ -3,9 +3,9 @@
 // // declare module NodeJS {
 // //   interface Global {
 // //     isDev: boolean
-// //     envParams: LX.EnvParams
+// //     envParams: S.EnvParams
 // //     staticPath: string
-// //     lx: Lx
+// //     s: S
 // //   }
 // // }
 

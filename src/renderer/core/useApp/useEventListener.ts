@@ -30,12 +30,12 @@ import { HOTKEY_COMMON } from '@common/hotKey'
 import { applyTheme, getThemes } from '@renderer/store/utils'
 import { clearDownKeys } from '@renderer/event'
 
-const handle_key_down = ({ event, type, key }: LX.KeyDownEevent) => {
+const handle_key_down = ({ event, type, key }: S.KeyDownEevent) => {
   // console.log(key)
-  if (key != 'escape' || !event || event.repeat || type == 'up' || window.lx.isEditingHotKey || (event.target as HTMLElement)?.classList.contains('ignore-esc') || event.lx_handled) return
+  if (key != 'escape' || !event || event.repeat || type == 'up' || window.s.isEditingHotKey || (event.target as HTMLElement)?.classList.contains('ignore-esc') || event.s_handled) return
   if ((event.target as HTMLElement).tagName != 'INPUT') {
     if (isFullscreen.value) {
-      event.lx_handled = true
+      event.s_handled = true
       void setFullScreen(false).then(fullscreen => {
         isFullscreen.value = fullscreen
       })
@@ -44,7 +44,7 @@ const handle_key_down = ({ event, type, key }: LX.KeyDownEevent) => {
   }
   (event.target as HTMLInputElement).value = ''
   ;(event.target as HTMLInputElement).blur()
-  event.lx_handled = true
+  event.s_handled = true
 }
 
 const handleBodyClick = (event: MouseEvent) => {
@@ -56,7 +56,7 @@ const handleBodyClick = (event: MouseEvent) => {
 const handle_open_devtools = () => {
   openDevTools()
 }
-const handle_fullscreen = (event: LX.KeyDownEevent) => {
+const handle_fullscreen = (event: S.KeyDownEevent) => {
   let fullscreen = !isFullscreen.value
   if (typeof event == 'boolean') {
     fullscreen = event
@@ -65,7 +65,7 @@ const handle_fullscreen = (event: LX.KeyDownEevent) => {
     isFullscreen.value = fullscreen
   })
 }
-const handle_selection = (event: LX.KeyDownEevent) => {
+const handle_selection = (event: S.KeyDownEevent) => {
   event.event?.preventDefault()
 }
 

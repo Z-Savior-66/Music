@@ -1,2 +1,2 @@
 
-export const userApis: LX.UserApi.UserApiInfoFull[] = []
+export const userApis: S.UserApi.UserApiInfoFull[] = []

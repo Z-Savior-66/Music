@@ -7,15 +7,15 @@ import { clipFileNameLength, clipNameLength } from '@common/utils/tools'
 /**
  * 保存歌词文件
  */
-export const saveLrc = async(lrcData: LX.Music.LyricInfo, info: {
+export const saveLrc = async(lrcData: S.Music.LyricInfo, info: {
   filePath: string
-  format: LX.LyricFormat
-  downloadLxlrc: boolean
+  format: S.LyricFormat
+  downloadSlrc: boolean
   downloadTlrc: boolean
   downloadRlrc: boolean
 }) => {
   const iconv = (await import('iconv-lite')).default
-  const lrc = buildLyrics(lrcData, info.downloadLxlrc, info.downloadTlrc, info.downloadRlrc)
+  const lrc = buildLyrics(lrcData, info.downloadSlrc, info.downloadTlrc, info.downloadRlrc)
   switch (info.format) {
     case 'gbk':
       fs.writeFile(info.filePath, iconv.encode(lrc, 'gbk', { addBOM: true }), err => {
@@ -31,7 +31,7 @@ export const saveLrc = async(lrcData: LX.Music.LyricInfo, info: {
   }
 }
 
-export const getExt = (type: string): LX.Download.FileExt => {
+export const getExt = (type: string): S.Download.FileExt => {
   switch (type) {
     case 'ape':
       return 'ape'
@@ -54,7 +54,7 @@ export const getExt = (type: string): LX.Download.FileExt => {
  * @param type
  * @param qualityList
  */
-export const getMusicType = (musicInfo: LX.Music.MusicInfoOnline, type: LX.Quality, qualityList: LX.QualityList): LX.Quality => {
+export const getMusicType = (musicInfo: S.Music.MusicInfoOnline, type: S.Quality, qualityList: S.QualityList): S.Quality => {
   let list = qualityList[musicInfo.source]
   if (!list) return '128k'
   if (!list.includes(type)) type = list[list.length - 1]
@@ -65,16 +65,16 @@ export const getMusicType = (musicInfo: LX.Music.MusicInfoOnline, type: LX.Quali
   return '128k'
 }
 
-// const checkExistList = (list: LX.Download.ListItem[], musicInfo: LX.Music.MusicInfo, type: LX.Quality, ext: string): boolean => {
+// const checkExistList = (list: S.Download.ListItem[], musicInfo: S.Music.MusicInfo, type: S.Quality, ext: string): boolean => {
 //   return list.some(s => s.id === musicInfo.id && (s.metadata.type === type || s.metadata.ext === ext))
 // }
 
-export const createDownloadInfo = (musicInfo: LX.Music.MusicInfoOnline, type: LX.Quality, fileName: string, qualityList: LX.QualityList, listId?: string) => {
+export const createDownloadInfo = (musicInfo: S.Music.MusicInfoOnline, type: S.Quality, fileName: string, qualityList: S.QualityList, listId?: string) => {
   type = getMusicType(musicInfo, type, qualityList)
   let ext = getExt(type)
   const key = `${musicInfo.id}_${type}_${ext}`
   // if (checkExistList(list, musicInfo, type, ext)) return null
-  const downloadInfo: LX.Download.ListItem = {
+  const downloadInfo: S.Download.ListItem = {
     id: key,
     isComplate: false,
     status: DOWNLOAD_STATUS.WAITING,

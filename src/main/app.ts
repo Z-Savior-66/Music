@@ -21,7 +21,7 @@ export const initGlobalData = () => {
     cmdParams: envParams.cmdParams,
     deeplink: envParams.deeplink,
   }
-  global.lx = {
+  global.s = {
     inited: false,
     isSkipTrayQuit: false,
     // mainWindowClosed: true,
@@ -67,7 +67,7 @@ export const initGlobalData = () => {
       lyric: '',
       tlyric: '',
       rlyric: '',
-      lxlyric: '',
+      slyric: '',
       collect: false,
       volume: 0,
       mute: false,
@@ -92,7 +92,7 @@ export const initSingleInstanceHandle = () => {
       const envParams = parseEnvParams(argv)
       if (envParams.deeplink) {
         global.envParams.deeplink = envParams.deeplink
-        global.lx.event_app.deeplink(global.envParams.deeplink)
+        global.s.event_app.deeplink(global.envParams.deeplink)
         return
       }
       if (envParams.cmdParams.hidden !== true) {
@@ -137,9 +137,9 @@ export const setUserDataPath = () => {
   }
 
   const userDataPath = app.getPath('userData')
-  global.lxOldDataPath = userDataPath
-  global.lxDataPath = path.join(userDataPath, 'LxDatas')
-  if (!existsSync(global.lxDataPath)) mkdirSync(global.lxDataPath)
+  global.sOldDataPath = userDataPath
+  global.sDataPath = path.join(userDataPath, 'SDatas')
+  if (!existsSync(global.sDataPath)) mkdirSync(global.sDataPath)
 }
 
 export const registerDeeplink = (startApp: () => void) => {
@@ -147,9 +147,9 @@ export const registerDeeplink = (startApp: () => void) => {
     // Set the path of electron.exe and your app.
     // These two additional parameters are only available on windows.
     // console.log(process.execPath, process.argv)
-    app.setAsDefaultProtocolClient('lxmusic', process.execPath, process.argv.slice(1))
+    app.setAsDefaultProtocolClient('smusic', process.execPath, process.argv.slice(1))
   } else {
-    app.setAsDefaultProtocolClient('lxmusic')
+    app.setAsDefaultProtocolClient('smusic')
   }
 
   // deep link
@@ -158,7 +158,7 @@ export const registerDeeplink = (startApp: () => void) => {
     event.preventDefault()
     global.envParams.deeplink = url
     if (isExistMainWindow()) {
-      if (global.envParams.deeplink) global.lx.event_app.deeplink(global.envParams.deeplink)
+      if (global.envParams.deeplink) global.s.event_app.deeplink(global.envParams.deeplink)
       else showMainWindow()
     } else {
       startApp()
@@ -201,7 +201,7 @@ export const listenerAppEvent = (startApp: () => void) => {
     })
 
     // disable create dictionary
-    // https://github.com/lyswhut/lx-music-desktop/issues/773
+    // https://github.com/lyswhut/s-music-desktop/issues/773
     contents.session.setSpellCheckerDictionaryDownloadURL('http://0.0.0.0')
   })
 
@@ -214,7 +214,7 @@ export const listenerAppEvent = (startApp: () => void) => {
   })
 
   app.on('before-quit', () => {
-    global.lx.isSkipTrayQuit = true
+    global.s.isSkipTrayQuit = true
   })
   app.on('window-all-closed', () => {
     if (isMac) return
@@ -232,9 +232,9 @@ export const listenerAppEvent = (startApp: () => void) => {
 
   nativeTheme.addListener('updated', () => {
     const shouldUseDarkColors = nativeTheme.shouldUseDarkColors
-    if (shouldUseDarkColors == global.lx.theme.shouldUseDarkColors) return
-    global.lx.theme.shouldUseDarkColors = shouldUseDarkColors
-    global.lx?.event_app.system_theme_change(shouldUseDarkColors)
+    if (shouldUseDarkColors == global.s.theme.shouldUseDarkColors) return
+    global.s.theme.shouldUseDarkColors = shouldUseDarkColors
+    global.s?.event_app.system_theme_change(shouldUseDarkColors)
   })
 
   const setProxy = () => {
@@ -243,27 +243,27 @@ export const listenerAppEvent = (startApp: () => void) => {
       setProxyByHost(proxy.host, proxy.port ? String(proxy.port) : undefined)
     } else setProxyByHost()
   }
-  global.lx.event_app.on('updated_config', (keys, setting) => {
-    if (keys.includes('network.proxy.enable') || (global.lx.appSetting['network.proxy.enable'] && keys.some(k => k.includes('network.proxy.')))) {
+  global.s.event_app.on('updated_config', (keys, setting) => {
+    if (keys.includes('network.proxy.enable') || (global.s.appSetting['network.proxy.enable'] && keys.some(k => k.includes('network.proxy.')))) {
       setProxy()
     }
 
     if (keys.includes('player.volume')) {
-      global.lx.event_app.player_status({ volume: Math.trunc(setting['player.volume']! * 100) })
+      global.s.event_app.player_status({ volume: Math.trunc(setting['player.volume']! * 100) })
     }
     if (keys.includes('player.isMute')) {
-      global.lx.event_app.player_status({ mute: setting['player.isMute'] })
+      global.s.event_app.player_status({ mute: setting['player.isMute'] })
     }
   })
-  global.lx.event_app.on('app_inited', () => {
+  global.s.event_app.on('app_inited', () => {
     setProxy()
   })
 }
 
 const initTheme = () => {
-  global.lx.theme = getTheme()
+  global.s.theme = getTheme()
   const themeConfigKeys = ['theme.id', 'theme.lightId', 'theme.darkId']
-  global.lx.event_app.on('updated_config', (keys) => {
+  global.s.event_app.on('updated_config', (keys) => {
     let requireUpdate = false
     for (const key of keys) {
       if (themeConfigKeys.includes(key)) {
@@ -272,20 +272,20 @@ const initTheme = () => {
       }
     }
     if (requireUpdate) {
-      global.lx.theme = getTheme()
-      global.lx.event_app.theme_change()
+      global.s.theme = getTheme()
+      global.s.event_app.theme_change()
     }
   })
-  global.lx.event_app.on('system_theme_change', () => {
-    if (global.lx.appSetting['theme.id'] == 'auto') {
-      global.lx.theme = getTheme()
-      global.lx.event_app.theme_change()
+  global.s.event_app.on('system_theme_change', () => {
+    if (global.s.appSetting['theme.id'] == 'auto') {
+      global.s.theme = getTheme()
+      global.s.event_app.theme_change()
     }
   })
 }
 
 const backupDB = (backupPath: string) => {
-  const dbPath = path.join(global.lxDataPath, 'lx.data.db')
+  const dbPath = path.join(global.sDataPath, 's.data.db')
   try {
     renameSync(dbPath, backupPath)
   } catch {}
@@ -300,36 +300,36 @@ const backupDB = (backupPath: string) => {
 
 let isInitialized = false
 export const initAppSetting = async() => {
-  if (!global.lx.inited) {
+  if (!global.s.inited) {
     const config = await initHotKey()
-    global.lx.hotKey.config.local = config.local
-    global.lx.hotKey.config.global = config.global
-    global.lx.inited = true
+    global.s.hotKey.config.local = config.local
+    global.s.hotKey.config.global = config.global
+    global.s.inited = true
   }
 
   if (!isInitialized) {
-    let dbFileExists = await global.lx.worker.dbService.init(global.lxDataPath)
+    let dbFileExists = await global.s.worker.dbService.init(global.sDataPath)
     if (dbFileExists === null) {
-      const backupPath = path.join(global.lxDataPath, `lx.data.db.${Date.now()}.bak`)
+      const backupPath = path.join(global.sDataPath, `s.data.db.${Date.now()}.bak`)
       dialog.showMessageBoxSync({
         type: 'warning',
         message: 'Database verify failed',
         detail: `数据库表结构校验失败，我们将把有问题的数据库备份到：${backupPath}\n若此问题导致你的数据丢失，你可以尝试从备份文件找回它们。\n\nThe database table structure verification failed, we will back up the problematic database to: ${backupPath}\nIf this problem causes your data to be lost, you can try to retrieve them from the backup file.`,
       })
       backupDB(backupPath)
-      dbFileExists = await global.lx.worker.dbService.init(global.lxDataPath)
+      dbFileExists = await global.s.worker.dbService.init(global.sDataPath)
     }
-    global.lx.appSetting = (await initSetting()).setting
+    global.s.appSetting = (await initSetting()).setting
     if (!dbFileExists) await migrateDBData().catch(err => { log.error(err) })
     initTheme()
-    if (envParams.cmdParams.dt == null) envParams.cmdParams.dt = !global.lx.appSetting['common.transparentWindow']
+    if (envParams.cmdParams.dt == null) envParams.cmdParams.dt = !global.s.appSetting['common.transparentWindow']
   }
-  // global.lx.theme = getTheme()
+  // global.s.theme = getTheme()
 
   isInitialized ||= true
 }
 
 export const quitApp = () => {
-  global.lx.isSkipTrayQuit = true
+  global.s.isSkipTrayQuit = true
   app.quit()
 }

@@ -23,11 +23,11 @@ export const proxy: {
 }
 export const sync: {
   enable: boolean
-  mode: LX.AppSetting['sync.mode']
+  mode: S.AppSetting['sync.mode']
   isShowSyncMode: boolean
   isShowAuthCodeModal: boolean
   deviceName: string
-  type: keyof LX.Sync.ModeTypes
+  type: keyof S.Sync.ModeTypes
   server: {
     port: string
     status: {
@@ -35,7 +35,7 @@ export const sync: {
       message: string
       address: string[]
       code: string
-      devices: LX.Sync.ServerKeyInfo[]
+      devices: S.Sync.ServerKeyInfo[]
     }
   }
   client: {
@@ -89,7 +89,7 @@ export const getSourceI18nPrefix = () => {
 
 export const sourceNames = computed(() => {
   const prefix = getSourceI18nPrefix()
-  const sourceNames: Record<LX.OnlineSource | 'all', string> = {
+  const sourceNames: Record<S.OnlineSource | 'all', string> = {
     kw: 'kw',
     tx: 'tx',
     kg: 'kg',
@@ -98,7 +98,7 @@ export const sourceNames = computed(() => {
     all: window.i18n.t(prefix + 'all' as any),
   }
   for (const { id } of music.sources) {
-    sourceNames[id as LX.OnlineSource] = window.i18n.t(prefix + id as any)
+    sourceNames[id as S.OnlineSource] = window.i18n.t(prefix + id as any)
   }
 
   return sourceNames
@@ -108,18 +108,18 @@ export const windowSizeList = markRaw(configWindowSizeList)
 
 export const isShowPact = ref(false)
 
-export const versionInfo = window.lxData.versionInfo = reactive<{
+export const versionInfo = window.sData.versionInfo = reactive<{
   version: string
   newVersion: {
     version: string
     desc: string
-    history?: LX.VersionInfo[]
+    history?: S.VersionInfo[]
   } | null
   showModal: boolean
   isUnknown: boolean
   isLatest: boolean
   reCheck: boolean
-  status: LX.UpdateStatus
+  status: S.UpdateStatus
   downloadProgress: ProgressInfo | null
 }>({
   version: pkg.version,
@@ -132,10 +132,10 @@ export const versionInfo = window.lxData.versionInfo = reactive<{
   downloadProgress: null,
 })
 export const userApi = reactive<{
-  list: LX.UserApi.UserApiInfo[]
+  list: S.UserApi.UserApiInfo[]
   status: boolean
   message?: string
-  apis: Partial<LX.UserApi.UserApiSources>
+  apis: Partial<S.UserApi.UserApiSources>
 }>({
   list: [],
   status: false,
@@ -148,19 +148,19 @@ export const isShowChangeLog = ref(false)
 
 export const isFullscreen = ref(false)
 watch(isFullscreen, isFullscreen => {
-  window.lx.rootOffset = window.dt || isFullscreen ? 0 : 8
+  window.s.rootOffset = window.dt || isFullscreen ? 0 : 8
 }, { immediate: true })
 
 export const themeShouldUseDarkColors = ref(window.shouldUseDarkColors)
 
 
-export const qualityList = shallowRef<LX.QualityList>({})
-export const setQualityList = (_qualityList: LX.QualityList) => {
+export const qualityList = shallowRef<S.QualityList>({})
+export const setQualityList = (_qualityList: S.QualityList) => {
   qualityList.value = _qualityList
 }
 
 export const themeId = ref('green')
-export const themeInfo: LX.ThemeInfo = {
+export const themeInfo: S.ThemeInfo = {
   themes: [],
   userThemes: [],
   dataPath: '',

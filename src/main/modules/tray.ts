@@ -32,7 +32,7 @@ const watchConfigKeys = [
   'tray.enable',
   'player.isShowStatusBarLyric',
   'common.langId',
-] satisfies Array<keyof LX.AppSetting>
+] satisfies Array<keyof S.AppSetting>
 
 const themeList = [
   {
@@ -134,7 +134,7 @@ const i18n = {
 
 const getIconPath = (id: number) => {
   let theme = id == TRAY_AUTO_ID
-    ? global.lx.theme.shouldUseDarkColors
+    ? global.s.theme.shouldUseDarkColors
       ? themeList[0] : themeList[2]
     : themeList.find(item => item.id === id) ?? themeList[0]
   return path.join(global.staticPath, 'images/tray', theme.fileName + (isWin ? '.ico' : '.png'))
@@ -142,12 +142,12 @@ const getIconPath = (id: number) => {
 
 export const createTray = () => {
   // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-  if ((tray && !tray.isDestroyed()) || !global.lx.appSetting['tray.enable']) return
+  if ((tray && !tray.isDestroyed()) || !global.s.appSetting['tray.enable']) return
 
   // 托盘
-  tray = new Tray(nativeImage.createFromPath(getIconPath(global.lx.appSetting['tray.themeId'])))
+  tray = new Tray(nativeImage.createFromPath(getIconPath(global.s.appSetting['tray.themeId'])))
 
-  // tray.setToolTip('LX Music')
+  // tray.setToolTip('S Music')
   // createMenu()
   tray.setIgnoreDoubleClickEvents(true)
   if (isWin) {
@@ -165,8 +165,8 @@ export const destroyTray = () => {
   tray = null
 }
 
-const handleUpdateConfig = (setting: Partial<LX.AppSetting>) => {
-  global.lx.event_app.update_config(setting)
+const handleUpdateConfig = (setting: Partial<S.AppSetting>) => {
+  global.s.event_app.update_config(setting)
 }
 
 const createPlayerMenu = () => {
@@ -213,7 +213,7 @@ export const createMenu = () => {
   let menu: Electron.MenuItemConstructorOptions[] = createPlayerMenu()
   if (playerState.empty) for (const m of menu) m.enabled = false
   menu.push({ type: 'separator' })
-  menu.push(global.lx.appSetting['desktopLyric.enable']
+  menu.push(global.s.appSetting['desktopLyric.enable']
     ? {
         label: i18n.getMessage('hide_win_lyric'),
         click() {
@@ -226,7 +226,7 @@ export const createMenu = () => {
           handleUpdateConfig({ 'desktopLyric.enable': true })
         },
       })
-  menu.push(global.lx.appSetting['desktopLyric.isLock']
+  menu.push(global.s.appSetting['desktopLyric.isLock']
     ? {
         label: i18n.getMessage('unlock_win_lyric'),
         click() {
@@ -239,7 +239,7 @@ export const createMenu = () => {
           handleUpdateConfig({ 'desktopLyric.isLock': true })
         },
       })
-  menu.push(global.lx.appSetting['desktopLyric.isAlwaysOnTop']
+  menu.push(global.s.appSetting['desktopLyric.isAlwaysOnTop']
     ? {
         label: i18n.getMessage('untop_win_lyric'),
         click() {
@@ -310,11 +310,11 @@ const defaultTip = 'S Music'
 const setTip = () => {
   if (!tray) return
 
-  let name = global.lx.player_status.name
+  let name = global.s.player_status.name
   let tip: string
   if (name) {
     if (name.length > 20) name = name.substring(0, 20) + '...'
-    let singer = global.lx.player_status.singer
+    let singer = global.s.player_status.singer
     if (singer?.length > 20) singer = singer.substring(0, 20) + '...'
 
     tip = `${defaultTip}\n${i18n.getMessage('music_name')}${name}${singer ? `\n${i18n.getMessage('music_singer')}${singer}` : ''}`
@@ -323,18 +323,18 @@ const setTip = () => {
 }
 
 const init = () => {
-  if (themeId != global.lx.appSetting['tray.themeId']) {
-    themeId = global.lx.appSetting['tray.themeId']
+  if (themeId != global.s.appSetting['tray.themeId']) {
+    themeId = global.s.appSetting['tray.themeId']
     setTrayImage(themeId)
   }
-  if (isEnableTray !== global.lx.appSetting['tray.enable']) {
-    isEnableTray = global.lx.appSetting['tray.enable']
-    global.lx.appSetting['tray.enable'] ? createTray() : destroyTray()
+  if (isEnableTray !== global.s.appSetting['tray.enable']) {
+    isEnableTray = global.s.appSetting['tray.enable']
+    global.s.appSetting['tray.enable'] ? createTray() : destroyTray()
   }
-  if (isShowStatusBarLyric !== global.lx.appSetting['player.isShowStatusBarLyric']) {
-    isShowStatusBarLyric = global.lx.appSetting['player.isShowStatusBarLyric']
+  if (isShowStatusBarLyric !== global.s.appSetting['player.isShowStatusBarLyric']) {
+    isShowStatusBarLyric = global.s.appSetting['player.isShowStatusBarLyric']
     if (isShowStatusBarLyric) {
-      setLyric(global.lx.player_status.lyricLineText)
+      setLyric(global.s.player_status.lyricLineText)
     } else {
       tray?.setTitle('')
     }
@@ -344,7 +344,7 @@ const init = () => {
 }
 
 export default () => {
-  global.lx.event_app.on('updated_config', (keys, setting) => {
+  global.s.event_app.on('updated_config', (keys, setting) => {
     if (!watchConfigKeys.some(key => keys.includes(key))) return
 
     if (keys.includes('common.langId')) i18n.setLang(setting['common.langId'])
@@ -352,38 +352,38 @@ export default () => {
     init()
   })
 
-  global.lx.event_app.on('main_window_ready_to_show', () => {
+  global.s.event_app.on('main_window_ready_to_show', () => {
     createMenu()
   })
-  global.lx.event_app.on('main_window_show', () => {
+  global.s.event_app.on('main_window_show', () => {
     createMenu()
   })
   if (!isWin) {
-    global.lx.event_app.on('main_window_focus', () => {
+    global.s.event_app.on('main_window_focus', () => {
       createMenu()
     })
-    global.lx.event_app.on('main_window_blur', () => {
+    global.s.event_app.on('main_window_blur', () => {
       createMenu()
     })
   }
-  global.lx.event_app.on('main_window_hide', () => {
+  global.s.event_app.on('main_window_hide', () => {
     createMenu()
   })
-  global.lx.event_app.on('main_window_close', () => {
+  global.s.event_app.on('main_window_close', () => {
     destroyTray()
   })
 
-  global.lx.event_app.on('app_inited', () => {
-    i18n.setLang(global.lx.appSetting['common.langId'])
+  global.s.event_app.on('app_inited', () => {
+    i18n.setLang(global.s.appSetting['common.langId'])
     init()
   })
 
-  global.lx.event_app.on('system_theme_change', () => {
-    if (global.lx.appSetting['tray.themeId'] != TRAY_AUTO_ID) return
-    setTrayImage(global.lx.appSetting['tray.themeId'])
+  global.s.event_app.on('system_theme_change', () => {
+    if (global.s.appSetting['tray.themeId'] != TRAY_AUTO_ID) return
+    setTrayImage(global.s.appSetting['tray.themeId'])
   })
 
-  global.lx.event_app.on('player_status', (status) => {
+  global.s.event_app.on('player_status', (status) => {
     let updated = false
     if (status.status) {
       switch (status.status) {
@@ -400,7 +400,7 @@ export default () => {
         case 'playing':
           playerState.play = true
           playerState.empty &&= false
-          setLyric(global.lx.player_status.lyricLineText)
+          setLyric(global.s.player_status.lyricLineText)
           break
         case 'stoped':
           playerState.play &&= false

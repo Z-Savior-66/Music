@@ -5,7 +5,7 @@ import { appSetting } from '@renderer/store/setting'
 import { SYNC_CODE } from '@common/constants_sync'
 
 export default () => {
-  const handleSyncList = (event: LX.Sync.SyncMainWindowActions) => {
+  const handleSyncList = (event: S.Sync.SyncMainWindowActions) => {
     // console.log(event)
     switch (event.action) {
       case 'select_mode':

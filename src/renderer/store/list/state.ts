@@ -13,19 +13,19 @@ export {
 
 // export const isInitedList: Ref<boolean> = ref(false)
 
-// export const allList: Map<string, LX.Music.MusicInfo[]> = window.lxData.allList = markRaw(new Map())
+// export const allList: Map<string, S.Music.MusicInfo[]> = window.sData.allList = markRaw(new Map())
 
-// export const defaultList: Omit<LX.List.MyDefaultListInfo, 'list'> = reactive({
+// export const defaultList: Omit<S.List.MyDefaultListInfo, 'list'> = reactive({
 //   id: 'default',
 //   name: '试听列表',
 // })
 
-// export const loveList: Omit<LX.List.MyLoveListInfo, 'list'> = reactive({
+// export const loveList: Omit<S.List.MyLoveListInfo, 'list'> = reactive({
 //   id: 'love',
 //   name: '我的收藏',
 // })
 
-// export const tempList: Omit<LX.List.MyTempListInfo, 'list'> = reactive({
+// export const tempList: Omit<S.List.MyTempListInfo, 'list'> = reactive({
 //   id: 'temp',
 //   name: '临时列表',
 //   meta: {},
@@ -36,7 +36,7 @@ export const tempListMeta = {
 }
 
 
-// export const userLists: LX.List.UserListInfo[] = window.lxData.userLists = reactive([])
+// export const userLists: S.List.UserListInfo[] = window.sData.userLists = reactive([])
 
 export const fetchingListStatus = reactive<Record<string, boolean>>({})
 

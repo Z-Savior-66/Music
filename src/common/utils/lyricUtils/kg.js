@@ -1,7 +1,7 @@
 import { inflate } from 'zlib'
 import { decodeName } from './util'
 
-// https://github.com/lyswhut/lx-music-desktop/issues/296#issuecomment-683285784
+// https://github.com/lyswhut/s-music-desktop/issues/296#issuecomment-683285784
 const enc_key = Buffer.from([0x40, 0x47, 0x61, 0x77, 0x5e, 0x32, 0x74, 0x47, 0x51, 0x36, 0x31, 0x2d, 0xce, 0xd2, 0x6e, 0x69], 'binary')
 const decodeLyric = str => new Promise((resolve, reject) => {
   if (!str.length) return
@@ -39,7 +39,7 @@ const parseLyric = str => {
     }
   }
   let i = 0
-  let lxlyric = str.replace(/\[((\d+),\d+)\].*/g, str => {
+  let slyric = str.replace(/\[((\d+),\d+)\].*/g, str => {
     let result = str.match(/\[((\d+),\d+)\].*/)
     let time = parseInt(result[2])
     let ms = time % 1000
@@ -55,16 +55,16 @@ const parseLyric = str => {
   })
   rlyric = rlyric ? rlyric.join('\n') : ''
   tlyric = tlyric ? tlyric.join('\n') : ''
-  lxlyric = lxlyric.replace(/<(\d+,\d+),\d+>/g, '<$1>')
-  lxlyric = decodeName(lxlyric)
-  lyric = lxlyric.replace(/<\d+,\d+>/g, '')
+  slyric = slyric.replace(/<(\d+,\d+),\d+>/g, '<$1>')
+  slyric = decodeName(slyric)
+  lyric = slyric.replace(/<\d+,\d+>/g, '')
   rlyric = decodeName(rlyric)
   tlyric = decodeName(tlyric)
   return {
     lyric,
     tlyric,
     rlyric,
-    lxlyric,
+    slyric,
   }
 }
 

@@ -4,13 +4,13 @@
 import { type DislikeType, type AppType, type ListType } from '@main/event'
 import { type DBSeriveTypes } from '@main/worker/utils'
 
-interface Lx {
+interface S {
   inited: boolean
-  appSetting: LX.AppSetting
+  appSetting: S.AppSetting
   hotKey: {
     enable: boolean
-    config: LX.HotKeyConfigAll
-    state: LX.HotKeyState
+    config: S.HotKeyConfigAll
+    state: S.HotKeyState
   }
   /**
    * 是否跳过托盘退出
@@ -26,14 +26,14 @@ interface Lx {
   worker: {
     dbService: DBSeriveTypes
   }
-  theme: LX.ThemeSetting
-  player_status: LX.Player.Status
+  theme: S.ThemeSetting
+  player_status: S.Player.Status
 }
 
 declare global {
   // declare module NodeJS {
   //   export interface Global {
-  //     lx: {
+  //     s: {
   //       app_event: {
   //         winMain: WinMainEvent
   //         winLyric: WinLyricEvent
@@ -43,11 +43,11 @@ declare global {
   // }
 
   // var isDev: boolean
-  var envParams: LX.EnvParams
+  var envParams: S.EnvParams
   var staticPath: string
-  var lxDataPath: string
-  var lxOldDataPath: string
-  var lx: Lx
+  var sDataPath: string
+  var sOldDataPath: string
+  var s: S
   var appWorder: AppWorder
 }
 

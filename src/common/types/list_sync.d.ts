@@ -1,4 +1,4 @@
-declare namespace LX {
+declare namespace S {
 
   namespace Sync {
     namespace List {
@@ -7,20 +7,20 @@ declare namespace LX {
         snapshotKey: string
       }
 
-      type ActionList = LX.Sync.SyncAction<'list_data_overwrite', LX.List.ListActionDataOverwrite>
-      | SyncAction<'list_create', LX.List.ListActionAdd>
-      | SyncAction<'list_remove', LX.List.ListActionRemove>
-      | SyncAction<'list_update', LX.List.ListActionUpdate>
-      | SyncAction<'list_update_position', LX.List.ListActionUpdatePosition>
-      | SyncAction<'list_music_add', LX.List.ListActionMusicAdd>
-      | SyncAction<'list_music_move', LX.List.ListActionMusicMove>
-      | SyncAction<'list_music_remove', LX.List.ListActionMusicRemove>
-      | SyncAction<'list_music_update', LX.List.ListActionMusicUpdate>
-      | SyncAction<'list_music_update_position', LX.List.ListActionMusicUpdatePosition>
-      | SyncAction<'list_music_overwrite', LX.List.ListActionMusicOverwrite>
-      | SyncAction<'list_music_clear', LX.List.ListActionMusicClear>
+      type ActionList = S.Sync.SyncAction<'list_data_overwrite', S.List.ListActionDataOverwrite>
+      | SyncAction<'list_create', S.List.ListActionAdd>
+      | SyncAction<'list_remove', S.List.ListActionRemove>
+      | SyncAction<'list_update', S.List.ListActionUpdate>
+      | SyncAction<'list_update_position', S.List.ListActionUpdatePosition>
+      | SyncAction<'list_music_add', S.List.ListActionMusicAdd>
+      | SyncAction<'list_music_move', S.List.ListActionMusicMove>
+      | SyncAction<'list_music_remove', S.List.ListActionMusicRemove>
+      | SyncAction<'list_music_update', S.List.ListActionMusicUpdate>
+      | SyncAction<'list_music_update_position', S.List.ListActionMusicUpdatePosition>
+      | SyncAction<'list_music_overwrite', S.List.ListActionMusicOverwrite>
+      | SyncAction<'list_music_clear', S.List.ListActionMusicClear>
 
-      type ListData = Omit<LX.List.ListDataFull, 'tempList'>
+      type ListData = Omit<S.List.ListDataFull, 'tempList'>
       type SyncMode = 'merge_local_remote'
       | 'merge_remote_local'
       | 'overwrite_local_remote'

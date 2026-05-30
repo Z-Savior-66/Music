@@ -8,15 +8,15 @@ import { setPowerSaveBlocker as setPowerSaveBlockerRemote } from '@renderer/util
  * 过滤列表中已播放的歌曲
  */
 export const filterList = async({ playedList, listId, list, playerMusicInfo, isNext }: {
-  playedList: LX.Player.PlayMusicInfo[]
+  playedList: S.Player.PlayMusicInfo[]
   listId: string
-  list: Array<LX.Music.MusicInfo | LX.Download.ListItem>
-  playerMusicInfo?: LX.Music.MusicInfo | LX.Download.ListItem
+  list: Array<S.Music.MusicInfo | S.Download.ListItem>
+  playerMusicInfo?: S.Music.MusicInfo | S.Download.ListItem
   isNext: boolean
 }) => {
   // if (this.list.listName === null) return
   // console.log(isCheckFile)
-  let { filteredList, canPlayList, playerIndex } = await window.lx.worker.main.filterMusicList({
+  let { filteredList, canPlayList, playerIndex } = await window.s.worker.main.filterMusicList({
     listId,
     list: list.map(m => toRaw(m)),
     playedList: toRaw(playedList),

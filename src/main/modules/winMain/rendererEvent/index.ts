@@ -40,7 +40,7 @@ export default () => {
   soundEffect()
   openAPI()
 
-  global.lx.event_app.on('updated_config', (keys, setting) => {
+  global.s.event_app.on('updated_config', (keys, setting) => {
     sendConfigChange(setting)
   })
 }

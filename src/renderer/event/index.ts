@@ -3,12 +3,12 @@ import { registerKeyEvent, createKeyEventHub } from './keyEvent'
 import { createAppEventHub } from './appEvent'
 
 export const registerEvents = () => {
-  window.lx.isEditingHotKey = false
+  window.s.isEditingHotKey = false
   window.app_event = createAppEventHub()
   window.key_event = createKeyEventHub()
 
-  const setHotkeyConfig = ({ local, global }: LX.HotKeyConfigAll) => {
-    window.lx.appHotKeyConfig = {
+  const setHotkeyConfig = ({ local, global }: S.HotKeyConfigAll) => {
+    window.s.appHotKeyConfig = {
       local,
       global,
     }
@@ -21,7 +21,7 @@ export const registerEvents = () => {
   })
 
   onKeyDown(({ params: { key } }) => {
-    const keyInfo = window.lx.appHotKeyConfig.global.keys[key]
+    const keyInfo = window.s.appHotKeyConfig.global.keys[key]
     if (keyInfo) window.key_event.emit(keyInfo.action)
   })
 

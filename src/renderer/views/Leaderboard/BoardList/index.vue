@@ -83,7 +83,7 @@ watch(() => props.source, async(source) => {
     list.splice(0, list.length)
     return
   }
-  // const source = (await getLeaderboardSetting()).source as LX.OnlineSource
+  // const source = (await getLeaderboardSetting()).source as S.OnlineSource
   let boardList = boards[source]
   if (boardList == null) {
     const nextBoardList = await getBoardsList(source)

@@ -8,10 +8,10 @@ import {
   // clearDislikeList,
 } from './dbHelper'
 
-// let dislikeInfo: LX.Dislike.DislikeInfo
+// let dislikeInfo: S.Dislike.DislikeInfo
 
-const toDBDislikeInfo = (musicInfos: string[]): LX.DBService.DislikeInfo[] => {
-  const list: LX.DBService.DislikeInfo[] = []
+const toDBDislikeInfo = (musicInfos: string[]): S.DBService.DislikeInfo[] => {
+  const list: S.DBService.DislikeInfo[] = []
   for (const item of musicInfos) {
     if (!item.trim()) continue
     list.push({
@@ -22,7 +22,7 @@ const toDBDislikeInfo = (musicInfos: string[]): LX.DBService.DislikeInfo[] => {
 }
 
 const initDislikeList = () => {
-  const dislikeInfo: LX.Dislike.DislikeInfo = {
+  const dislikeInfo: S.Dislike.DislikeInfo = {
     // musicIds: new Set<string>(),
     names: new Set<string>(),
     singerNames: new Set<string>(),
@@ -60,7 +60,7 @@ const initDislikeList = () => {
  * 获取不喜欢列表信息
  * @returns 不喜欢列表信息
  */
-export const getDislikeListInfo = (): LX.Dislike.DislikeInfo => {
+export const getDislikeListInfo = (): S.Dislike.DislikeInfo => {
   // if (!dislikeInfo) initDislikeList()
   return initDislikeList()
 }
@@ -70,7 +70,7 @@ export const getDislikeListInfo = (): LX.Dislike.DislikeInfo => {
  * 添加信息
  * @param lists 列表信息
  */
-export const dislikeInfoAdd = async(lists: LX.Dislike.DislikeMusicInfo[]) => {
+export const dislikeInfoAdd = async(lists: S.Dislike.DislikeMusicInfo[]) => {
   await insertDislikeList(lists.map(info => ({ content: `${info.name}${SPLIT_CHAR.DISLIKE_NAME}${info.singer}` })))
 }
 

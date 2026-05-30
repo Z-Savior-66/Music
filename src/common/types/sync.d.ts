@@ -1,4 +1,4 @@
-declare namespace LX {
+declare namespace S {
   namespace Sync {
 
     interface EnableServer {
@@ -21,8 +21,8 @@ declare namespace LX {
 
 
     interface ModeTypes {
-      list: LX.Sync.List.SyncMode
-      dislike: LX.Sync.Dislike.SyncMode
+      list: S.Sync.List.SyncMode
+      dislike: S.Sync.Dislike.SyncMode
     }
 
     type ModeType = { [K in keyof ModeTypes]: { type: K, mode: ModeTypes[K] } }[keyof ModeTypes]

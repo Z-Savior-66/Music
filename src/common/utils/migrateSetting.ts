@@ -17,7 +17,7 @@ const oldThemeMap = {
   9: 'happy_new_year',
 } as const
 
-export default (setting: any): Partial<LX.AppSetting> => {
+export default (setting: any): Partial<S.AppSetting> => {
   setting = { ...setting }
 
   // 迁移 v2.0.0 之前的配置
@@ -65,7 +65,7 @@ export default (setting: any): Partial<LX.AppSetting> => {
     setting['player.isShowLyricTranslation'] = setting.player?.isShowLyricTranslation
     setting['player.isShowLyricRoma'] = setting.player?.isShowLyricRoma
     setting['player.isS2t'] = setting.player?.isS2t
-    setting['player.isPlayLxlrc'] = setting.player?.isPlayLxlrc
+    setting['player.isPlaySlrc'] = setting.player?.isPlaySlrc
     setting['player.isSavePlayTime'] = setting.player?.isSavePlayTime
     setting['player.audioVisualization'] = setting.player?.audioVisualization
     setting['player.waitPlayEndStop'] = setting.player?.waitPlayEndStop

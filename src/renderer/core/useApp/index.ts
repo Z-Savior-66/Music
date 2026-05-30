@@ -71,7 +71,7 @@ export default () => {
       sendInited()
 
       handleListAutoUpdate()
-      if (window.lx.isProd && appSetting['common.isAgreePact']) checkUpdate()
+      if (window.s.isProd && appSetting['common.isAgreePact']) checkUpdate()
     })
   })
 }

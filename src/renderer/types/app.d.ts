@@ -2,19 +2,19 @@
 import { type AppEventTypes, type KeyEventTypes } from '@renderer/event'
 import { type MainTypes, type DownloadTypes } from '@renderer/worker/utils'
 import { type I18n } from '@renderer/plugins/i18n'
-// interface LX.EnvParams {
+// interface S.EnvParams {
 //   deeplink?: string | null
-//   cmdParams: LX.CmdParams
+//   cmdParams: S.CmdParams
 //   workAreaSize?: Electron.Size
 // }
 
 
-interface Lx {
-  // appSetting: LX.AppSetting
+interface S {
+  // appSetting: S.AppSetting
   isEditingHotKey: boolean
   isPlayedStop: boolean
-  appHotKeyConfig: LX.HotKeyConfigAll
-  restorePlayInfo: LX.Player.SavedPlayInfo | null
+  appHotKeyConfig: S.HotKeyConfigAll
+  restorePlayInfo: S.Player.SavedPlayInfo | null
   worker: {
     main: MainTypes
     download: DownloadTypes
@@ -36,12 +36,12 @@ declare global {
     ELECTRON_DISABLE_SECURITY_WARNINGS?: string
     dt: boolean
     shouldUseDarkColors: boolean
-    lx: Lx
+    s: S
     app_event: AppEventTypes
     key_event: KeyEventTypes
     i18n: I18n
 
-    lxData: any
+    sData: any
 
     setTheme: (colors: Record<string, string>) => void
     setLang: (lang?: string) => void
@@ -56,7 +56,7 @@ declare global {
   // const ENVIRONMENT: NodeJS.ProcessEnv
 
 
-  namespace LX {
+  namespace S {
     interface KeyDownEevent {
       /**
        * 原始事件
@@ -92,7 +92,7 @@ declare global {
       /**
        * 此事件是否标记为 已被处理，如果设置为`true`，则停止触发key event事件
        */
-      lx_handled?: boolean
+      s_handled?: boolean
     }
   }
 

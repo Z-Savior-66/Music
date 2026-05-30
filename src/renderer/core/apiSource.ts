@@ -8,11 +8,11 @@ let prevId = ''
 export const setUserApi = async(apiId: string) => {
   if (prevId == apiId) return
   prevId = apiId
-  if (window.lx.apiInitPromise[1]) {
-    window.lx.apiInitPromise[0] = new Promise<boolean>(resolve => {
-      window.lx.apiInitPromise[1] = false
-      window.lx.apiInitPromise[2] = (result: boolean) => {
-        window.lx.apiInitPromise[1] = true
+  if (window.s.apiInitPromise[1]) {
+    window.s.apiInitPromise[0] = new Promise<boolean>(resolve => {
+      window.s.apiInitPromise[1] = false
+      window.s.apiInitPromise[2] = (result: boolean) => {
+        window.s.apiInitPromise[1] = true
         resolve(result)
       }
     })
@@ -28,7 +28,7 @@ export const setUserApi = async(apiId: string) => {
       apiSource.value = apiId
     }).catch(err => {
       if (prevId != apiId) return
-      if (!window.lx.apiInitPromise[1]) window.lx.apiInitPromise[2](false)
+      if (!window.s.apiInitPromise[1]) window.s.apiInitPromise[2](false)
       console.log(err)
       let api = apiSourceInfo.find(api => !api.disabled)
       if (!api) return
@@ -40,7 +40,7 @@ export const setUserApi = async(apiId: string) => {
     qualityList.value = musicSdk.supportQuality[apiId] ?? {}
     apiSource.value = apiId
     void setUserApiAction(apiId)
-    if (!window.lx.apiInitPromise[1]) window.lx.apiInitPromise[2](true)
+    if (!window.s.apiInitPromise[1]) window.s.apiInitPromise[2](true)
   }
 
   if (prevId != apiId) return

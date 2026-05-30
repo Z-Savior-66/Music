@@ -6,26 +6,26 @@ import { SYNC_CLOSE_CODE } from '@common/constants_sync'
 import { filterRules } from '../utils'
 // import { LIST_IDS } from '@common/constants'
 
-// type ListInfoType = LX.Dislike.UserListInfoFull | LX.Dislike.MyDefaultListInfoFull | LX.Dislike.MyLoveListInfoFull
+// type ListInfoType = S.Dislike.UserListInfoFull | S.Dislike.MyDefaultListInfoFull | S.Dislike.MyLoveListInfoFull
 
-// let wss: LX.Sync.Server.SocketServer | null
+// let wss: S.Sync.Server.SocketServer | null
 let syncingId: string | null = null
 const wait = async(time = 1000) => await new Promise((resolve, reject) => setTimeout(resolve, time))
 
 
-const getRemoteListData = async(socket: LX.Sync.Server.Socket): Promise<LX.Dislike.DislikeRules> => {
+const getRemoteListData = async(socket: S.Sync.Server.Socket): Promise<S.Dislike.DislikeRules> => {
   console.log('getRemoteListData')
   return (await socket.remoteQueueDislike.dislike_sync_get_list_data()) ?? ''
 }
 
-const getRemoteDataMD5 = async(socket: LX.Sync.Server.Socket): Promise<string> => {
+const getRemoteDataMD5 = async(socket: S.Sync.Server.Socket): Promise<string> => {
   return socket.remoteQueueDislike.dislike_sync_get_md5()
 }
 
-// const getLocalDislikeData  async(socket: LX.Sync.Server.Socket): Promise<LX.Sync.Dislike.ListData> => {
+// const getLocalDislikeData  async(socket: S.Sync.Server.Socket): Promise<S.Sync.Dislike.ListData> => {
 //   return getUserSpace(socket.userInfo.name).dislikeManage.getListData()
 // }
-const getSyncMode = async(socket: LX.Sync.Server.Socket): Promise<LX.Sync.Dislike.SyncMode> => new Promise((resolve, reject) => {
+const getSyncMode = async(socket: S.Sync.Server.Socket): Promise<S.Sync.Dislike.SyncMode> => new Promise((resolve, reject) => {
   const handleDisconnect = (err: Error) => {
     sendCloseSelectMode()
     removeSelectModeListener()
@@ -42,22 +42,22 @@ const getSyncMode = async(socket: LX.Sync.Server.Socket): Promise<LX.Sync.Dislik
     removeEventClose()
   })
 })
-// const getSyncMode = async(socket: LX.Sync.Server.Socket): Promise<LX.Sync.Dislike.SyncMode> => {
+// const getSyncMode = async(socket: S.Sync.Server.Socket): Promise<S.Sync.Dislike.SyncMode> => {
 //   return socket.remoteQueueDislike.list_sync_get_sync_mode()
 // }
 
-const finishedSync = async(socket: LX.Sync.Server.Socket) => {
+const finishedSync = async(socket: S.Sync.Server.Socket) => {
   await socket.remoteQueueDislike.dislike_sync_finished()
 }
 
 
-const setLocalList = async(socket: LX.Sync.Server.Socket, listData: LX.Dislike.DislikeRules) => {
+const setLocalList = async(socket: S.Sync.Server.Socket, listData: S.Dislike.DislikeRules) => {
   await setLocalDislikeData(listData)
   const userSpace = getUserSpace(socket.userInfo.name)
   return userSpace.dislikeManage.createSnapshot()
 }
 
-const overwriteRemoteListData = async(socket: LX.Sync.Server.Socket, listData: LX.Dislike.DislikeRules, key: string, excludeIds: string[] = []) => {
+const overwriteRemoteListData = async(socket: S.Sync.Server.Socket, listData: S.Dislike.DislikeRules, key: string, excludeIds: string[] = []) => {
   const action = { action: 'dislike_data_overwrite', data: listData } as const
   const tasks: Array<Promise<void>> = []
   const userSpace = getUserSpace(socket.userInfo.name)
@@ -75,24 +75,24 @@ const overwriteRemoteListData = async(socket: LX.Sync.Server.Socket, listData: L
   if (!tasks.length) return
   await Promise.all(tasks)
 }
-const setRemotelList = async(socket: LX.Sync.Server.Socket, listData: LX.Dislike.DislikeRules, key: string): Promise<void> => {
+const setRemotelList = async(socket: S.Sync.Server.Socket, listData: S.Dislike.DislikeRules, key: string): Promise<void> => {
   await socket.remoteQueueDislike.dislike_sync_set_list_data(listData)
   const userSpace = getUserSpace(socket.userInfo.name)
   await userSpace.dislikeManage.updateDeviceSnapshotKey(socket.keyInfo.clientId, key)
 }
 
 
-const mergeList = (socket: LX.Sync.Server.Socket, sourceListData: LX.Dislike.DislikeRules, targetListData: LX.Dislike.DislikeRules): LX.Dislike.DislikeRules => {
+const mergeList = (socket: S.Sync.Server.Socket, sourceListData: S.Dislike.DislikeRules, targetListData: S.Dislike.DislikeRules): S.Dislike.DislikeRules => {
   return Array.from(filterRules(sourceListData + '\n' + targetListData)).join('\n')
 }
 
-const handleMergeListData = async(socket: LX.Sync.Server.Socket): Promise<[LX.Dislike.DislikeRules, boolean, boolean]> => {
-  const mode: LX.Sync.Dislike.SyncMode = await getSyncMode(socket)
+const handleMergeListData = async(socket: S.Sync.Server.Socket): Promise<[S.Dislike.DislikeRules, boolean, boolean]> => {
+  const mode: S.Sync.Dislike.SyncMode = await getSyncMode(socket)
 
   if (mode == 'cancel') throw new Error('cancel')
   const [remoteListData, localListData] = await Promise.all([getRemoteListData(socket), getLocalDislikeData()])
   console.log('handleMergeListData', 'remoteListData, localListData')
-  let listData: LX.Dislike.DislikeRules
+  let listData: S.Dislike.DislikeRules
   let requiredUpdateLocalListData = true
   let requiredUpdateRemoteListData = true
   switch (mode) {
@@ -117,7 +117,7 @@ const handleMergeListData = async(socket: LX.Sync.Server.Socket): Promise<[LX.Di
   return [listData, requiredUpdateLocalListData, requiredUpdateRemoteListData]
 }
 
-const handleSyncList = async(socket: LX.Sync.Server.Socket) => {
+const handleSyncList = async(socket: S.Sync.Server.Socket) => {
   const [remoteListData, localListData] = await Promise.all([getRemoteListData(socket), getLocalDislikeData()])
   console.log('handleSyncList', 'remoteListData, localListData')
   console.log('localListData', localListData.length)
@@ -153,10 +153,10 @@ const handleSyncList = async(socket: LX.Sync.Server.Socket) => {
 }
 
 const mergeDataFromSnapshot = (
-  sourceList: LX.Dislike.DislikeRules,
-  targetList: LX.Dislike.DislikeRules,
-  snapshotList: LX.Dislike.DislikeRules,
-): LX.Dislike.DislikeRules => {
+  sourceList: S.Dislike.DislikeRules,
+  targetList: S.Dislike.DislikeRules,
+  snapshotList: S.Dislike.DislikeRules,
+): S.Dislike.DislikeRules => {
   const removedRules = new Set<string>()
   const sourceRules = filterRules(sourceList)
   const targetRules = filterRules(targetList)
@@ -171,7 +171,7 @@ const mergeDataFromSnapshot = (
     return !removedRules.has(rule)
   }))).join('\n')
 }
-const checkListLatest = async(socket: LX.Sync.Server.Socket) => {
+const checkListLatest = async(socket: S.Sync.Server.Socket) => {
   const remoteListMD5 = await getRemoteDataMD5(socket)
   const userSpace = getUserSpace(socket.userInfo.name)
   const userCurrentListInfoKey = await userSpace.dislikeManage.getDeviceCurrentSnapshotKey(socket.keyInfo.clientId)
@@ -181,7 +181,7 @@ const checkListLatest = async(socket: LX.Sync.Server.Socket) => {
   return latest
 }
 
-const handleMergeListDataFromSnapshot = async(socket: LX.Sync.Server.Socket, snapshot: LX.Dislike.DislikeRules) => {
+const handleMergeListDataFromSnapshot = async(socket: S.Sync.Server.Socket, snapshot: S.Dislike.DislikeRules) => {
   if (await checkListLatest(socket)) return
 
   const [remoteListData, localListData] = await Promise.all([getRemoteListData(socket), getLocalDislikeData()])
@@ -193,7 +193,7 @@ const handleMergeListDataFromSnapshot = async(socket: LX.Sync.Server.Socket, sna
   if (err) throw err
 }
 
-const syncDislike = async(socket: LX.Sync.Server.Socket) => {
+const syncDislike = async(socket: S.Sync.Server.Socket) => {
   // socket.data.snapshotFilePath = getSnapshotFilePath(socket.keyInfo)
   // console.log(socket.keyInfo)
   if (!socket.feature.dislike) throw new Error('dislike feature options not available')
@@ -212,7 +212,7 @@ const syncDislike = async(socket: LX.Sync.Server.Socket) => {
   await handleSyncList(socket)
 }
 
-export const sync = async(socket: LX.Sync.Server.Socket) => {
+export const sync = async(socket: S.Sync.Server.Socket) => {
   let disconnected = false
   socket.onClose(() => {
     disconnected = true

@@ -21,10 +21,10 @@ const denyEvents = [
 
 
 export const getProxy = () => {
-  if (global.lx.appSetting['network.proxy.enable'] && global.lx.appSetting['network.proxy.host']) {
+  if (global.s.appSetting['network.proxy.enable'] && global.s.appSetting['network.proxy.host']) {
     return {
-      host: global.lx.appSetting['network.proxy.host'],
-      port: global.lx.appSetting['network.proxy.port'],
+      host: global.s.appSetting['network.proxy.host'],
+      port: global.s.appSetting['network.proxy.port'],
     }
   }
   const envProxy = envParams.cmdParams['proxy-server']
@@ -42,8 +42,8 @@ export const getProxy = () => {
     port: '',
   }
 }
-const handleUpdateProxy = (keys: Array<keyof LX.AppSetting>) => {
-  if (keys.includes('network.proxy.enable') || (global.lx.appSetting['network.proxy.enable'] && keys.some(k => k.startsWith('network.proxy.')))) {
+const handleUpdateProxy = (keys: Array<keyof S.AppSetting>) => {
+  if (keys.includes('network.proxy.enable') || (global.s.appSetting['network.proxy.enable'] && keys.some(k => k.startsWith('network.proxy.')))) {
     sendEvent(USER_API_RENDERER_EVENT_NAME.proxyUpdate, getProxy())
   }
 }
@@ -55,7 +55,7 @@ const winEvent = () => {
   })
 }
 
-export const createWindow = async(userApi: LX.UserApi.UserApiInfo) => {
+export const createWindow = async(userApi: S.UserApi.UserApiInfo) => {
   await closeWindow()
   dir ??= process.env.NODE_ENV !== 'production' ? webpackUserApiPath : path.join(__dirname, 'userApi')
 
@@ -123,7 +123,7 @@ export const createWindow = async(userApi: LX.UserApi.UserApiInfo) => {
   await browserWindow.loadURL('data:text/html;charset=UTF-8,' + encodeURIComponent(html))
 
   browserWindow.on('ready-to-show', async() => {
-    global.lx.event_app.on('updated_config', handleUpdateProxy)
+    global.s.event_app.on('updated_config', handleUpdateProxy)
     sendEvent(USER_API_RENDERER_EVENT_NAME.initEnv, { ...userApi, script: await getScript(userApi.id), proxy: getProxy() })
   })
 
@@ -132,7 +132,7 @@ export const createWindow = async(userApi: LX.UserApi.UserApiInfo) => {
 }
 
 export const closeWindow = async() => {
-  global.lx.event_app.off('updated_config', handleUpdateProxy)
+  global.s.event_app.off('updated_config', handleUpdateProxy)
   if (!browserWindow) return
   await Promise.all([
     browserWindow.webContents.session.clearAuthCache(),

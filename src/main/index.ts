@@ -18,7 +18,7 @@ const init = () => {
   console.log('init')
   void initAppSetting().then(() => {
     registerModules()
-    global.lx.event_app.app_inited()
+    global.s.event_app.app_inited()
   })
 }
 

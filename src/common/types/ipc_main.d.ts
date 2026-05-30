@@ -1,4 +1,4 @@
-declare namespace LX {
+declare namespace S {
   interface IpcMainEvent {
     event: Electron.IpcMainEvent
   }
@@ -6,8 +6,8 @@ declare namespace LX {
     event: Electron.IpcMainEvent
     params: T
   }
-  type IpcMainEventListener = (params: LX.IpcMainEvent) => void
-  type IpcMainEventListenerParams<T> = (params: LX.IpcMainEventParams<T>) => void
+  type IpcMainEventListener = (params: S.IpcMainEvent) => void
+  type IpcMainEventListenerParams<T> = (params: S.IpcMainEventParams<T>) => void
 
   interface IpcMainInvokeEvent {
     event: Electron.IpcMainInvokeEvent
@@ -17,8 +17,8 @@ declare namespace LX {
     params: T
   }
 
-  type IpcMainInvokeEventListener = (params: LX.IpcMainInvokeEvent) => Promise<void>
-  type IpcMainInvokeEventListenerParams<T> = (params: LX.IpcMainInvokeEventParams<T>) => Promise<void>
-  type IpcMainInvokeEventListenerValue<V> = (params: LX.IpcMainInvokeEvent) => Promise<V>
-  type IpcMainInvokeEventListenerParamsValue<T, V> = (params: LX.IpcMainInvokeEventParams<T>) => Promise<V>
+  type IpcMainInvokeEventListener = (params: S.IpcMainInvokeEvent) => Promise<void>
+  type IpcMainInvokeEventListenerParams<T> = (params: S.IpcMainInvokeEventParams<T>) => Promise<void>
+  type IpcMainInvokeEventListenerValue<V> = (params: S.IpcMainInvokeEvent) => Promise<V>
+  type IpcMainInvokeEventListenerParamsValue<T, V> = (params: S.IpcMainInvokeEventParams<T>) => Promise<V>
 }

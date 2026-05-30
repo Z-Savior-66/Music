@@ -7,7 +7,7 @@ import {
 } from './dbHelper'
 
 
-const toDBMusicInfo = (id: string, musicInfos: LX.Music.MusicInfo[]): LX.DBService.MusicInfoOtherSource[] => {
+const toDBMusicInfo = (id: string, musicInfos: S.Music.MusicInfo[]): S.DBService.MusicInfoOtherSource[] => {
   return musicInfos.map((info, index) => {
     return {
       ...info,
@@ -23,7 +23,7 @@ const toDBMusicInfo = (id: string, musicInfos: LX.Music.MusicInfo[]): LX.DBServi
  * @param id 歌曲id
  * @returns 歌词信息
  */
-export const getMusicInfoOtherSource = (id: string): LX.Music.MusicInfoOnline[] => {
+export const getMusicInfoOtherSource = (id: string): S.Music.MusicInfoOnline[] => {
   const list = queryMusicInfo(id).sort((a, b) => a.order - b.order).map(info => {
     return {
       id: info.id,
@@ -43,7 +43,7 @@ export const getMusicInfoOtherSource = (id: string): LX.Music.MusicInfoOnline[] 
  * @param id 歌曲id
  * @param musicInfos 歌词信息
  */
-export const musicInfoOtherSourceAdd = (id: string, musicInfos: LX.Music.MusicInfoOnline[]) => {
+export const musicInfoOtherSourceAdd = (id: string, musicInfos: S.Music.MusicInfoOnline[]) => {
   insertMusicInfo(toDBMusicInfo(id, musicInfos))
 }
 

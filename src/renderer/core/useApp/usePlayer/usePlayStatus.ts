@@ -54,7 +54,7 @@ export default () => {
       lyric: musicInfo.lrc ?? '',
       tlyric: musicInfo.tlrc ?? '',
       rlyric: musicInfo.rlrc ?? '',
-      lxlyric: musicInfo.lxlrc ?? '',
+      slyric: musicInfo.slrc ?? '',
       lyricLineText: '',
       lyricLineAllText: '',
     })
@@ -193,7 +193,7 @@ export default () => {
       lyric: musicInfo.lrc ?? '',
       tlyric: musicInfo.tlrc ?? '',
       rlyric: musicInfo.rlrc ?? '',
-      lxlyric: musicInfo.lxlrc ?? '',
+      slyric: musicInfo.slrc ?? '',
     })
   }
 }

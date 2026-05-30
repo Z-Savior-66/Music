@@ -6,7 +6,7 @@ import { toMD5 } from '@common/utils/nodejs'
 import { SYNC_CODE } from '@common/constants_sync'
 
 
-const hello = async(urlInfo: LX.Sync.Client.UrlInfo) => request(`${urlInfo.httpProtocol}//${urlInfo.hostPath}/hello`)
+const hello = async(urlInfo: S.Sync.Client.UrlInfo) => request(`${urlInfo.httpProtocol}//${urlInfo.hostPath}/hello`)
   .then(({ text }) => text == SYNC_CODE.helloMsg)
   .catch((err: any) => {
     log.error('[auth] hello', err.message)
@@ -14,7 +14,7 @@ const hello = async(urlInfo: LX.Sync.Client.UrlInfo) => request(`${urlInfo.httpP
     return false
   })
 
-const getServerId = async(urlInfo: LX.Sync.Client.UrlInfo) => request(`${urlInfo.httpProtocol}//${urlInfo.hostPath}/id`)
+const getServerId = async(urlInfo: S.Sync.Client.UrlInfo) => request(`${urlInfo.httpProtocol}//${urlInfo.hostPath}/id`)
   .then(({ text }) => {
     if (!text.startsWith(SYNC_CODE.idPrefix)) return ''
     return text.replace(SYNC_CODE.idPrefix, '')
@@ -25,7 +25,7 @@ const getServerId = async(urlInfo: LX.Sync.Client.UrlInfo) => request(`${urlInfo
     throw err
   })
 
-const codeAuth = async(urlInfo: LX.Sync.Client.UrlInfo, serverId: string, authCode: string) => {
+const codeAuth = async(urlInfo: S.Sync.Client.UrlInfo, serverId: string, authCode: string) => {
   let key = toMD5(authCode).substring(0, 16)
   // const iv = Buffer.from(key.split('').reverse().join('')).toString('base64')
   key = Buffer.from(key).toString('base64')
@@ -33,7 +33,7 @@ const codeAuth = async(urlInfo: LX.Sync.Client.UrlInfo, serverId: string, authCo
   publicKey = publicKey.replace(/\n/g, '')
     .replace('-----BEGIN PUBLIC KEY-----', '')
     .replace('-----END PUBLIC KEY-----', '')
-  const msg = aesEncrypt(`${SYNC_CODE.authMsg}\n${publicKey}\n${getComputerName()}\nlx_music_desktop`, key)
+  const msg = aesEncrypt(`${SYNC_CODE.authMsg}\n${publicKey}\n${getComputerName()}\ns_music_desktop`, key)
   // console.log(msg, key)
   return request(`${urlInfo.httpProtocol}//${urlInfo.hostPath}/ah`, { headers: { m: msg } }).then(async({ text, code }) => {
     // console.log(text)
@@ -54,13 +54,13 @@ const codeAuth = async(urlInfo: LX.Sync.Client.UrlInfo, serverId: string, authCo
     }
     // console.log(msg)
     if (!msg) return Promise.reject(new Error(SYNC_CODE.authFailed))
-    const info = JSON.parse(msg) as LX.Sync.ClientKeyInfo
+    const info = JSON.parse(msg) as S.Sync.ClientKeyInfo
     void setSyncAuthKey(serverId, info)
     return info
   })
 }
 
-const keyAuth = async(urlInfo: LX.Sync.Client.UrlInfo, keyInfo: LX.Sync.ClientKeyInfo) => {
+const keyAuth = async(urlInfo: S.Sync.Client.UrlInfo, keyInfo: S.Sync.ClientKeyInfo) => {
   const msg = aesEncrypt(SYNC_CODE.authMsg + getComputerName(), keyInfo.key)
   // eslint-disable-next-line @typescript-eslint/promise-function-async
   return request(`${urlInfo.httpProtocol}//${urlInfo.hostPath}/ah`, { headers: { i: keyInfo.clientId, m: msg } }).then(({ text, code }) => {
@@ -77,7 +77,7 @@ const keyAuth = async(urlInfo: LX.Sync.Client.UrlInfo, keyInfo: LX.Sync.ClientKe
   })
 }
 
-const auth = async(urlInfo: LX.Sync.Client.UrlInfo, serverId: string, authCode?: string) => {
+const auth = async(urlInfo: S.Sync.Client.UrlInfo, serverId: string, authCode?: string) => {
   if (authCode) return codeAuth(urlInfo, serverId, authCode)
   const keyInfo = await getSyncAuthKey(serverId)
   if (!keyInfo) throw new Error(SYNC_CODE.missingAuthCode)
@@ -85,7 +85,7 @@ const auth = async(urlInfo: LX.Sync.Client.UrlInfo, serverId: string, authCode?:
   return keyInfo
 }
 
-export default async(urlInfo: LX.Sync.Client.UrlInfo, authCode?: string) => {
+export default async(urlInfo: S.Sync.Client.UrlInfo, authCode?: string) => {
   console.log('connect: ', urlInfo.href, authCode)
   if (!await hello(urlInfo)) throw new Error(SYNC_CODE.connectServiceFailed)
   const serverId = await getServerId(urlInfo)

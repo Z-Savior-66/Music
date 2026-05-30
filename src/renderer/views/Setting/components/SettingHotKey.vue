@@ -95,7 +95,7 @@ export default {
     const handleHotKeyFocus = (event, info, type) => {
       setTimeout(async() => {
         await hotKeySetEnable(false)
-        window.lx.isEditingHotKey = true
+        window.s.isEditingHotKey = true
         isEditHotKey = true
         let config = hotKeyConfig.value[type][info.name]
         newHotKey = config?.key
@@ -107,7 +107,7 @@ export default {
     const handleHotKeyBlur = (event, info, type) => {
       setTimeout(async() => {
         await hotKeySetEnable(true)
-        window.lx.isEditingHotKey = false
+        window.s.isEditingHotKey = false
         isEditHotKey = false
         const prevInput = hotKeyTargetInput
         hotKeyTargetInput = null
@@ -213,7 +213,7 @@ export default {
       })
     }
 
-    current_hot_key.value = window.lx.appHotKeyConfig
+    current_hot_key.value = window.s.appHotKeyConfig
     initHotKeyConfig()
     void getHotKeyStatus()
 

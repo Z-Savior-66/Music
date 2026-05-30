@@ -12,25 +12,25 @@ export default () => {
   const t = useI18n()
   const showImportTip = useImportTip()
 
-  const handleExportList = (listInfo: LX.List.MyListInfo) => {
+  const handleExportList = (listInfo: S.List.MyListInfo) => {
     if (!listInfo) return
     void openSaveDir({
       title: t('lists__export_part_desc'),
-      defaultPath: `lx_list_part_${filterFileName(listInfo.name)}.lxmc`,
+      defaultPath: `s_list_part_${filterFileName(listInfo.name)}.smc`,
     }).then(async result => {
       if (result.canceled || !result.filePath) return
-      void window.lx.worker.main.saveLxConfigFile(result.filePath, {
+      void window.s.worker.main.saveSConfigFile(result.filePath, {
         type: 'playListPart_v2',
         data: { ...toRaw(listInfo), list: toRaw(await getListMusics(listInfo.id)) },
       })
     })
   }
-  const handleImportList = (listInfo: LX.List.MyListInfo, index: number) => {
+  const handleImportList = (listInfo: S.List.MyListInfo, index: number) => {
     void showSelectDialog({
       title: t('lists__import_part_desc'),
       properties: ['openFile'],
       filters: [
-        { name: 'Play List Part', extensions: ['json', 'lxmc'] },
+        { name: 'Play List Part', extensions: ['json', 'smc'] },
         { name: 'All Files', extensions: ['*'] },
       ],
     }).then(async result => {
@@ -39,11 +39,11 @@ export default () => {
       if (!filePath) return
       let configData: any
       try {
-        configData = await window.lx.worker.main.readLxConfigFile(filePath)
+        configData = await window.s.worker.main.readSConfigFile(filePath)
       } catch (error) {
         return
       }
-      let listData: LX.ConfigFile.MyListInfoPart['data']
+      let listData: S.ConfigFile.MyListInfoPart['data']
       switch (configData.type) {
         case 'playListPart':
           listData = configData.data
@@ -76,9 +76,9 @@ export default () => {
                 {
                   name: listData.name,
                   id: listData.id,
-                  source: (listData as LX.List.UserListInfo).source,
-                  sourceListId: (listData as LX.List.UserListInfo).sourceListId,
-                  locationUpdateTime: (targetList as LX.List.UserListInfo).locationUpdateTime,
+                  source: (listData as S.List.UserListInfo).source,
+                  sourceListId: (listData as S.List.UserListInfo).sourceListId,
+                  locationUpdateTime: (targetList as S.List.UserListInfo).locationUpdateTime,
                 },
               ])
               break
@@ -95,8 +95,8 @@ export default () => {
         position: index,
         name: listData.name,
         id: listData.id,
-        source: (listData as LX.List.UserListInfo).source,
-        sourceListId: (listData as LX.List.UserListInfo).sourceListId,
+        source: (listData as S.List.UserListInfo).source,
+        sourceListId: (listData as S.List.UserListInfo).sourceListId,
       })
       void addListMusics(listData.id, listData.list.map(m => fixNewMusicInfoQuality(m)))
     })

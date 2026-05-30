@@ -2,11 +2,11 @@ import { SYNC_CLOSE_CODE } from '@common/constants_sync'
 import { registerDislikeActionEvent } from '../../../../dislikeEvent'
 import { getUserSpace } from '../../../user'
 
-// let socket: LX.Sync.Server.Socket | null
+// let socket: S.Sync.Server.Socket | null
 let unregisterLocalListAction: (() => void) | null
 
 
-const sendListAction = async(wss: LX.Sync.Server.SocketServer, action: LX.Sync.Dislike.ActionList) => {
+const sendListAction = async(wss: S.Sync.Server.SocketServer, action: S.Sync.Dislike.ActionList) => {
   // console.log('sendListAction', action.action)
   const userSpace = getUserSpace()
   let key = ''
@@ -25,7 +25,7 @@ const sendListAction = async(wss: LX.Sync.Server.SocketServer, action: LX.Sync.D
   }
 }
 
-export const registerEvent = (wss: LX.Sync.Server.SocketServer) => {
+export const registerEvent = (wss: S.Sync.Server.SocketServer) => {
   // socket = _socket
   // socket.onClose(() => {
   //   unregisterLocalListAction?.()

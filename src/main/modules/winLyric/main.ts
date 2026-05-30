@@ -11,8 +11,8 @@ import { encodePath } from '@common/utils/electron'
 let browserWindow: Electron.BrowserWindow | null = null
 let isWinBoundsUpdateing = false
 
-const saveBoundsConfig = debounce((config: Partial<LX.AppSetting>) => {
-  global.lx.event_app.update_config(config)
+const saveBoundsConfig = debounce((config: Partial<S.AppSetting>) => {
+  global.s.event_app.update_config(config)
   if (isWinBoundsUpdateing) isWinBoundsUpdateing = false
 }, 500)
 
@@ -20,9 +20,9 @@ const winEvent = () => {
   if (!browserWindow) return
 
   // browserWindow.on('close', () => {
-  //   if (global.lx.appSetting['desktopLyric.enable'] && !global.lx.mainWindowClosed) {
+  //   if (global.s.appSetting['desktopLyric.enable'] && !global.s.mainWindowClosed) {
   //     browserWindow = null
-  //     global.lx.event_app.update_config({ 'desktopLyric.enable': false })
+  //     global.s.event_app.update_config({ 'desktopLyric.enable': false })
   //   }
   // })
 
@@ -44,10 +44,10 @@ const winEvent = () => {
     } else if (isWin) { // Linux 不允许将窗口设置出屏幕之外，MacOS未知，故只在Windows下执行强制设置
       // 非主动调整窗口触发的窗口位置变化将重置回设置值
       browserWindow!.setBounds({
-        x: global.lx.appSetting['desktopLyric.x'] ?? 0,
-        y: global.lx.appSetting['desktopLyric.y'] ?? 0,
-        width: global.lx.appSetting['desktopLyric.width'],
-        height: global.lx.appSetting['desktopLyric.height'],
+        x: global.s.appSetting['desktopLyric.x'] ?? 0,
+        y: global.s.appSetting['desktopLyric.y'] ?? 0,
+        width: global.s.appSetting['desktopLyric.width'],
+        height: global.s.appSetting['desktopLyric.height'],
       })
     }
   })
@@ -74,14 +74,14 @@ const winEvent = () => {
 
   browserWindow.once('ready-to-show', () => {
     showWindow()
-    if (global.lx.appSetting['desktopLyric.isLock']) {
-      browserWindow!.setIgnoreMouseEvents(true, { forward: !isLinux && global.lx.appSetting['desktopLyric.isHoverHide'] })
+    if (global.s.appSetting['desktopLyric.isLock']) {
+      browserWindow!.setIgnoreMouseEvents(true, { forward: !isLinux && global.s.appSetting['desktopLyric.isHoverHide'] })
     }
     // linux下每次重开时貌似要重新设置置顶
-    // if (isLinux && global.lx.appSetting['desktopLyric.isAlwaysOnTop']) {
-    //   browserWindow!.setAlwaysOnTop(global.lx.appSetting['desktopLyric.isAlwaysOnTop'], 'screen-saver')
+    // if (isLinux && global.s.appSetting['desktopLyric.isAlwaysOnTop']) {
+    //   browserWindow!.setAlwaysOnTop(global.s.appSetting['desktopLyric.isAlwaysOnTop'], 'screen-saver')
     // }
-    if (global.lx.appSetting['desktopLyric.isAlwaysOnTop'] && global.lx.appSetting['desktopLyric.isAlwaysOnTopLoop']) alwaysOnTopTools.startLoop()
+    if (global.s.appSetting['desktopLyric.isAlwaysOnTop'] && global.s.appSetting['desktopLyric.isAlwaysOnTopLoop']) alwaysOnTopTools.startLoop()
     browserWindow!.blur()
   })
 }
@@ -89,23 +89,23 @@ const winEvent = () => {
 export const createWindow = () => {
   closeWindow()
   if (!global.envParams.workAreaSize) return
-  let x = global.lx.appSetting['desktopLyric.x']
-  let y = global.lx.appSetting['desktopLyric.y']
-  let width = global.lx.appSetting['desktopLyric.width']
-  let height = global.lx.appSetting['desktopLyric.height']
-  let isAlwaysOnTop = global.lx.appSetting['desktopLyric.isAlwaysOnTop']
-  // let isLockScreen = global.lx.appSetting['desktopLyric.isLockScreen']
-  let isShowTaskbar = global.lx.appSetting['desktopLyric.isShowTaskbar']
+  let x = global.s.appSetting['desktopLyric.x']
+  let y = global.s.appSetting['desktopLyric.y']
+  let width = global.s.appSetting['desktopLyric.width']
+  let height = global.s.appSetting['desktopLyric.height']
+  let isAlwaysOnTop = global.s.appSetting['desktopLyric.isAlwaysOnTop']
+  // let isLockScreen = global.s.appSetting['desktopLyric.isLockScreen']
+  let isShowTaskbar = global.s.appSetting['desktopLyric.isShowTaskbar']
   // let { width: screenWidth, height: screenHeight } = global.envParams.workAreaSize
   const winSize = initWindowSize(x, y, width, height)
-  global.lx.event_app.update_config({
+  global.s.event_app.update_config({
     'desktopLyric.x': winSize.x,
     'desktopLyric.y': winSize.y,
     'desktopLyric.width': winSize.width,
     'desktopLyric.height': winSize.height,
   })
 
-  const { shouldUseDarkColors, theme } = global.lx.theme
+  const { shouldUseDarkColors, theme } = global.s.theme
 
   /**
    * Initial window options
@@ -148,7 +148,7 @@ export const createWindow = () => {
 
   winEvent()
   // browserWindow.webContents.openDevTools()
-  global.lx.event_app.desktop_lyric_window_created(browserWindow)
+  global.s.event_app.desktop_lyric_window_created(browserWindow)
 }
 export const isExistWindow = (): boolean => !!browserWindow
 
@@ -214,7 +214,7 @@ export const alwaysOnTopTools: AlwaysOnTopTools = {
   timeout: null,
   setAlwaysOnTop(isLoop) {
     this.clearLoop()
-    setAlwaysOnTop(global.lx.appSetting['desktopLyric.isAlwaysOnTop'], 'screen-saver')
+    setAlwaysOnTop(global.s.appSetting['desktopLyric.isAlwaysOnTop'], 'screen-saver')
     // console.log(isLoop)
     if (isLoop) this.startLoop()
   },

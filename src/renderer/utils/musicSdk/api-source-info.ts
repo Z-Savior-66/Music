@@ -4,7 +4,7 @@ const sources: Array<{
   id: string
   name: string
   disabled: boolean
-  supportQualitys: Partial<Record<LX.OnlineSource, LX.Quality[]>>
+  supportQualitys: Partial<Record<S.OnlineSource, S.Quality[]>>
 }> = [
   // {
   //   id: 'test',

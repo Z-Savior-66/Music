@@ -4,7 +4,7 @@ declare global {
   // interface WorkerDBSeriveTypes {
   //   list: typeof list
   // }
-  namespace LX {
+  namespace S {
     type WorkerDBSeriveListTypes = workerDBSeriveTypes
   }
 }

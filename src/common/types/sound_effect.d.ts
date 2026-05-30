@@ -1,4 +1,4 @@
-declare namespace LX {
+declare namespace S {
   namespace SoundEffect {
     interface EQPreset {
       id: string

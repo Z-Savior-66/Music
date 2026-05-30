@@ -24,7 +24,7 @@ export class Event extends EventEmitter {
    * @param keys 已更新配置的key
    * @param setting 已更新配置
    */
-  updated_config(keys: Array<keyof LX.AppSetting>, setting: Partial<LX.AppSetting>) {
+  updated_config(keys: Array<keyof S.AppSetting>, setting: Partial<S.AppSetting>) {
     this.emit('updated_config', keys, setting)
   }
 
@@ -32,9 +32,9 @@ export class Event extends EventEmitter {
    * 更新配置
    * @param setting 新设置
    */
-  update_config(setting: Partial<LX.AppSetting>) {
+  update_config(setting: Partial<S.AppSetting>) {
     const { setting: newSetting, updatedSettingKeys, updatedSetting } = updateSetting(setting)
-    global.lx.appSetting = newSetting
+    global.s.appSetting = newSetting
     if (!updatedSettingKeys.length) return
     this.emit('update_config', newSetting)
     // console.log(updatedSetting)
@@ -53,19 +53,19 @@ export class Event extends EventEmitter {
     this.emit('deeplink', link)
   }
 
-  player_status(status: Partial<LX.Player.Status>) {
+  player_status(status: Partial<S.Player.Status>) {
     for (const [key, value] of Object.entries(status)) {
       // @ts-expect-error
-      global.lx.player_status[key] = value
+      global.s.player_status[key] = value
     }
     this.emit('player_status', status)
   }
 
-  hot_key_down(keyInfo: LX.HotKeyDownInfo) {
+  hot_key_down(keyInfo: S.HotKeyDownInfo) {
     this.emit('hot_key_down', keyInfo)
   }
 
-  hot_key_config_update(config: LX.HotKeyConfigAll) {
+  hot_key_config_update(config: S.HotKeyConfigAll) {
     saveAppHotKeyConfig(config)
     this.emit('hot_key_config_update', config)
   }

@@ -36,7 +36,7 @@ describe('common/utils/nodejs - path helpers', () => {
 
   it('toMD5 应生成正确的 MD5 哈希', () => {
     expect(nodejs.toMD5('hello')).toBe('5d41402abc4b2a76b9719d911017c592')
-    expect(nodejs.toMD5('Savior Music')).toHaveLength(32)
+    expect(nodejs.toMD5('S Music')).toHaveLength(32)
   })
 
   it('toMD5 空字符串应生成正确哈希', () => {

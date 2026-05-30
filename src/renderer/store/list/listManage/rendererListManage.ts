@@ -24,7 +24,7 @@ import { allMusicList } from './state'
  * @returns 所有用户列表
  */
 export const getUserLists = async() => {
-  const lists = await rendererInvoke<LX.List.UserListInfo[]>(PLAYER_EVENT_NAME.list_get)
+  const lists = await rendererInvoke<S.List.UserListInfo[]>(PLAYER_EVENT_NAME.list_get)
   return setUserLists(lists)
 }
 
@@ -32,44 +32,44 @@ export const getUserLists = async() => {
  * 添加用户列表
  * @param data
  */
-export const createUserList = async(data: LX.List.ListActionAdd) => {
+export const createUserList = async(data: S.List.ListActionAdd) => {
   data.listInfos = data.listInfos.map(info => toRaw(info))
-  await rendererInvoke<LX.List.ListActionAdd>(PLAYER_EVENT_NAME.list_add, data)
+  await rendererInvoke<S.List.ListActionAdd>(PLAYER_EVENT_NAME.list_add, data)
 }
 
 /**
  * 移除用户列表及列表内歌曲
  * @param data
  */
-export const removeUserList = async(data: LX.List.ListActionRemove) => {
-  await rendererInvoke<LX.List.ListActionRemove>(PLAYER_EVENT_NAME.list_remove, data)
+export const removeUserList = async(data: S.List.ListActionRemove) => {
+  await rendererInvoke<S.List.ListActionRemove>(PLAYER_EVENT_NAME.list_remove, data)
 }
 
 /**
  * 更新用户列表
  * @param data
  */
-export const updateUserList = async(data: LX.List.ListActionUpdate) => {
+export const updateUserList = async(data: S.List.ListActionUpdate) => {
   data = data.map(info => toRaw(info))
-  await rendererInvoke<LX.List.ListActionUpdate>(PLAYER_EVENT_NAME.list_update, data)
+  await rendererInvoke<S.List.ListActionUpdate>(PLAYER_EVENT_NAME.list_update, data)
 }
 
 /**
  * 批量移动用户列表位置
  * @param data
  */
-export const updateUserListPosition = async(data: LX.List.ListActionUpdatePosition) => {
-  await rendererInvoke<LX.List.ListActionUpdatePosition>(PLAYER_EVENT_NAME.list_update_position, data)
+export const updateUserListPosition = async(data: S.List.ListActionUpdatePosition) => {
+  await rendererInvoke<S.List.ListActionUpdatePosition>(PLAYER_EVENT_NAME.list_update_position, data)
 }
 
 /**
  * 获取列表内的歌曲
  * @param listId
  */
-export const getListMusics = async(listId: string | null): Promise<LX.Music.MusicInfo[]> => {
+export const getListMusics = async(listId: string | null): Promise<S.Music.MusicInfo[]> => {
   if (!listId) return []
   if (allMusicList.has(listId)) return allMusicList.get(listId)!
-  const list = await rendererInvoke<string, LX.Music.MusicInfo[]>(PLAYER_EVENT_NAME.list_music_get, listId)
+  const list = await rendererInvoke<string, S.Music.MusicInfo[]>(PLAYER_EVENT_NAME.list_music_get, listId)
   return setMusicList(listId, list)
 }
 
@@ -77,63 +77,63 @@ export const getListMusics = async(listId: string | null): Promise<LX.Music.Musi
  * 批量添加歌曲到列表
  * @param data
  */
-export const addListMusics = async(data: LX.List.ListActionMusicAdd) => {
-  await rendererInvoke<LX.List.ListActionMusicAdd>(PLAYER_EVENT_NAME.list_music_add, data)
+export const addListMusics = async(data: S.List.ListActionMusicAdd) => {
+  await rendererInvoke<S.List.ListActionMusicAdd>(PLAYER_EVENT_NAME.list_music_add, data)
 }
 
 /**
  * 跨列表批量移动歌曲
  * @param data
  */
-export const moveListMusics = async(data: LX.List.ListActionMusicMove) => {
-  await rendererInvoke<LX.List.ListActionMusicMove>(PLAYER_EVENT_NAME.list_music_move, data)
+export const moveListMusics = async(data: S.List.ListActionMusicMove) => {
+  await rendererInvoke<S.List.ListActionMusicMove>(PLAYER_EVENT_NAME.list_music_move, data)
 }
 
 /**
  * 批量删除列表内歌曲
  * @param data
  */
-export const removeListMusics = async(data: LX.List.ListActionMusicRemove) => {
-  await rendererInvoke<LX.List.ListActionMusicRemove>(PLAYER_EVENT_NAME.list_music_remove, data)
+export const removeListMusics = async(data: S.List.ListActionMusicRemove) => {
+  await rendererInvoke<S.List.ListActionMusicRemove>(PLAYER_EVENT_NAME.list_music_remove, data)
 }
 
 /**
  * 批量更新列表内歌曲
  * @param data
  */
-export const updateListMusics = async(data: LX.List.ListActionMusicUpdate) => {
-  await rendererInvoke<LX.List.ListActionMusicUpdate>(PLAYER_EVENT_NAME.list_music_update, data)
+export const updateListMusics = async(data: S.List.ListActionMusicUpdate) => {
+  await rendererInvoke<S.List.ListActionMusicUpdate>(PLAYER_EVENT_NAME.list_music_update, data)
 }
 
 /**
  * 批量移动列表内歌曲的位置
  * @param data
  */
-export const updateListMusicsPosition = async(data: LX.List.ListActionMusicUpdatePosition) => {
-  await rendererInvoke<LX.List.ListActionMusicUpdatePosition>(PLAYER_EVENT_NAME.list_music_update_position, data)
+export const updateListMusicsPosition = async(data: S.List.ListActionMusicUpdatePosition) => {
+  await rendererInvoke<S.List.ListActionMusicUpdatePosition>(PLAYER_EVENT_NAME.list_music_update_position, data)
 }
 
 /**
  * 覆盖列表内的歌曲
  * @param data
  */
-export const overwriteListMusics = async(data: LX.List.ListActionMusicOverwrite) => {
-  await rendererInvoke<LX.List.ListActionMusicOverwrite>(PLAYER_EVENT_NAME.list_music_overwrite, data)
+export const overwriteListMusics = async(data: S.List.ListActionMusicOverwrite) => {
+  await rendererInvoke<S.List.ListActionMusicOverwrite>(PLAYER_EVENT_NAME.list_music_overwrite, data)
 }
 
 /**
  * 清空列表内的歌曲
  * @param ids
  */
-export const clearListMusics = async(ids: LX.List.ListActionMusicClear) => {
-  await rendererInvoke<LX.List.ListActionMusicClear>(PLAYER_EVENT_NAME.list_music_clear, ids)
+export const clearListMusics = async(ids: S.List.ListActionMusicClear) => {
+  await rendererInvoke<S.List.ListActionMusicClear>(PLAYER_EVENT_NAME.list_music_clear, ids)
 }
 
 /**
  * 覆盖全部列表数据
  * @param data
  */
-export const overwriteListFull = async(data: LX.List.ListActionDataOverwrite) => {
+export const overwriteListFull = async(data: S.List.ListActionDataOverwrite) => {
   data.defaultList = toRaw(data.defaultList)
   data.loveList = toRaw(data.loveList)
   if (data.tempList) {
@@ -146,7 +146,7 @@ export const overwriteListFull = async(data: LX.List.ListActionDataOverwrite) =>
     }
   })
 
-  await rendererInvoke<LX.List.ListActionDataOverwrite>(PLAYER_EVENT_NAME.list_data_overwire, data)
+  await rendererInvoke<S.List.ListActionDataOverwrite>(PLAYER_EVENT_NAME.list_data_overwire, data)
 }
 
 /**
@@ -155,7 +155,7 @@ export const overwriteListFull = async(data: LX.List.ListActionDataOverwrite) =>
  * @param musicInfoId
  */
 export const checkListExistMusic = async(listId: string, musicInfoId: string): Promise<boolean> => {
-  return rendererInvoke<LX.List.ListActionCheckMusicExistList, boolean>(PLAYER_EVENT_NAME.list_music_check_exist, { listId, musicInfoId })
+  return rendererInvoke<S.List.ListActionCheckMusicExistList, boolean>(PLAYER_EVENT_NAME.list_music_check_exist, { listId, musicInfoId })
 }
 
 /**
@@ -170,55 +170,55 @@ export const getMusicExistListIds = async(musicInfoId: string): Promise<string[]
 const noop = () => {}
 
 
-export const registerListAction = (appSetting: LX.AppSetting, onListChanged: (listIds: string[]) => void = noop) => {
-  const list_data_overwrite = ({ params: datas }: LX.IpcRendererEventParams<LX.List.ListActionDataOverwrite>) => {
+export const registerListAction = (appSetting: S.AppSetting, onListChanged: (listIds: string[]) => void = noop) => {
+  const list_data_overwrite = ({ params: datas }: S.IpcRendererEventParams<S.List.ListActionDataOverwrite>) => {
     const updatedListIds = listDataOverwrite(datas)
     if (updatedListIds.length) onListChanged(updatedListIds)
   }
-  const list_create = ({ params: { position, listInfos } }: LX.IpcRendererEventParams<LX.List.ListActionAdd>) => {
+  const list_create = ({ params: { position, listInfos } }: S.IpcRendererEventParams<S.List.ListActionAdd>) => {
     for (const list of listInfos) {
       userListCreate({ ...list, position })
     }
   }
-  const list_remove = ({ params: ids }: LX.IpcRendererEventParams<LX.List.ListActionRemove>) => {
+  const list_remove = ({ params: ids }: S.IpcRendererEventParams<S.List.ListActionRemove>) => {
     const updatedListIds = userListsRemove(ids)
     if (updatedListIds.length) onListChanged(updatedListIds)
   }
-  const list_update = ({ params: listInfos }: LX.IpcRendererEventParams<LX.List.ListActionUpdate>) => {
+  const list_update = ({ params: listInfos }: S.IpcRendererEventParams<S.List.ListActionUpdate>) => {
     userListsUpdate(listInfos)
   }
-  const list_update_position = ({ params: { position, ids } }: LX.IpcRendererEventParams<LX.List.ListActionUpdatePosition>) => {
+  const list_update_position = ({ params: { position, ids } }: S.IpcRendererEventParams<S.List.ListActionUpdatePosition>) => {
     userListsUpdatePosition(position, ids)
   }
-  const list_music_add = ({ params: { id, musicInfos, addMusicLocationType } }: LX.IpcRendererEventParams<LX.List.ListActionMusicAdd>) => {
+  const list_music_add = ({ params: { id, musicInfos, addMusicLocationType } }: S.IpcRendererEventParams<S.List.ListActionMusicAdd>) => {
     addMusicLocationType ??= appSetting['list.addMusicLocationType']
     const updatedListIds = listMusicAdd(id, musicInfos, addMusicLocationType)
     if (updatedListIds.length) onListChanged(updatedListIds)
   }
-  const list_music_move = ({ params: { fromId, toId, musicInfos, addMusicLocationType } }: LX.IpcRendererEventParams<LX.List.ListActionMusicMove>) => {
+  const list_music_move = ({ params: { fromId, toId, musicInfos, addMusicLocationType } }: S.IpcRendererEventParams<S.List.ListActionMusicMove>) => {
     addMusicLocationType ??= appSetting['list.addMusicLocationType']
     const updatedListIds = listMusicMove(fromId, toId, musicInfos, addMusicLocationType)
     if (updatedListIds.length) onListChanged(updatedListIds)
   }
-  const list_music_remove = ({ params: { listId, ids } }: LX.IpcRendererEventParams<LX.List.ListActionMusicRemove>) => {
+  const list_music_remove = ({ params: { listId, ids } }: S.IpcRendererEventParams<S.List.ListActionMusicRemove>) => {
     // console.log(listId, ids)
     const updatedListIds = listMusicRemove(listId, ids)
     if (updatedListIds.length) onListChanged(updatedListIds)
   }
-  const list_music_update = ({ params: musicInfos }: LX.IpcRendererEventParams<LX.List.ListActionMusicUpdate>) => {
+  const list_music_update = ({ params: musicInfos }: S.IpcRendererEventParams<S.List.ListActionMusicUpdate>) => {
     const updatedListIds = listMusicUpdateInfo(musicInfos)
     if (updatedListIds.length) onListChanged(updatedListIds)
   }
-  const list_music_update_position = ({ params: { listId, position, ids } }: LX.IpcRendererEventParams<LX.List.ListActionMusicUpdatePosition>) => {
+  const list_music_update_position = ({ params: { listId, position, ids } }: S.IpcRendererEventParams<S.List.ListActionMusicUpdatePosition>) => {
     void listMusicUpdatePosition(listId, position, ids).then(updatedListIds => {
       if (updatedListIds.length) onListChanged(updatedListIds)
     })
   }
-  const list_music_overwrite = ({ params: { listId, musicInfos } }: LX.IpcRendererEventParams<LX.List.ListActionMusicOverwrite>) => {
+  const list_music_overwrite = ({ params: { listId, musicInfos } }: S.IpcRendererEventParams<S.List.ListActionMusicOverwrite>) => {
     const updatedListIds = listMusicOverwrite(listId, musicInfos)
     if (updatedListIds.length) onListChanged(updatedListIds)
   }
-  const list_music_clear = ({ params: ids }: LX.IpcRendererEventParams<LX.List.ListActionMusicClear>) => {
+  const list_music_clear = ({ params: ids }: S.IpcRendererEventParams<S.List.ListActionMusicClear>) => {
     const updatedListIds = listMusicClear(ids)
     if (updatedListIds.length) onListChanged(updatedListIds)
   }

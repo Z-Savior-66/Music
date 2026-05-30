@@ -2,7 +2,7 @@ import { Worker } from 'node:worker_threads'
 import * as Comlink from 'comlink'
 import nodeEndpoint from 'comlink/dist/esm/node-adapter'
 
-export type DBSeriveTypes = Comlink.Remote<LX.WorkerDBSeriveListTypes>
+export type DBSeriveTypes = Comlink.Remote<S.WorkerDBSeriveListTypes>
 
 export const createDBServiceWorker = () => {
   const worker: Worker = new Worker(new URL(
@@ -10,6 +10,6 @@ export const createDBServiceWorker = () => {
     '../dbService',
     import.meta.url,
   ))
-  return Comlink.wrap<LX.WorkerDBSeriveListTypes>(nodeEndpoint(worker))
+  return Comlink.wrap<S.WorkerDBSeriveListTypes>(nodeEndpoint(worker))
 }
 

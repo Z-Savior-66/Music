@@ -49,7 +49,7 @@ export class ListManage {
     this.snapshotDataManage.removeSnapshotInfo(clientId)
   }
 
-  getListData = async(): Promise<LX.Sync.List.ListData> => {
+  getListData = async(): Promise<S.Sync.List.ListData> => {
     return getLocalListData()
   }
 }

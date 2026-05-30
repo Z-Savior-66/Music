@@ -6,7 +6,7 @@ import { type Message } from '@root/lang'
 
 
 declare global {
-  namespace LX {
+  namespace S {
     namespace Download {
       type DownloadTaskStatus = 'run'
       | 'waiting'
@@ -53,9 +53,9 @@ declare global {
         speed: string
         writeQueue: number
         metadata: {
-          musicInfo: LX.Music.MusicInfoOnline
+          musicInfo: S.Music.MusicInfoOnline
           url: string | null
-          quality: LX.Quality
+          quality: S.Quality
           ext: FileExt
           fileName: string
           filePath: string
@@ -65,7 +65,7 @@ declare global {
 
       interface saveDownloadMusicInfo {
         list: ListItem[]
-        addMusicLocationType: LX.AddMusicLocationType
+        addMusicLocationType: S.AddMusicLocationType
       }
     }
   }

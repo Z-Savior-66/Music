@@ -15,7 +15,7 @@ const logInfo = (eventName: string, success = false) => {
 // const logError = (eventName: string, err: Error) => {
 //   log.error(`[${eventName}]${eventName.replace('list:sync:list_sync_', '').replaceAll('_', ' ')} error: ${err.message}`)
 // }
-const getSyncMode = async(socket: LX.Sync.Client.Socket): Promise<LX.Sync.List.SyncMode> => new Promise((resolve, reject) => {
+const getSyncMode = async(socket: S.Sync.Client.Socket): Promise<S.Sync.List.SyncMode> => new Promise((resolve, reject) => {
   const handleDisconnect = (err: Error) => {
     sendCloseSelectMode()
     removeSelectModeListener()
@@ -33,7 +33,7 @@ const getSyncMode = async(socket: LX.Sync.Client.Socket): Promise<LX.Sync.List.S
   })
 })
 
-const handler: LX.Sync.ClientSyncHandlerListActions<LX.Sync.Client.Socket> = {
+const handler: S.Sync.ClientSyncHandlerListActions<S.Sync.Client.Socket> = {
   async onListSyncAction(socket, action) {
     if (!socket.moduleReadys?.list) return
     await handleRemoteListAction(action)

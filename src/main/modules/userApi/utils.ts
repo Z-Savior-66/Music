@@ -3,7 +3,7 @@ import { STORE_NAMES } from '@common/constants'
 import getStore from '@main/utils/store'
 import zlib from 'node:zlib'
 
-let userApis: LX.UserApi.UserApiInfo[] | null
+let userApis: S.UserApi.UserApiInfo[] | null
 let scripts = new Map<string, string>()
 
 const saveData = () => {
@@ -15,11 +15,11 @@ const saveData = () => {
   }))
 }
 
-export const getUserApis = (): LX.UserApi.UserApiInfo[] => {
+export const getUserApis = (): S.UserApi.UserApiInfo[] => {
   if (userApis) return userApis
 
   const electronStore_userApi = getStore(STORE_NAMES.USER_API)
-  let infoFull = electronStore_userApi.get('userApis') as LX.UserApi.UserApiInfoFull[]
+  let infoFull = electronStore_userApi.get('userApis') as S.UserApi.UserApiInfoFull[]
   let requiredUpdate = false
   if (infoFull) {
     for (let i = 0; i < infoFull.length; i++) {
@@ -107,7 +107,7 @@ const inflateScript = async(script: string) => new Promise<string>((resolve, rej
     })
   } else resolve(script)
 })
-export const importApi = async(scriptRaw: string): Promise<LX.UserApi.UserApiInfo> => {
+export const importApi = async(scriptRaw: string): Promise<S.UserApi.UserApiInfo> => {
   let scriptInfo = parseScriptInfo(scriptRaw)
   const apiInfo = {
     id: `user_api_${Math.random().toString().substring(2, 5)}_${Date.now()}`,

@@ -1,6 +1,6 @@
-# Savior
+# S
 
-Savior-Music 是一个基于 Electron 和 Vue 3 的桌面音乐应用项目。
+S-Music 是一个基于 Electron 和 Vue 3 的桌面音乐应用项目。
 
 ## 项目地址
 
@@ -39,7 +39,7 @@ npm run pack
 ## 项目结构
 
 ```text
-Savior-music/
+S-music/
 ├─ build/                    # 打包输出目录与自动更新发布文件
 │  ├─ Release/               # 原生模块与构建中间产物
 │  └─ win-unpacked/          # Windows 解包后的运行目录

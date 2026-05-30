@@ -5,12 +5,12 @@ export const lyrics = markRaw<{
   lyric: string
   tlyric: string | null
   rlyric: string | null
-  lxlyric: string | null
+  slyric: string | null
 }>({
   lyric: '',
   tlyric: '',
   rlyric: '',
-  lxlyric: '',
+  slyric: '',
 })
 
 interface Line {

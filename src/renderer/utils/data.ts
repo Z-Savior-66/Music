@@ -19,9 +19,9 @@ import { type DEFAULT_SETTING, LIST_IDS } from '@common/constants'
 import { dateFormat } from './index'
 import { setUpdateTime } from '@renderer/store/list/action'
 
-let listPosition: LX.List.ListPositionInfo
+let listPosition: S.List.ListPositionInfo
 let listPrevSelectId: string
-let listUpdateInfo: LX.List.ListUpdateInfo
+let listUpdateInfo: S.List.ListUpdateInfo
 
 let searchSetting: typeof DEFAULT_SETTING['search']
 let songListSetting: typeof DEFAULT_SETTING['songList']
@@ -103,7 +103,7 @@ export const getListUpdateInfo = async() => {
   await initListUpdateInfo()
   return listUpdateInfo
 }
-export const setListUpdateInfo = async(info: LX.List.ListUpdateInfo) => {
+export const setListUpdateInfo = async(info: S.List.ListUpdateInfo) => {
   await initListUpdateInfo()
   listUpdateInfo = info
   saveListUpdateInfo()

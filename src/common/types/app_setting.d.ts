@@ -2,7 +2,7 @@ import type { I18n } from '../../lang/i18n'
 
 declare global {
 
-  declare namespace LX {
+  declare namespace S {
     type AddMusicLocationType = 'top' | 'bottom'
 
     interface AppSetting {
@@ -96,7 +96,7 @@ declare global {
       /**
        * 优先播放的音质
        */
-      'player.playQuality': LX.Quality
+      'player.playQuality': S.Quality
 
       /**
        * 是否显示任务栏进度条
@@ -172,7 +172,7 @@ declare global {
       /**
        * 是否播放卡拉OK歌词
        */
-      'player.isPlayLxlrc': boolean
+      'player.isPlaySlrc': boolean
 
       /**
        * 启动软件时是否恢复上次播放进度
@@ -488,7 +488,7 @@ declare global {
       /**
        * 添加歌曲到我的列表时的方式
        */
-      'list.addMusicLocationType': LX.AddMusicLocationType
+      'list.addMusicLocationType': S.AddMusicLocationType
 
       /**
        * 是否显示列表操作按钮列
@@ -531,9 +531,9 @@ declare global {
       'download.isDownloadLrc': boolean
 
       /**
-       * 是否在下载 lx 歌词
+       * 是否在下载 s 歌词
        */
-      'download.isDownloadLxLrc': boolean
+      'download.isDownloadSLrc': boolean
 
       /**
        * 是否下载翻译歌词文件
@@ -556,9 +556,9 @@ declare global {
       'download.isEmbedPic': boolean
 
       /**
-       * 是否在音频文件中嵌入 lx 歌词
+       * 是否在音频文件中嵌入 s 歌词
        */
-      'download.isEmbedLyricLx': boolean
+      'download.isEmbedLyricS': boolean
 
       /**
        * 是否在音频文件中嵌入歌词

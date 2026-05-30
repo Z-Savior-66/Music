@@ -15,7 +15,7 @@ import { EventEmitter } from 'events'
 // } from '@main/workers/dbService/modules/list'
 
 // 兼容v2.3.0之前版本插入数字类型的ID导致其意外在末尾追加 .0 的问题，确保所有ID都是字符串类型
-const fixListIdType = (lists: LX.List.UserListInfo[] | LX.List.UserListInfoFull[]) => {
+const fixListIdType = (lists: S.List.UserListInfo[] | S.List.UserListInfoFull[]) => {
   for (const list of lists) {
     if (typeof list.sourceListId == 'number') {
       list.sourceListId = String(list.sourceListId)
@@ -36,9 +36,9 @@ export class Event extends EventEmitter {
    * @param listData 列表数据
    * @param isRemote 是否属于远程操作
    */
-  async list_data_overwrite(listData: MakeOptional<LX.List.ListDataFull, 'tempList'>, isRemote: boolean = false) {
+  async list_data_overwrite(listData: MakeOptional<S.List.ListDataFull, 'tempList'>, isRemote: boolean = false) {
     fixListIdType(listData.userList)
-    await global.lx.worker.dbService.listDataOverwrite(listData)
+    await global.s.worker.dbService.listDataOverwrite(listData)
     this.emit('list_data_overwrite', listData, isRemote)
     this.list_changed()
   }
@@ -49,9 +49,9 @@ export class Event extends EventEmitter {
    * @param lists 列表信息
    * @param isRemote 是否属于远程操作
    */
-  async list_create(position: number, lists: LX.List.UserListInfo[], isRemote: boolean = false) {
+  async list_create(position: number, lists: S.List.UserListInfo[], isRemote: boolean = false) {
     fixListIdType(lists)
-    await global.lx.worker.dbService.createUserLists(position, lists)
+    await global.s.worker.dbService.createUserLists(position, lists)
     this.emit('list_create', position, lists, isRemote)
     this.list_changed()
   }
@@ -62,7 +62,7 @@ export class Event extends EventEmitter {
    * @param isRemote 是否属于远程操作
    */
   async list_remove(ids: string[], isRemote: boolean = false) {
-    await global.lx.worker.dbService.removeUserLists(ids)
+    await global.s.worker.dbService.removeUserLists(ids)
     this.emit('list_remove', ids, isRemote)
     this.list_changed()
   }
@@ -72,8 +72,8 @@ export class Event extends EventEmitter {
    * @param lists 列表信息
    * @param isRemote 是否属于远程操作
    */
-  async list_update(lists: LX.List.UserListInfo[], isRemote: boolean = false) {
-    await global.lx.worker.dbService.updateUserLists(lists)
+  async list_update(lists: S.List.UserListInfo[], isRemote: boolean = false) {
+    await global.s.worker.dbService.updateUserLists(lists)
     this.emit('list_update', lists, isRemote)
     this.list_changed()
   }
@@ -85,7 +85,7 @@ export class Event extends EventEmitter {
    * @param isRemote 是否属于远程操作
    */
   async list_update_position(position: number, ids: string[], isRemote: boolean = false) {
-    await global.lx.worker.dbService.updateUserListsPosition(position, ids)
+    await global.s.worker.dbService.updateUserListsPosition(position, ids)
     this.emit('list_update_position', position, ids, isRemote)
     this.list_changed()
   }
@@ -96,8 +96,8 @@ export class Event extends EventEmitter {
    * @param musicInfos 音乐信息
    * @param isRemote 是否属于远程操作
    */
-  async list_music_overwrite(listId: string, musicInfos: LX.Music.MusicInfo[], isRemote: boolean = false) {
-    await global.lx.worker.dbService.musicOverwrite(listId, musicInfos)
+  async list_music_overwrite(listId: string, musicInfos: S.Music.MusicInfo[], isRemote: boolean = false) {
+    await global.s.worker.dbService.musicOverwrite(listId, musicInfos)
     this.emit('list_music_overwrite', listId, musicInfos, isRemote)
     this.list_changed()
   }
@@ -109,8 +109,8 @@ export class Event extends EventEmitter {
    * @param addMusicLocationType 添加在到列表的位置
    * @param isRemote 是否属于远程操作
    */
-  async list_music_add(listId: string, musicInfos: LX.Music.MusicInfo[], addMusicLocationType: LX.AddMusicLocationType, isRemote: boolean = false) {
-    await global.lx.worker.dbService.musicsAdd(listId, musicInfos, addMusicLocationType)
+  async list_music_add(listId: string, musicInfos: S.Music.MusicInfo[], addMusicLocationType: S.AddMusicLocationType, isRemote: boolean = false) {
+    await global.s.worker.dbService.musicsAdd(listId, musicInfos, addMusicLocationType)
     this.emit('list_music_add', listId, musicInfos, addMusicLocationType, isRemote)
     this.list_changed()
   }
@@ -123,8 +123,8 @@ export class Event extends EventEmitter {
    * @param addMusicLocationType 添加在到列表的位置
    * @param isRemote 是否属于远程操作
    */
-  async list_music_move(fromId: string, toId: string, musicInfos: LX.Music.MusicInfo[], addMusicLocationType: LX.AddMusicLocationType, isRemote: boolean = false) {
-    await global.lx.worker.dbService.musicsMove(fromId, toId, musicInfos, addMusicLocationType)
+  async list_music_move(fromId: string, toId: string, musicInfos: S.Music.MusicInfo[], addMusicLocationType: S.AddMusicLocationType, isRemote: boolean = false) {
+    await global.s.worker.dbService.musicsMove(fromId, toId, musicInfos, addMusicLocationType)
     this.emit('list_music_move', fromId, toId, musicInfos, addMusicLocationType, isRemote)
     this.list_changed()
   }
@@ -137,7 +137,7 @@ export class Event extends EventEmitter {
    * @param isRemote 是否属于远程操作
    */
   async list_music_remove(listId: string, ids: string[], isRemote: boolean = false) {
-    await global.lx.worker.dbService.musicsRemove(listId, ids)
+    await global.s.worker.dbService.musicsRemove(listId, ids)
     this.emit('list_music_remove', listId, ids, isRemote)
     this.list_changed()
   }
@@ -147,8 +147,8 @@ export class Event extends EventEmitter {
    * @param musicInfos 歌曲&列表信息
    * @param isRemote 是否属于远程操作
    */
-  async list_music_update(musicInfos: LX.List.ListActionMusicUpdate, isRemote: boolean = false) {
-    await global.lx.worker.dbService.musicsUpdate(musicInfos)
+  async list_music_update(musicInfos: S.List.ListActionMusicUpdate, isRemote: boolean = false) {
+    await global.s.worker.dbService.musicsUpdate(musicInfos)
     this.emit('list_music_update', musicInfos, isRemote)
     this.list_changed()
   }
@@ -159,7 +159,7 @@ export class Event extends EventEmitter {
    * @param isRemote 是否属于远程操作
    */
   async list_music_clear(ids: string[], isRemote: boolean = false) {
-    await global.lx.worker.dbService.musicsClear(ids)
+    await global.s.worker.dbService.musicsClear(ids)
     this.emit('list_music_clear', ids, isRemote)
     this.list_changed()
   }
@@ -172,7 +172,7 @@ export class Event extends EventEmitter {
    * @param isRemote 是否属于远程操作
    */
   async list_music_update_position(listId: string, position: number, ids: string[], isRemote: boolean = false) {
-    await global.lx.worker.dbService.musicsPositionUpdate(listId, position, ids)
+    await global.s.worker.dbService.musicsPositionUpdate(listId, position, ids)
     this.emit('list_music_update_position', listId, position, ids, isRemote)
     this.list_changed()
   }

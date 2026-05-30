@@ -6,7 +6,7 @@ declare global {
 
     i18n: I18n
 
-    lxData: any
+    sData: any
 
     setTheme: (colors: Record<string, string>) => void
     setLang: (lang?: string) => void
@@ -14,7 +14,7 @@ declare global {
     os: 'windows' | 'linux' | 'mac'
   }
 
-  namespace LX {
+  namespace S {
 
   }
 

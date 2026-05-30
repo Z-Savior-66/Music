@@ -48,7 +48,7 @@ dd
   .gap-top
     base-checkbox(id="setting_download_isEmbedLyricR" :disabled="!appSetting['download.isEmbedLyric']" :model-value="appSetting['download.isEmbedLyricR']" :label="$t('setting__download_embed_rlyric')" @update:model-value="updateSetting({'download.isEmbedLyricR': $event})")
   .gap-top
-    base-checkbox(id="setting_download_isEmbedLyricLx" :disabled="!appSetting['download.isEmbedLyric']" :model-value="appSetting['download.isEmbedLyricLx']" :label="$t('setting__download_embed_lxlyric')" @update:model-value="updateSetting({'download.isEmbedLyricLx': $event})")
+    base-checkbox(id="setting_download_isEmbedLyricS" :disabled="!appSetting['download.isEmbedLyric']" :model-value="appSetting['download.isEmbedLyricS']" :label="$t('setting__download_embed_slyric')" @update:model-value="updateSetting({'download.isEmbedLyricS': $event})")
 dd(:aria-label="$t('setting__download_lyric_title')")
   h3#download_lyric {{ $t('setting__download_lyric') }}
   .gap-top
@@ -58,7 +58,7 @@ dd(:aria-label="$t('setting__download_lyric_title')")
   .gap-top
     base-checkbox(id="setting_download_isDownloadRLrc" :disabled="!appSetting['download.isDownloadLrc']" :model-value="appSetting['download.isDownloadRLrc']" :label="$t('setting__download_rlyric')" @update:model-value="updateSetting({'download.isDownloadRLrc': $event})")
   .gap-top
-    base-checkbox(id="setting_download_isDownloadLxLrc" :disabled="!appSetting['download.isDownloadLrc']" :model-value="appSetting['download.isDownloadLxLrc']" :label="$t('setting__download_lxlyric')" @update:model-value="updateSetting({'download.isDownloadLxLrc': $event})")
+    base-checkbox(id="setting_download_isDownloadSLrc" :disabled="!appSetting['download.isDownloadLrc']" :model-value="appSetting['download.isDownloadSLrc']" :label="$t('setting__download_slyric')" @update:model-value="updateSetting({'download.isDownloadSLrc': $event})")
 dd
   h3#download_lyric_format
     | {{ $t('setting__download_lyric_format') }}

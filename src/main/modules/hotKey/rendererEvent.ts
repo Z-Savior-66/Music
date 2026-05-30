@@ -4,14 +4,14 @@ import { init, registerHotkey, unRegisterHotkey, unRegisterHotkeyAll } from './u
 
 
 export default () => {
-  mainHandle<LX.HotKeyActions, boolean>(HOTKEY_RENDERER_EVENT_NAME.set_config, async({ params }) => {
+  mainHandle<S.HotKeyActions, boolean>(HOTKEY_RENDERER_EVENT_NAME.set_config, async({ params }) => {
     switch (params.action) {
       case 'config':
-        // global.lx.event_app.saveConfig(data, source)
-        global.lx.event_app.hot_key_config_update(params.data)
+        // global.s.event_app.saveConfig(data, source)
+        global.s.event_app.hot_key_config_update(params.data)
         return true
       case 'enable':
-        global.lx.hotKey.enable = params.data
+        global.s.hotKey.enable = params.data
         params.data ? init(true) : unRegisterHotkeyAll()
         return true
       case 'register':
@@ -22,7 +22,7 @@ export default () => {
     }
   })
 
-  mainHandle<LX.HotKeyState>(HOTKEY_RENDERER_EVENT_NAME.status, async() => global.lx.hotKey.state)
+  mainHandle<S.HotKeyState>(HOTKEY_RENDERER_EVENT_NAME.status, async() => global.s.hotKey.state)
 
   mainHandle<boolean>(HOTKEY_RENDERER_EVENT_NAME.enable, async({ params: flag }) => {
     flag ? init() : unRegisterHotkeyAll()

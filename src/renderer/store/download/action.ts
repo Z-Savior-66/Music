@@ -18,9 +18,9 @@ import { DOWNLOAD_STATUS } from '@common/constants'
 import { proxy } from '../index'
 import { buildSavePath } from './utils'
 
-const waitingUpdateTasks = new Map<string, LX.Download.ListItem>()
+const waitingUpdateTasks = new Map<string, S.Download.ListItem>()
 let timer: NodeJS.Timeout | null = null
-const throttleUpdateTask = (tasks: LX.Download.ListItem[]) => {
+const throttleUpdateTask = (tasks: S.Download.ListItem[]) => {
   for (const task of tasks) waitingUpdateTasks.set(task.id, toRaw(task))
   if (timer) return
   timer = setTimeout(() => {
@@ -30,13 +30,13 @@ const throttleUpdateTask = (tasks: LX.Download.ListItem[]) => {
   }, 100)
 }
 
-const runingTask = new Map<string, LX.Download.ListItem>()
+const runingTask = new Map<string, S.Download.ListItem>()
 
-// const initDownloadList = (list: LX.Download.ListItem[]) => {
+// const initDownloadList = (list: S.Download.ListItem[]) => {
 //   downloadList.splice(0, downloadList.length, ...list)
 // }
 
-export const getDownloadList = async(): Promise<LX.Download.ListItem[]> => {
+export const getDownloadList = async(): Promise<S.Download.ListItem[]> => {
   if (!downloadList.length) {
     const list = await downloadTasksGet()
     for (const downloadInfo of list) {
@@ -55,7 +55,7 @@ export const getDownloadList = async(): Promise<LX.Download.ListItem[]> => {
   return downloadList
 }
 
-const addTasks = async(list: LX.Download.ListItem[]) => {
+const addTasks = async(list: S.Download.ListItem[]) => {
   const addMusicLocationType = appSetting['list.addMusicLocationType']
 
   await downloadTasksCreate(list.map(i => toRaw(i)), addMusicLocationType)
@@ -68,22 +68,22 @@ const addTasks = async(list: LX.Download.ListItem[]) => {
   window.app_event.downloadListUpdate()
 }
 
-const setStatusText = (downloadInfo: LX.Download.ListItem, text: string) => { // 设置状态文本
+const setStatusText = (downloadInfo: S.Download.ListItem, text: string) => { // 设置状态文本
   downloadInfo.statusText = text
   throttleUpdateTask([downloadInfo])
 }
 
-const setUrl = (downloadInfo: LX.Download.ListItem, url: string) => {
+const setUrl = (downloadInfo: S.Download.ListItem, url: string) => {
   downloadInfo.metadata.url = url
   throttleUpdateTask([downloadInfo])
 }
 
-const updateFilePath = (downloadInfo: LX.Download.ListItem, filePath: string) => {
+const updateFilePath = (downloadInfo: S.Download.ListItem, filePath: string) => {
   downloadInfo.metadata.filePath = filePath
   throttleUpdateTask([downloadInfo])
 }
 
-const setProgress = (downloadInfo: LX.Download.ListItem, progress: LX.Download.ProgressInfo) => {
+const setProgress = (downloadInfo: S.Download.ListItem, progress: S.Download.ProgressInfo) => {
   downloadInfo.total = progress.total
   downloadInfo.downloaded = progress.downloaded
   downloadInfo.writeQueue = progress.writeQueue
@@ -98,7 +98,7 @@ const setProgress = (downloadInfo: LX.Download.ListItem, progress: LX.Download.P
   throttleUpdateTask([downloadInfo])
 }
 
-const setStatus = (downloadInfo: LX.Download.ListItem, status: LX.Download.DownloadTaskStatus, statusText?: string) => { // 设置状态及状态文本
+const setStatus = (downloadInfo: S.Download.ListItem, status: S.Download.DownloadTaskStatus, statusText?: string) => { // 设置状态及状态文本
   if (statusText == null) {
     switch (status) {
       case DOWNLOAD_STATUS.RUN:
@@ -146,10 +146,10 @@ const getProxy = () => {
  * 设置歌曲meta信息
  * @param downloadInfo 下载任务信息
  */
-const saveMeta = (downloadInfo: LX.Download.ListItem) => {
+const saveMeta = (downloadInfo: S.Download.ListItem) => {
   if (downloadInfo.metadata.quality === 'ape') return
   const isUseOtherSource = appSetting['download.isUseOtherSource']
-  const tasks: [Promise<string | null>, Promise<LX.Player.LyricInfo | null>] = [
+  const tasks: [Promise<string | null>, Promise<S.Player.LyricInfo | null>] = [
     appSetting['download.isEmbedPic']
       ? downloadInfo.metadata.musicInfo.meta.picUrl
         ? Promise.resolve(downloadInfo.metadata.musicInfo.meta.picUrl)
@@ -168,7 +168,7 @@ const saveMeta = (downloadInfo: LX.Download.ListItem) => {
   void Promise.all(tasks).then(([imgUrl, lyrics]) => {
     const info = {
       filePath: downloadInfo.metadata.filePath,
-      isEmbedLyricLx: appSetting['download.isEmbedLyricLx'],
+      isEmbedLyricS: appSetting['download.isEmbedLyricS'],
       isEmbedLyricT: appSetting['download.isEmbedLyricT'],
       isEmbedLyricR: appSetting['download.isEmbedLyricR'],
       title: downloadInfo.metadata.musicInfo.name,
@@ -176,7 +176,7 @@ const saveMeta = (downloadInfo: LX.Download.ListItem) => {
       album: downloadInfo.metadata.musicInfo.meta.albumName,
       APIC: imgUrl,
     }
-    void window.lx.worker.download.writeMeta(info, lyrics ?? { lyric: '' }, getProxy())
+    void window.s.worker.download.writeMeta(info, lyrics ?? { lyric: '' }, getProxy())
   })
 }
 
@@ -184,7 +184,7 @@ const saveMeta = (downloadInfo: LX.Download.ListItem) => {
  * 保存歌词文件
  * @param downloadInfo 下载任务信息
  */
-const downloadLyric = (downloadInfo: LX.Download.ListItem) => {
+const downloadLyric = (downloadInfo: S.Download.ListItem) => {
   if (!appSetting['download.isDownloadLrc']) return
   void getLyricInfo({
     musicInfo: downloadInfo.metadata.musicInfo,
@@ -196,16 +196,16 @@ const downloadLyric = (downloadInfo: LX.Download.ListItem) => {
       const info = {
         filePath: downloadInfo.metadata.filePath.substring(0, downloadInfo.metadata.filePath.lastIndexOf('.')) + '.lrc',
         format: appSetting['download.lrcFormat'],
-        downloadLxlrc: appSetting['download.isDownloadLxLrc'],
+        downloadSlrc: appSetting['download.isDownloadSLrc'],
         downloadTlrc: appSetting['download.isDownloadTLrc'],
         downloadRlrc: appSetting['download.isDownloadRLrc'],
       }
-      void window.lx.worker.download.saveLrc(lrcs, info)
+      void window.s.worker.download.saveLrc(lrcs, info)
     }
   })
 }
 
-const getUrl = async(downloadInfo: LX.Download.ListItem, isRefresh: boolean = false) => {
+const getUrl = async(downloadInfo: S.Download.ListItem, isRefresh: boolean = false) => {
   let toggleMusicInfo = downloadInfo.metadata.musicInfo.meta.toggleMusicInfo
   return (toggleMusicInfo ? getMusicUrl({
     musicInfo: toggleMusicInfo,
@@ -221,7 +221,7 @@ const getUrl = async(downloadInfo: LX.Download.ListItem, isRefresh: boolean = fa
     })
   }).catch(() => '')
 }
-const handleRefreshUrl = (downloadInfo: LX.Download.ListItem) => {
+const handleRefreshUrl = (downloadInfo: S.Download.ListItem) => {
   setStatusText(downloadInfo, window.i18n.t('download_status_error_refresh_url'))
   let toggleMusicInfo = downloadInfo.metadata.musicInfo.meta.toggleMusicInfo
   ;(toggleMusicInfo ? getMusicUrl({
@@ -241,21 +241,21 @@ const handleRefreshUrl = (downloadInfo: LX.Download.ListItem) => {
     .then(url => {
     // commit('setStatusText', { downloadInfo, text: '链接刷新成功' })
       setUrl(downloadInfo, url)
-      void window.lx.worker.download.updateUrl(downloadInfo.id, url)
+      void window.s.worker.download.updateUrl(downloadInfo.id, url)
     })
     .catch(err => {
       console.log(err)
       handleError(downloadInfo, err.message)
     })
 }
-const handleError = (downloadInfo: LX.Download.ListItem, message?: string) => {
+const handleError = (downloadInfo: S.Download.ListItem, message?: string) => {
   setStatus(downloadInfo, DOWNLOAD_STATUS.ERROR, message)
-  void window.lx.worker.download.removeTask(downloadInfo.id)
+  void window.s.worker.download.removeTask(downloadInfo.id)
   runingTask.delete(downloadInfo.id)
   void checkStartTask()
 }
 
-const handleStartTask = async(downloadInfo: LX.Download.ListItem) => {
+const handleStartTask = async(downloadInfo: S.Download.ListItem) => {
   if (!downloadInfo.metadata.url) {
     setStatusText(downloadInfo, window.i18n.t('download_status_url_getting'))
     const url = await getUrl(downloadInfo)
@@ -273,7 +273,7 @@ const handleStartTask = async(downloadInfo: LX.Download.ListItem) => {
 
   setStatusText(downloadInfo, window.i18n.t('download_status_start'))
 
-  await window.lx.worker.download.startTask(toRaw(downloadInfo), savePath, appSetting['download.skipExistFile'], proxyCallback((event: LX.Download.DownloadTaskActions) => {
+  await window.s.worker.download.startTask(toRaw(downloadInfo), savePath, appSetting['download.skipExistFile'], proxyCallback((event: S.Download.DownloadTaskActions) => {
     // console.log(event)
     switch (event.action) {
       case 'start':
@@ -283,7 +283,7 @@ const handleStartTask = async(downloadInfo: LX.Download.ListItem) => {
         downloadInfo.progress = 100
         saveMeta(downloadInfo)
         downloadLyric(downloadInfo)
-        void window.lx.worker.download.removeTask(downloadInfo.id)
+        void window.s.worker.download.removeTask(downloadInfo.id)
         runingTask.delete(downloadInfo.id)
         setStatus(downloadInfo, DOWNLOAD_STATUS.COMPLETED)
         void checkStartTask()
@@ -308,13 +308,13 @@ const handleStartTask = async(downloadInfo: LX.Download.ListItem) => {
     }
   }), getProxy())
 }
-const startTask = async(downloadInfo: LX.Download.ListItem) => {
+const startTask = async(downloadInfo: S.Download.ListItem) => {
   setStatus(downloadInfo, DOWNLOAD_STATUS.RUN)
   runingTask.set(downloadInfo.id, downloadInfo)
   void handleStartTask(downloadInfo)
 }
 
-const getStartTask = (list: LX.Download.ListItem[]): LX.Download.ListItem | null => {
+const getStartTask = (list: S.Download.ListItem[]): S.Download.ListItem | null => {
   let downloadCount = 0
   const waitList = list.filter(item => {
     if (item.status == DOWNLOAD_STATUS.WAITING) return true
@@ -339,7 +339,7 @@ const checkStartTask = async() => {
  * 过滤重复任务
  * @param list
  */
-const filterTask = (list: LX.Download.ListItem[]) => {
+const filterTask = (list: S.Download.ListItem[]) => {
   const set = new Set<string>()
   for (const item of downloadList) set.add(item.id)
   return list.filter(item => {
@@ -354,9 +354,9 @@ const filterTask = (list: LX.Download.ListItem[]) => {
  * @param list 要下载的歌曲
  * @param quality 下载音质
  */
-export const createDownloadTasks = async(list: LX.Music.MusicInfoOnline[], quality: LX.Quality, listId?: string) => {
+export const createDownloadTasks = async(list: S.Music.MusicInfoOnline[], quality: S.Quality, listId?: string) => {
   if (!list.length) return
-  const tasks = filterTask(await window.lx.worker.download.createDownloadTasks(list, quality,
+  const tasks = filterTask(await window.s.worker.download.createDownloadTasks(list, quality,
     appSetting['download.fileName'],
     toRaw(qualityList.value), listId),
   )
@@ -369,7 +369,7 @@ export const createDownloadTasks = async(list: LX.Music.MusicInfoOnline[], quali
  * 开始下载任务
  * @param list
  */
-export const startDownloadTasks = async(list: LX.Download.ListItem[]) => {
+export const startDownloadTasks = async(list: S.Download.ListItem[]) => {
   for (const downloadInfo of list) {
     switch (downloadInfo.status) {
       case DOWNLOAD_STATUS.PAUSE:
@@ -387,11 +387,11 @@ export const startDownloadTasks = async(list: LX.Download.ListItem[]) => {
  * 暂停下载任务
  * @param list
  */
-export const pauseDownloadTasks = async(list: LX.Download.ListItem[]) => {
+export const pauseDownloadTasks = async(list: S.Download.ListItem[]) => {
   for (const downloadInfo of list) {
     switch (downloadInfo.status) {
       case DOWNLOAD_STATUS.RUN:
-        void window.lx.worker.download.pauseTask(downloadInfo.id)
+        void window.s.worker.download.pauseTask(downloadInfo.id)
         runingTask.delete(downloadInfo.id)
       case DOWNLOAD_STATUS.WAITING:
       case DOWNLOAD_STATUS.ERROR:
@@ -413,7 +413,7 @@ export const removeDownloadTasks = async(ids: string[]) => {
   const idsSet = new Set<string>(ids)
   const newList = downloadList.filter(task => {
     if (runingTask.has(task.id)) {
-      void window.lx.worker.download.removeTask(task.id)
+      void window.s.worker.download.removeTask(task.id)
       runingTask.delete(task.id)
     }
     return !idsSet.has(task.id)

@@ -28,8 +28,8 @@ describe('store/utils', () => {
   beforeEach(async () => {
     vi.resetModules()
     ;(globalThis as any).window = {
-      lxData: {} as any,
-      lx: { rootOffset: 0 } as any,
+      sData: {} as any,
+      s: { rootOffset: 0 } as any,
       setTheme: vi.fn(),
       dt: false,
       requestIdleCallback: vi.fn(),
@@ -67,7 +67,7 @@ describe('store/utils', () => {
 
   describe('copyTheme', () => {
     it('应深度复制主题对象', () => {
-      const theme: LX.Theme = {
+      const theme: S.Theme = {
         id: 'custom', name: '自定义', isDark: false, isCustom: true,
         config: { themeColors: { '--color-primary': '#ff0000' }, extInfo: { '--background-image': 'bg.jpg' } },
       }
@@ -79,14 +79,14 @@ describe('store/utils', () => {
 
   describe('findTheme', () => {
     it('应在内置主题中查找', () => {
-      const info: LX.ThemeInfo = {
+      const info: S.ThemeInfo = {
         themes: [{ id: 'green', name: '绿色', isDark: false, isCustom: false, config: { themeColors: {}, extInfo: {} } }],
         userThemes: [], dataPath: '',
       }
       expect(utils.findTheme(info, 'green')!.id).toBe('green')
     })
     it('应在用户主题中查找', () => {
-      const info: LX.ThemeInfo = {
+      const info: S.ThemeInfo = {
         themes: [],
         userThemes: [{ id: 'my_theme', name: '我的主题', isDark: false, isCustom: true, config: { themeColors: {}, extInfo: {} } }],
         dataPath: '',
@@ -100,7 +100,7 @@ describe('store/utils', () => {
 
   describe('buildThemeColors', () => {
     it('应合并 themeColors 和 extInfo', () => {
-      const theme: LX.Theme = {
+      const theme: S.Theme = {
         id: 'test', name: '测试', isDark: false, isCustom: false,
         config: { themeColors: { '--color-primary': '#ff0000' }, extInfo: { '--background-image': 'none' } },
       }
@@ -109,7 +109,7 @@ describe('store/utils', () => {
       expect(colors['--background-image']).toBe('none')
     })
     it('自定义主题应处理背景图片路径', () => {
-      const theme: LX.Theme = {
+      const theme: S.Theme = {
         id: 'custom', name: '自定义', isDark: false, isCustom: true,
         config: { themeColors: {}, extInfo: { '--background-image': 'custom_bg.jpg' } },
       }

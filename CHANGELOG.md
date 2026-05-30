@@ -1,4 +1,4 @@
-# Savior 更新日志
+# S 更新日志
 
 ## 2.12.3 - 2026-04-14
 
@@ -45,8 +45,8 @@
 - 开放 API 新增播放器声音大小、静音、播放进度控制、完整歌词获取，详情看接入文档
 - 新增「设置 → 播放设置 → 调换歌词翻译与歌词罗马音位置」选项，默认关闭
 - 新增启动参数 `-hidden`，在启动时将软件最小化到系统托盘
-- 新增 Savior 歌词（用于支持已下载歌曲的歌词逐字播放）标签数据读取与播放
-- 新增 Savior 歌词（包含逐字歌词、翻译、罗马音歌词，如果有）嵌入与下载，默认启用
+- 新增 S 歌词（用于支持已下载歌曲的歌词逐字播放）标签数据读取与播放
+- 新增 S 歌词（包含逐字歌词、翻译、罗马音歌词，如果有）嵌入与下载，默认启用
 - 下载列表菜单新增歌曲添加弹窗，允许将所选歌曲的在线版本添加到收藏列表
 
 ### 修复
@@ -227,7 +227,7 @@
 
 - 主题编辑器添加“深色字体”选项，启用后将减少字体颜色梯度，各类字体（正文、标签字体等）颜色将更接近，这有助于解决创建全透明主题时可能出现的字体配色问题
 - 新增在线自定义源导入功能，允许通过http/https链接导入自定义源
-- 新增HTTP开放API服务，默认关闭，该服务可以为第三方软件提供调用 Savior 的能力，可用API看[说明文档](https://lyswhut.github.io/lx-music-doc/desktop/open-api)
+- 新增HTTP开放API服务，默认关闭，该服务可以为第三方软件提供调用 S 的能力，可用API看[说明文档](https://lyswhut.github.io/s-music-doc/desktop/open-api)
 - 托盘菜单新增播放、切歌、收藏控制
 - 添加当前软件版本所对应的代码提交版本、提交时间的显示，可到设置-版本更新查看
 
@@ -298,12 +298,12 @@
 
 ### 自定义源的不兼容变更与新增内容（源开发者需要看）
 
-- 为了与移动端的调用方式统一，不再推荐使用 `window.lx` 对象（移动端无`window`对象），改用 `globalThis.lx`
+- 为了与移动端的调用方式统一，不再推荐使用 `window.s` 对象（移动端无`window`对象），改用 `globalThis.s`
 - `inited` 事件不再需要传递 `status` 属性，脚本运行过程中，在成功调用 `inited` 事件之前的任何首次未捕获的错误都将视为初始化失败，所以现在若想人为让脚本初始化失败，直接抛出一个错误即可
-- 新增 `globalThis.lx.env` 属性，桌面端环境固定为 `desktop`，移动端环境固定为 `mobile`
-- 新增 `globalThis.lx.currentScriptInfo` 对象，可以从这里获取解析后的脚本头部注释信息及脚本原始内容，具体可用属性看文档说明
-- `globalThis.lx.version` 属性更新到 `2.0.0`
-- 自定义源不再使用`script`标签的形式执行，若要获取脚本原始代码字符串需从 `globalThis.lx.currentScriptInfo.rawScript` 属性获取
+- 新增 `globalThis.s.env` 属性，桌面端环境固定为 `desktop`，移动端环境固定为 `mobile`
+- 新增 `globalThis.s.currentScriptInfo` 对象，可以从这里获取解析后的脚本头部注释信息及脚本原始内容，具体可用属性看文档说明
+- `globalThis.s.version` 属性更新到 `2.0.0`
+- 自定义源不再使用`script`标签的形式执行，若要获取脚本原始代码字符串需从 `globalThis.s.currentScriptInfo.rawScript` 属性获取
 - 自定义源新增支持`local`源的`musicUrl`、`pic`、`lyric`的获取操作详情看自定义源文档说明
 
 ## 2.5.0 - 2023-09-28
@@ -448,7 +448,7 @@
 
 ### 不兼容性变更说明
 
-- 同步功能，从这个版本起，数据同步功能至少需要移动端v1.0.0的版本才能连接，连接的地址格式也略有改变，详情看[文档说明](https://lyswhut.github.io/lx-music-doc/desktop/faq/sync)
+- 同步功能，从这个版本起，数据同步功能至少需要移动端v1.0.0的版本才能连接，连接的地址格式也略有改变，详情看[文档说明](https://lyswhut.github.io/s-music-doc/desktop/faq/sync)
 
 ### 新增
 
@@ -560,9 +560,9 @@
 
 ## 2.0.2 - 2023-01-02
 
-   - Windows：`%APPDATA%/lx-music-desktop`
-   - Linux：`$XDG_CONFIG_HOME/lx-music-desktop` 或 `~/.config/lx-music-desktop`
-   - macOS：`~/Library/Application Support/lx-music-desktop`
+   - Windows：`%APPDATA%/s-music-desktop`
+   - Linux：`$XDG_CONFIG_HOME/s-music-desktop` 或 `~/.config/s-music-desktop`
+   - macOS：`~/Library/Application Support/s-music-desktop`
 
 ### 修复
 
@@ -570,9 +570,9 @@
 
 ## 2.0.1 - 2023-01-02
 
-   - Windows：`%APPDATA%/lx-music-desktop`
-   - Linux：`$XDG_CONFIG_HOME/lx-music-desktop` 或 `~/.config/lx-music-desktop`
-   - macOS：`~/Library/Application Support/lx-music-desktop`
+   - Windows：`%APPDATA%/s-music-desktop`
+   - Linux：`$XDG_CONFIG_HOME/s-music-desktop` 或 `~/.config/s-music-desktop`
+   - macOS：`~/Library/Application Support/s-music-desktop`
 
 ### 优化
 
@@ -835,7 +835,7 @@
 - 修复wy源某些歌曲获取歌词翻译的问题处理
 - 修复下载功能的歌词换源时会进入死循环的问题
 - 修复某些歌曲无法下载的问题
-- 修复windows平台下软件目录存在`portable`文件夹时，仍会创建`C:\Users\<user>\AppData\Roaming\lx-music-desktop\Dictionaries\en-US-9-0.bdic`文件的问题，现在不会再创建文件，但仍会创建空目录（Electron的问题，目前暂无解决方法）
+- 修复windows平台下软件目录存在`portable`文件夹时，仍会创建`C:\Users\<user>\AppData\Roaming\s-music-desktop\Dictionaries\en-US-9-0.bdic`文件的问题，现在不会再创建文件，但仍会创建空目录（Electron的问题，目前暂无解决方法）
 - 修复播放器的停止逻辑问题
 
 ### 其他
@@ -862,7 +862,7 @@
 ### 新增
 
 - 新增“便携”功能，在Windows平台下，若程序目录下存在 portable 目录，则自动使用此目录作为数据存储目录
-- 新增 Scheme URL 支持，同时发布lx-music-script项目配合使用（一个油猴脚本，可以在浏览器中的官方平台网页直接调用Savior），Scheme URL的调用说明看Readme.md文档的Scheme URL支持部分
+- 新增 Scheme URL 支持，同时发布s-music-script项目配合使用（一个油猴脚本，可以在浏览器中的官方平台网页直接调用S），Scheme URL的调用说明看Readme.md文档的Scheme URL支持部分
 - 新增启动参数`-proxy-server`与`-proxy-bypass-list`，详细介绍看Readme.md文档的启动参数部分
 - 新增桌面歌词是否延迟滚动设置，默认开启，若你不想要桌面歌词延迟滚动可以去设置-桌面歌词设置关掉
 
@@ -870,7 +870,7 @@
 
 - 为可视化音频的频谱整体添加频谱均值加成，使频谱显示更有节奏感
 - 优化程序初始化逻辑，修复无网络的情况下的初始化问题
-- 我的列表-列表名的右击菜单更新已收藏的在线列表时，将始终重新加载，不再使用缓存，解决在原平台更新歌单后，在LX点击更新可能看到的还是在原平台更新前的歌单的问题
+- 我的列表-列表名的右击菜单更新已收藏的在线列表时，将始终重新加载，不再使用缓存，解决在原平台更新歌单后，在S点击更新可能看到的还是在原平台更新前的歌单的问题
 
 ### 修复
 
@@ -1424,7 +1424,7 @@
 - 新增托盘图标样式设置，可到设置-其他切换
 - 新增开关下载功能控制，默认关闭，可到设置-下载设置开启
 - 新增将歌词嵌入音频文件中，默认关闭，可到设置-下载设置开启
-- 新增当列表文件损坏时对损坏文件的备份，若出现该情况可打开`%HOMEPATH%\AppData\Roaming\lx-music-desktop`找到`playList.json.bak`尝试手动修复列表文件，列表文件以`JSON`格式存储
+- 新增当列表文件损坏时对损坏文件的备份，若出现该情况可打开`%HOMEPATH%\AppData\Roaming\s-music-desktop`找到`playList.json.bak`尝试手动修复列表文件，列表文件以`JSON`格式存储
 - 新增在歌单详情列表按退格（Backspace）键可快速返回歌单列表
 
 ### 优化
@@ -1525,7 +1525,7 @@
 
 - 新增多语言设置，目前软件内置了简体中文、繁体中文、英语三种语言，欢迎提交PR翻译更多语言！
 - 新增无法打开外部歌单FAQ
-- 新增启动参数`search`，使用例子：`.\lx-music-desktop.exe -search="突然的自我 - 伍佰"`
+- 新增启动参数`search`，使用例子：`.\s-music-desktop.exe -search="突然的自我 - 伍佰"`
 - 新增音频输出设置
 - 新增软件内的包括字体在内的界面内容大小调整，现在当窗口大小切换到“较小/大/较大”时，软件内的元素将会适当减小或加大，窗口大小的“小”与“中”内的元素将保持之前的大小暂不做改变
 - 新增音源别名，默认将显示别名，想要显示回原名可到设置切换（免责声明：别名仅是本软件用于描述各音源的标签，其名字归版权方所有）
@@ -1601,7 +1601,7 @@
 
 - 新增各大平台歌单热门标签显示（显示在歌单界面的第一个下拉标签菜单中）
 - 恢复QQ音乐源128k音质试听
-- 新增不强制win7开启透明效果即可使用，但要配置运行参数`-nt`，例如：`.\lx-music-desktop.exe -nt`，添加方法可自行百度“给快捷方式加参数”
+- 新增不强制win7开启透明效果即可使用，但要配置运行参数`-nt`，例如：`.\s-music-desktop.exe -nt`，添加方法可自行百度“给快捷方式加参数”
 - 新增“新年快乐”主题，可自行切换体验
 
 ### 优化
@@ -1903,7 +1903,7 @@
 ### 新增
 
 - 新增**歌单**功能，目前支持酷我、酷狗、百度源歌单
-- 在设置界面-关于Savior说明部分新增**最新版网盘下载地址**与**打赏地址**
+- 在设置界面-关于S说明部分新增**最新版网盘下载地址**与**打赏地址**
 - 新增酷狗 电音热歌榜、DJ热歌榜
 - 新增版本更新超时功能，对于部分无法访问GitHub的用户做更新超时提醒
 

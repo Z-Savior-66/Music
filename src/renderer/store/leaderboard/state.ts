@@ -1,13 +1,13 @@
 import { reactive, markRaw, shallowReactive } from '@common/utils/vueTools'
 import music from '@renderer/utils/musicSdk'
 
-export type Source = LX.OnlineSource
+export type Source = S.OnlineSource
 
-export const sources: LX.OnlineSource[] = markRaw([])
+export const sources: S.OnlineSource[] = markRaw([])
 
 for (const source of music.sources) {
-  if (!music[source.id as LX.OnlineSource]?.leaderboard?.getBoards) continue
-  sources.push(source.id as LX.OnlineSource)
+  if (!music[source.id as S.OnlineSource]?.leaderboard?.getBoards) continue
+  sources.push(source.id as S.OnlineSource)
 }
 
 export interface BoardItem {
@@ -17,17 +17,17 @@ export interface BoardItem {
 }
 export interface Board {
   list: BoardItem[]
-  source: LX.OnlineSource
+  source: S.OnlineSource
 }
-type Boards = Partial<Record<LX.OnlineSource, Board>>
+type Boards = Partial<Record<S.OnlineSource, Board>>
 
 export const boards = shallowReactive<Boards>({})
 
 export interface ListDetailInfo {
-  list: LX.Music.MusicInfoOnline[]
+  list: S.Music.MusicInfoOnline[]
   total: number
   page: number
-  source: LX.OnlineSource | null
+  source: S.OnlineSource | null
   limit: number
   key: string | null
   id: string

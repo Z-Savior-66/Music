@@ -1,7 +1,7 @@
 import Event from './Event'
 
 export class AppEvent extends Event {
-  configUpdate(setting: Partial<LX.AppSetting>) {
+  configUpdate(setting: Partial<S.AppSetting>) {
     this.emit('configUpdate', setting)
   }
 
@@ -153,7 +153,7 @@ export class AppEvent extends Event {
     this.emit('downloadListUpdate')
   }
 
-  keyDown(event: LX.KeyDownEevent) {
+  keyDown(event: S.KeyDownEevent) {
     this.emit('keyDown', event)
   }
 }

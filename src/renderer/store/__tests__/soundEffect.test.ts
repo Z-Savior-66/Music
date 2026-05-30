@@ -18,7 +18,7 @@ vi.mock('@renderer/utils/ipc', () => ({
 // ---------------------------------------------------------------------------
 // 预设数据工厂
 // ---------------------------------------------------------------------------
-const createEQPreset = (id: string): LX.SoundEffect.EQPreset => ({
+const createEQPreset = (id: string): S.SoundEffect.EQPreset => ({
   id,
   name: `EQ ${id}`,
   hz31: 0,
@@ -33,7 +33,7 @@ const createEQPreset = (id: string): LX.SoundEffect.EQPreset => ({
   hz16000: 0,
 })
 
-const createConvolutionPreset = (id: string): LX.SoundEffect.ConvolutionPreset => ({
+const createConvolutionPreset = (id: string): S.SoundEffect.ConvolutionPreset => ({
   id,
   name: `Conv ${id}`,
   source: 'impulse.wav',

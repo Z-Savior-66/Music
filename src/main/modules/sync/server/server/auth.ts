@@ -56,7 +56,7 @@ const verifyByCode = (encryptMsg: string, password: string) => {
     const data = text.split('\n')
     const publicKey = `-----BEGIN PUBLIC KEY-----\n${data[1]}\n-----END PUBLIC KEY-----`
     const deviceName = data[2] || 'Unknown'
-    const isMobile = data[3] == 'lx_music_mobile'
+    const isMobile = data[3] == 's_music_mobile'
     const keyInfo = createClientKeyInfo(deviceName, isMobile)
     const userSpace = getUserSpace()
     userSpace.dataManage.saveClientKeyInfo(keyInfo)

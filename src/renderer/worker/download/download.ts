@@ -5,32 +5,32 @@ import { DOWNLOAD_STATUS } from '@common/constants'
 
 const dls = new Map<string, DownloaderType>()
 const tryNum = new Map<string, number>()
-const taskActions = new Map<string, (action: LX.Download.DownloadTaskActions) => void>()
-const tasks = new Map<string, LX.Download.ListItem>()
+const taskActions = new Map<string, (action: S.Download.DownloadTaskActions) => void>()
+const tasks = new Map<string, S.Download.ListItem>()
 
-export const checkList = (list: LX.Download.ListItem[], musicInfo: LX.Music.MusicInfo, quality: LX.Quality, ext: string): boolean => {
+export const checkList = (list: S.Download.ListItem[], musicInfo: S.Music.MusicInfo, quality: S.Quality, ext: string): boolean => {
   return list.some(s => s.id === musicInfo.id && (s.metadata.quality === quality || s.metadata.ext === ext))
 }
 
-const sendAction = (id: string, action: LX.Download.DownloadTaskActions) => {
+const sendAction = (id: string, action: S.Download.DownloadTaskActions) => {
   const callback = taskActions.get(id)
   if (!callback) return
   callback(action)
 }
 
 export const createDownloadTasks = (
-  list: LX.Music.MusicInfoOnline[],
-  quality: LX.Quality,
+  list: S.Music.MusicInfoOnline[],
+  quality: S.Quality,
   fileNameFormat: string,
-  qualityList: LX.QualityList,
+  qualityList: S.QualityList,
   listId?: string,
-): LX.Download.ListItem[] => {
+): S.Download.ListItem[] => {
   return list.map(musicInfo => {
     return createDownloadInfo(musicInfo, quality, fileNameFormat, qualityList, listId)
   }).filter(task => task)
 }
 
-const createTask = async(downloadInfo: LX.Download.ListItem, savePath: string, skipExistFile: boolean, proxy?: { host: string, port: number }) => {
+const createTask = async(downloadInfo: S.Download.ListItem, savePath: string, skipExistFile: boolean, proxy?: { host: string, port: number }) => {
   if (!await checkAndCreateDir(savePath)) {
     sendAction(downloadInfo.id, {
       action: 'error',
@@ -185,7 +185,7 @@ export const updateUrl = (id: string, url: string) => {
   })
 }
 
-export const startTask = async(downloadInfo: LX.Download.ListItem, savePath: string, skipExistFile: boolean, callback: (action: LX.Download.DownloadTaskActions) => void, proxy?: { host: string, port: number }) => {
+export const startTask = async(downloadInfo: S.Download.ListItem, savePath: string, skipExistFile: boolean, callback: (action: S.Download.DownloadTaskActions) => void, proxy?: { host: string, port: number }) => {
   await pauseTask(downloadInfo.id)
 
   tasks.set(downloadInfo.id, downloadInfo)

@@ -6,7 +6,7 @@ export interface PlayerMusicInfo {
   lrc: string | null
   tlrc: string | null
   rlrc: string | null
-  lxlrc: string | null
+  slrc: string | null
   rawlrc: string | null
   // url: string | null
   name: string
@@ -14,13 +14,13 @@ export interface PlayerMusicInfo {
   album: string
 }
 
-export const musicInfo = window.lxData.musicInfo = reactive<PlayerMusicInfo>({
+export const musicInfo = window.sData.musicInfo = reactive<PlayerMusicInfo>({
   id: null,
   pic: null,
   lrc: null,
   tlrc: null,
   rlrc: null,
-  lxlrc: null,
+  slrc: null,
   rawlrc: null,
   // url: null,
   name: '',
@@ -30,7 +30,7 @@ export const musicInfo = window.lxData.musicInfo = reactive<PlayerMusicInfo>({
 
 export const isPlay = ref(false)
 
-export const status = window.lxData.status = ref('')
+export const status = window.sData.status = ref('')
 
 export const statusText = ref('')
 
@@ -44,11 +44,11 @@ export const playMusicInfo = shallowReactive<{
   /**
    * 当前播放歌曲的列表 id
    */
-  musicInfo: LX.Player.PlayMusicInfo['musicInfo'] | null
+  musicInfo: S.Player.PlayMusicInfo['musicInfo'] | null
   /**
    * 当前播放歌曲的列表 id
    */
-  listId: LX.Player.PlayMusicInfo['listId'] | null
+  listId: S.Player.PlayMusicInfo['listId'] | null
   /**
    * 是否属于 “稍后播放”
    */
@@ -58,16 +58,16 @@ export const playMusicInfo = shallowReactive<{
   musicInfo: null,
   isTempPlay: false,
 })
-export const playInfo = shallowReactive<LX.Player.PlayInfo>({
+export const playInfo = shallowReactive<S.Player.PlayInfo>({
   playIndex: -1,
   playerListId: null,
   playerPlayIndex: -1,
 })
 
 
-export const playedList = window.lxData.playedList = shallowReactive<LX.Player.PlayMusicInfo[]>([])
+export const playedList = window.sData.playedList = shallowReactive<S.Player.PlayMusicInfo[]>([])
 
-export const tempPlayList = shallowReactive<LX.Player.PlayMusicInfo[]>([])
+export const tempPlayList = shallowReactive<S.Player.PlayMusicInfo[]>([])
 
-window.lxData.playInfo = playInfo
-window.lxData.playMusicInfo = playMusicInfo
+window.sData.playInfo = playInfo
+window.sData.playMusicInfo = playMusicInfo

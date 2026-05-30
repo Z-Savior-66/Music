@@ -2,7 +2,7 @@ import { reactive, computed } from '@common/utils/vueTools'
 import defaultSetting from '@common/defaultSetting'
 import { updateSetting as saveSetting } from '@renderer/utils/ipc'
 
-export const appSetting = window.lxData.appSetting = reactive<LX.AppSetting>({
+export const appSetting = window.sData.appSetting = reactive<S.AppSetting>({
   ...defaultSetting,
   'common.isAgreePact': true,
 })
@@ -12,11 +12,11 @@ export const isShowAnimation = computed(() => {
 })
 
 
-export const initSetting = (newSetting: LX.AppSetting) => {
+export const initSetting = (newSetting: S.AppSetting) => {
   mergeSetting(newSetting)
 }
 
-export const mergeSetting = (newSetting: Partial<LX.AppSetting>) => {
+export const mergeSetting = (newSetting: Partial<S.AppSetting>) => {
   for (const [key, value] of Object.entries(newSetting)) {
     // @ts-expect-error
     appSetting[key] = value
@@ -24,7 +24,7 @@ export const mergeSetting = (newSetting: Partial<LX.AppSetting>) => {
   appSetting['common.isAgreePact'] = true
 }
 
-export const updateSetting = window.lxData.updateSetting = (setting: Partial<LX.AppSetting>) => {
+export const updateSetting = window.sData.updateSetting = (setting: Partial<S.AppSetting>) => {
   // console.warn(setting)
   void saveSetting(setting)
 }
@@ -90,7 +90,7 @@ export const setLockDesktopLyric = (isLock: boolean) => {
  * 设置切歌模式
  * @param mode
  */
-export const setTogglePlayMode = (mode: LX.AppSetting['player.togglePlayMethod']) => {
+export const setTogglePlayMode = (mode: S.AppSetting['player.togglePlayMethod']) => {
   updateSetting({ 'player.togglePlayMethod': mode })
 }
 
@@ -114,7 +114,7 @@ export const setPlayDetailLyricFont = (size: number) => {
  * 设置播放详情页歌词对齐方式
  * @param align 对齐方式
  */
-export const setPlayDetailLyricAlign = (align: LX.AppSetting['playDetail.style.align']) => {
+export const setPlayDetailLyricAlign = (align: S.AppSetting['playDetail.style.align']) => {
   updateSetting({ 'playDetail.style.align': align })
 }
 

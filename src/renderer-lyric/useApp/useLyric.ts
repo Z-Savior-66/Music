@@ -7,7 +7,7 @@ export default () => {
   watch(() => setting['player.isShowLyricTranslation'], setLyric)
   watch(() => setting['player.isShowLyricRoma'], setLyric)
   watch(() => setting['player.isSwapLyricTranslationAndRoma'], setLyric)
-  watch(() => setting['player.isPlayLxlrc'], setLyric)
+  watch(() => setting['player.isPlaySlrc'], setLyric)
   watch(() => setting['player.playbackRate'], (rate) => {
     setPlaybackRate(rate)
     if (isPlay.value) {

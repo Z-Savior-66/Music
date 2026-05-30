@@ -21,7 +21,7 @@ export default () => {
   // 更新超时定时器
   let updateTimeout: number | null = null
   const startUpdateTimeout = () => {
-    if (window.lx.isProd && !(isWin && process.arch.includes('arm'))) {
+    if (window.s.isProd && !(isWin && process.arch.includes('arm'))) {
       updateTimeout = window.setTimeout(() => {
         updateTimeout = null
         void nextTick(() => {
@@ -88,7 +88,7 @@ export default () => {
 
   let versionInfoPromise: null | ReturnType<typeof handleGetVersionInfo> = null
 
-  const showUpdateModal = (status?: LX.UpdateStatus) => {
+  const showUpdateModal = (status?: S.UpdateStatus) => {
     if (versionInfoPromise) {
       if (
         // @ts-expect-error

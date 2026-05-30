@@ -5,15 +5,15 @@ import { createWindow, getProxy, openDevTools, sendEvent } from '../main'
 import { getUserApis } from '../utils'
 import { sendShowUpdateAlert, sendStatusChange } from '@main/modules/winMain'
 
-let userApi: LX.UserApi.UserApiInfo
-let apiStatus: LX.UserApi.UserApiStatus = { status: true }
+let userApi: S.UserApi.UserApiInfo
+let apiStatus: S.UserApi.UserApiStatus = { status: true }
 const requestQueue = new Map()
 const timeouts = new Map<string, NodeJS.Timeout>()
 interface InitParams {
   params: {
     status: boolean
     message: string
-    data: LX.UserApi.UserApiInfo
+    data: S.UserApi.UserApiInfo
   }
 }
 interface ResponseParams {
@@ -40,7 +40,7 @@ export const init = () => {
     // console.log('inited')
     // if (!status) {
     //   console.log('init failed:', message)
-    //   global.lx_event.userApi.status(status = { status: true, apiInfo: { ...userApi, sources: apiInfo.sources } })
+    //   global.s_event.userApi.status(status = { status: true, apiInfo: { ...userApi, sources: apiInfo.sources } })
     //   return
     // }
     apiStatus = status
@@ -100,9 +100,9 @@ export const loadApi = async(apiId: string) => {
   userApi = targetApi
   console.log('load api', userApi.name)
   await createWindow(userApi)
-  // if (!userApi) return global.lx_event.userApi.status(status = { status: false, message: 'api script is not found' })
+  // if (!userApi) return global.s_event.userApi.status(status = { status: false, message: 'api script is not found' })
   // if (!global.modules.userApiWindow) {
-  //   global.lx_event.userApi.status(status = { status: false, message: 'user api runtime is not defined' })
+  //   global.s_event.userApi.status(status = { status: false, message: 'user api runtime is not defined' })
   //   throw new Error('user api window is not defined')
   // }
 
@@ -121,7 +121,7 @@ export const cancelRequest = (requestKey: string) => {
   clearRequestTimeout(requestKey)
 }
 
-export const request = async({ requestKey, data }: LX.UserApi.UserApiRequestParams): Promise<any> => await new Promise((resolve, reject) => {
+export const request = async({ requestKey, data }: S.UserApi.UserApiRequestParams): Promise<any> => await new Promise((resolve, reject) => {
   if (!userApi) {
     reject(new Error('user api is not load'))
   }
@@ -142,7 +142,7 @@ export const request = async({ requestKey, data }: LX.UserApi.UserApiRequestPara
   sendRequest({ requestKey, data })
 })
 
-export const getStatus = (): LX.UserApi.UserApiStatus => apiStatus
+export const getStatus = (): S.UserApi.UserApiStatus => apiStatus
 
 export const setAllowShowUpdateAlert = (id: string, enable: boolean) => {
   if (!userApi || userApi.id != id) return

@@ -13,18 +13,18 @@ import {
  */
 export const queryDownloadList = () => {
   const queryStatement = createQueryStatement()
-  return queryStatement.all() as LX.DBService.DownloadMusicInfo[]
+  return queryStatement.all() as S.DBService.DownloadMusicInfo[]
 }
 
 /**
  * 批量插入下载歌曲并刷新顺序
  * @param mInfos 列表
  */
-export const insertDownloadList = (mInfos: LX.DBService.DownloadMusicInfo[], listPositions: Array<{ id: string, position: number }>) => {
+export const insertDownloadList = (mInfos: S.DBService.DownloadMusicInfo[], listPositions: Array<{ id: string, position: number }>) => {
   const db = getDB()
   const insertStatement = createInsertStatement()
   const updatePositionStatement = createUpdatePositionStatement()
-  db.transaction((mInfos: LX.DBService.DownloadMusicInfo[]) => {
+  db.transaction((mInfos: S.DBService.DownloadMusicInfo[]) => {
     for (const info of mInfos) insertStatement.run(info)
     for (const info of listPositions) updatePositionStatement.run(info)
   })(mInfos)
@@ -46,10 +46,10 @@ export const deleteDownloadList = (ids: string[]) => {
  * 批量更新下载歌曲
  * @param urlInfo 列表
  */
-export const updateDownloadList = (urlInfo: LX.DBService.DownloadMusicInfo[]) => {
+export const updateDownloadList = (urlInfo: S.DBService.DownloadMusicInfo[]) => {
   const db = getDB()
   const updateStatement = createUpdateStatement()
-  db.transaction((urlInfo: LX.DBService.DownloadMusicInfo[]) => {
+  db.transaction((urlInfo: S.DBService.DownloadMusicInfo[]) => {
     for (const info of urlInfo) updateStatement.run(info)
   })(urlInfo)
 }

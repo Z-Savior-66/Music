@@ -14,10 +14,10 @@ import {
 import { sendEvent } from '../main'
 
 
-let selectModeListenr: ((mode: LX.Sync.ModeTypes[keyof LX.Sync.ModeTypes] | null) => void) | null = null
+let selectModeListenr: ((mode: S.Sync.ModeTypes[keyof S.Sync.ModeTypes] | null) => void) | null = null
 
 export default () => {
-  mainHandle<LX.Sync.SyncServiceActions, any>(WIN_MAIN_RENDERER_EVENT_NAME.sync_action, async({ params: data }) => {
+  mainHandle<S.Sync.SyncServiceActions, any>(WIN_MAIN_RENDERER_EVENT_NAME.sync_action, async({ params: data }) => {
     switch (data.action) {
       case 'enable_server':
         data.data.enable ? await startServer(parseInt(data.data.port)) : await stopServer()
@@ -38,7 +38,7 @@ export default () => {
         break
     }
   })
-  mainHandle<never, LX.Sync.ServerDevices>(WIN_MAIN_RENDERER_EVENT_NAME.sync_get_server_devices, async() => {
+  mainHandle<never, S.Sync.ServerDevices>(WIN_MAIN_RENDERER_EVENT_NAME.sync_get_server_devices, async() => {
     return getServerDevices()
   })
   mainHandle<string>(WIN_MAIN_RENDERER_EVENT_NAME.sync_remove_server_device, async({ params: clientId }) => {
@@ -47,23 +47,23 @@ export default () => {
 }
 
 
-export const sendSyncAction = (data: LX.Sync.SyncMainWindowActions) => {
+export const sendSyncAction = (data: S.Sync.SyncMainWindowActions) => {
   sendEvent(WIN_MAIN_RENDERER_EVENT_NAME.sync_action, data)
 }
 
-export const sendClientStatus = (status: LX.Sync.ClientStatus) => {
+export const sendClientStatus = (status: S.Sync.ClientStatus) => {
   sendSyncAction({
     action: 'client_status',
     data: status,
   })
 }
-export const sendServerStatus = (status: LX.Sync.ServerStatus) => {
+export const sendServerStatus = (status: S.Sync.ServerStatus) => {
   sendSyncAction({
     action: 'server_status',
     data: status,
   })
 }
-export const sendSelectMode = <T extends keyof LX.Sync.ModeTypes>(deviceName: string, type: T, listener: (mode: LX.Sync.ModeTypes[T] | null) => void) => {
+export const sendSelectMode = <T extends keyof S.Sync.ModeTypes>(deviceName: string, type: T, listener: (mode: S.Sync.ModeTypes[T] | null) => void) => {
   selectModeListenr = listener as typeof selectModeListenr
   sendSyncAction({ action: 'select_mode', data: { deviceName, type } })
 }

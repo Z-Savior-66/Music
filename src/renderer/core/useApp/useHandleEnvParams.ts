@@ -5,7 +5,7 @@ import { getListMusics } from '@renderer/store/list/action'
 import usePlaySonglist from './compositions/usePlaySonglist'
 import { playList } from '@renderer/core/player'
 
-const getListPlayIndex = (list: LX.Music.MusicInfo[], indexStr?: string): number => {
+const getListPlayIndex = (list: S.Music.MusicInfo[], indexStr?: string): number => {
   let index: number
   if (indexStr == null) {
     index = 1
@@ -82,7 +82,7 @@ export default () => {
   // 处理启动参数 play
   const initEnvParamPlay = useInitEnvParamPlay()
 
-  return (envParams: LX.EnvParams) => {
+  return (envParams: S.EnvParams) => {
     initEnvParamSearch(envParams.cmdParams.search)
     void initEnvParamPlay(envParams.cmdParams.play)
   }

@@ -1,5 +1,5 @@
 import { ref, onMounted, onBeforeUnmount, watch, nextTick } from '@common/utils/vueTools'
-import { scrollXRTo } from '@common/utils/renderer'
+import { scrollHorizontalReverseTo } from '@common/utils/renderer'
 import { lyric } from '@lyric/store/lyric'
 import { isPlay, setting } from '@lyric/store/state'
 import { setWindowBounds, setWindowResizeable } from '@lyric/utils/ipc'
@@ -27,7 +27,7 @@ export default (isComputeWidth) => {
   }
 
   let msDownX = 0
-  let msDownScrollX = 0
+  let msDownScrollHorizontal = 0
   let timeout = null
   let cancelScrollFn
   let dom_lines
@@ -48,9 +48,9 @@ export default (isComputeWidth) => {
         offset = prevActiveLine < lyric.line ? ((dom_lines[prevActiveLine]?.clientWidth ?? 0) - prevLineWidth) : 0
         // console.log(prevActiveLine, dom_lines[prevActiveLine]?.clientHeight ?? 0, prevLineWidth, offset)
       }
-      cancelScrollFn = scrollXRTo(dom_lyric.value, dom_p ? (dom_p.offsetLeft + offset - getOffsetTop(dom_lyric.value.clientWidth, dom_p.clientWidth)) : 0, duration)
+      cancelScrollFn = scrollHorizontalReverseTo(dom_lyric.value, dom_p ? (dom_p.offsetLeft + offset - getOffsetTop(dom_lyric.value.clientWidth, dom_p.clientWidth)) : 0, duration)
     } else {
-      cancelScrollFn = scrollXRTo(dom_lyric.value, 0, duration)
+      cancelScrollFn = scrollHorizontalReverseTo(dom_lyric.value, 0, duration)
     }
   }
   const clearLyricScrollTimeout = () => {
@@ -80,14 +80,14 @@ export default (isComputeWidth) => {
       }
       isMsDown.value = true
       msDownX = x
-      msDownScrollX = dom_lyric.value.scrollLeft
+      msDownScrollHorizontal = dom_lyric.value.scrollLeft
     } else {
       winEvent.isMsDown = true
       winEvent.msDownX = x
       winEvent.msDownY = y
       winEvent.windowW = window.innerWidth
       winEvent.windowH = window.innerHeight
-      // https://github.com/lyswhut/lx-music-desktop/issues/2244
+      // https://github.com/lyswhut/s-music-desktop/issues/2244
       if (isWin) setWindowResizeable(false)
     }
   }
@@ -113,10 +113,10 @@ export default (isComputeWidth) => {
         cancelScrollFn()
         cancelScrollFn = null
       }
-      dom_lyric.value.scrollLeft = msDownScrollX + msDownX - x
+      dom_lyric.value.scrollLeft = msDownScrollHorizontal + msDownX - x
       startLyricScrollTimeout()
     } else if (winEvent.isMsDown) {
-      // https://github.com/lyswhut/lx-music-desktop/issues/2244
+      // https://github.com/lyswhut/s-music-desktop/issues/2244
       if (isWin) {
         setWindowBounds({
           x: x - winEvent.msDownX,
@@ -175,7 +175,7 @@ export default (isComputeWidth) => {
       if (lines.length) {
         setLyric(lines)
       } else {
-        cancelScrollFn = scrollXRTo(dom_lyric.value, 0, 300, () => {
+        cancelScrollFn = scrollHorizontalReverseTo(dom_lyric.value, 0, 300, () => {
           if (lyric.lines !== lines) return
           setLyric(lines)
         }, 50)

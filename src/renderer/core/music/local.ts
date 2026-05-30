@@ -16,8 +16,8 @@ import {
 } from './utils'
 
 
-const getOtherSourceByLocal = async<T>(musicInfo: LX.Music.MusicInfoLocal, handler: (infos: LX.Music.MusicInfoOnline[]) => Promise<T>) => {
-  let result: LX.Music.MusicInfoOnline[] = []
+const getOtherSourceByLocal = async<T>(musicInfo: S.Music.MusicInfoLocal, handler: (infos: S.Music.MusicInfoOnline[]) => Promise<T>) => {
+  let result: S.Music.MusicInfoOnline[] = []
   result = await getOtherSource(musicInfo)
   if (result.length) try { return await handler(result) } catch {}
   if (musicInfo.name.includes('-')) {
@@ -67,10 +67,10 @@ const getOtherSourceByLocal = async<T>(musicInfo: LX.Music.MusicInfoLocal, handl
 }
 
 export const getMusicUrl = async({ musicInfo, isRefresh, allowToggleSource = true, onToggleSource = () => {} }: {
-  musicInfo: LX.Music.MusicInfoLocal
+  musicInfo: S.Music.MusicInfoLocal
   isRefresh: boolean
   allowToggleSource?: boolean
-  onToggleSource?: (musicInfo?: LX.Music.MusicInfoOnline) => void
+  onToggleSource?: (musicInfo?: S.Music.MusicInfoOnline) => void
 }): Promise<string> => {
   if (!isRefresh) {
     const path = await getLocalFilePath(musicInfo)
@@ -99,13 +99,13 @@ export const getMusicUrl = async({ musicInfo, isRefresh, allowToggleSource = tru
 }
 
 export const getPicUrl = async({ musicInfo, listId, isRefresh, onToggleSource = () => {} }: {
-  musicInfo: LX.Music.MusicInfoLocal
+  musicInfo: S.Music.MusicInfoLocal
   listId?: string | null
   isRefresh: boolean
-  onToggleSource?: (musicInfo?: LX.Music.MusicInfoOnline) => void
+  onToggleSource?: (musicInfo?: S.Music.MusicInfoOnline) => void
 }): Promise<string> => {
   if (!isRefresh) {
-    const pic = await window.lx.worker.main.getMusicFilePic(musicInfo.meta.filePath)
+    const pic = await window.s.worker.main.getMusicFilePic(musicInfo.meta.filePath)
     if (pic) return pic
 
     if (musicInfo.meta.picUrl) return musicInfo.meta.picUrl
@@ -131,12 +131,12 @@ export const getPicUrl = async({ musicInfo, listId, isRefresh, onToggleSource = 
 }
 
 export const getLyricInfo = async({ musicInfo, isRefresh, onToggleSource = () => {} }: {
-  musicInfo: LX.Music.MusicInfoLocal
+  musicInfo: S.Music.MusicInfoLocal
   isRefresh: boolean
-  onToggleSource?: (musicInfo?: LX.Music.MusicInfoOnline) => void
-}): Promise<LX.Player.LyricInfo> => {
+  onToggleSource?: (musicInfo?: S.Music.MusicInfoOnline) => void
+}): Promise<S.Player.LyricInfo> => {
   if (!isRefresh) {
-    const [lyricInfo, fileLyricInfo] = await Promise.all([getCachedLyricInfo(musicInfo), window.lx.worker.main.getMusicFileLyric(musicInfo.meta.filePath)])
+    const [lyricInfo, fileLyricInfo] = await Promise.all([getCachedLyricInfo(musicInfo), window.s.worker.main.getMusicFileLyric(musicInfo.meta.filePath)])
     // console.log(lyricInfo, fileLyricInfo)
     if (lyricInfo?.lyric && lyricInfo.lyric != fileLyricInfo?.lyric) {
       // 存在已编辑歌词

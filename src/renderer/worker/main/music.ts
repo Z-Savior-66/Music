@@ -5,7 +5,7 @@ import fs from 'node:fs/promises'
 import { checkPath } from '@common/utils/nodejs'
 
 const getTempDir = async() => {
-  const tempDir = path.join(os.tmpdir(), 'lxmusic_temp')
+  const tempDir = path.join(os.tmpdir(), 'smusic_temp')
   if (!await checkPath(tempDir)) {
     await fs.mkdir(tempDir, { recursive: true })
   }
@@ -29,7 +29,7 @@ export const getMusicFilePic = async(filePath: string) => {
   return `data:${picture.format};base64,${Buffer.from(picture.data).toString('base64')}`
 }
 
-export const parseLyric = (lrc: string): LX.Music.LyricInfo => {
+export const parseLyric = (lrc: string): S.Music.LyricInfo => {
   const verifyAwlrc = (lrc: string) => {
     return /(?:^|\s*)\[\d+:\d+(?:\.\d+)]<\d+,\d+>.+$/m.test(lrc)
   }
@@ -38,7 +38,7 @@ export const parseLyric = (lrc: string): LX.Music.LyricInfo => {
   }
   const lrcTags = {
     awlrc: {
-      name: 'lxlyric',
+      name: 'slyric',
       verify: verifyAwlrc,
     },
     lrc: {
@@ -57,7 +57,7 @@ export const parseLyric = (lrc: string): LX.Music.LyricInfo => {
   const tagRxp = /(?:^|\n\s*)\[awlrc:([^\]]+)]/i
   const lrcRxp = /^(lrc|awlrc|tlrc|rlrc):([^,]+)$/i
   const parse = (content: string) => {
-    const lyricInfo: Partial<LX.Music.LyricInfo> = {}
+    const lyricInfo: Partial<S.Music.LyricInfo> = {}
     const lrcs = content.trim().split(',')
     for (const lrc of lrcs) {
       const result = lrcRxp.exec(lrc.trim())
@@ -69,7 +69,7 @@ export const parseLyric = (lrc: string): LX.Music.LyricInfo => {
     }
     return lyricInfo
   }
-  let parsedInfo: Partial<LX.Music.LyricInfo> = {}
+  let parsedInfo: Partial<S.Music.LyricInfo> = {}
   let lyric = lrc.replace(tagRxp, (_: string, p1: string) => {
     parsedInfo = parse(p1)
     return ''
@@ -78,7 +78,7 @@ export const parseLyric = (lrc: string): LX.Music.LyricInfo => {
 }
 
 
-export const getMusicFileLyric = async(filePath: string): Promise<LX.Music.LyricInfo | null> => {
+export const getMusicFileLyric = async(filePath: string): Promise<S.Music.LyricInfo | null> => {
   const lyric = await getLocalMusicFileLyric(filePath)
   if (!lyric) return null
   return parseLyric(lyric.lyric)

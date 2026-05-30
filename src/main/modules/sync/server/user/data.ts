@@ -13,17 +13,17 @@ interface ServerInfo {
 }
 interface DevicesInfo {
   userName: string
-  clients: Record<string, LX.Sync.ServerKeyInfo>
+  clients: Record<string, S.Sync.ServerKeyInfo>
 }
 const saveServerInfoThrottle = throttle(() => {
-  fs.writeFile(path.join(global.lxDataPath, File.serverDataPath, File.serverInfoJSON), JSON.stringify(serverInfo), (err) => {
+  fs.writeFile(path.join(global.sDataPath, File.serverDataPath, File.serverInfoJSON), JSON.stringify(serverInfo), (err) => {
     if (err) console.error(err)
   })
 })
 let serverInfo: ServerInfo
 export const initServerInfo = async() => {
   if (serverInfo != null) return
-  const serverInfoFilePath = path.join(global.lxDataPath, File.serverDataPath, File.serverInfoJSON)
+  const serverInfoFilePath = path.join(global.sDataPath, File.serverDataPath, File.serverInfoJSON)
   if (await exists(serverInfoFilePath)) {
     // eslint-disable-next-line require-atomic-updates
     serverInfo = JSON.parse((await fs.promises.readFile(serverInfoFilePath)).toString())
@@ -33,7 +33,7 @@ export const initServerInfo = async() => {
       serverId: randomBytes(4 * 4).toString('base64'),
       version: 2,
     }
-    const syncDataPath = path.join(global.lxDataPath, File.serverDataPath)
+    const syncDataPath = path.join(global.sDataPath, File.serverDataPath)
     if (!await exists(syncDataPath)) {
       await fs.promises.mkdir(syncDataPath, { recursive: true })
     }
@@ -57,8 +57,8 @@ export const getUserDirname = (userName: string) => `${filterFileName(userName)}
 
 export const getUserConfig = (userName: string) => {
   return {
-    maxSnapshotNum: global.lx.appSetting['sync.server.maxSsnapshotNum'],
-    'list.addMusicLocationType': global.lx.appSetting['list.addMusicLocationType'],
+    maxSnapshotNum: global.s.appSetting['sync.server.maxSsnapshotNum'],
+    'list.addMusicLocationType': global.s.appSetting['list.addMusicLocationType'],
   }
 }
 
@@ -89,8 +89,8 @@ export const getUserConfig = (userName: string) => {
 //   deviceUserMap.delete(clientId)
 // }
 
-export const createClientKeyInfo = (deviceName: string, isMobile: boolean): LX.Sync.ServerKeyInfo => {
-  const keyInfo: LX.Sync.ServerKeyInfo = {
+export const createClientKeyInfo = (deviceName: string, isMobile: boolean): S.Sync.ServerKeyInfo => {
+  const keyInfo: S.Sync.ServerKeyInfo = {
     clientId: randomBytes(4 * 4).toString('base64'),
     key: randomBytes(16).toString('base64'),
     deviceName,
@@ -111,13 +111,13 @@ export class UserDataManage {
     return Object.values(this.devicesInfo.clients).sort((a, b) => (b.lastConnectDate ?? 0) - (a.lastConnectDate ?? 0))
   }
 
-  saveClientKeyInfo = (keyInfo: LX.Sync.ServerKeyInfo) => {
+  saveClientKeyInfo = (keyInfo: S.Sync.ServerKeyInfo) => {
     if (this.devicesInfo.clients[keyInfo.clientId] == null && Object.keys(this.devicesInfo.clients).length > 101) throw new Error('max keys')
     this.devicesInfo.clients[keyInfo.clientId] = keyInfo
     this.saveDevicesInfoThrottle()
   }
 
-  getClientKeyInfo = (clientId?: string | null): LX.Sync.ServerKeyInfo | null => {
+  getClientKeyInfo = (clientId?: string | null): S.Sync.ServerKeyInfo | null => {
     if (!clientId) return null
     return this.devicesInfo.clients[clientId] ?? null
   }
@@ -134,7 +134,7 @@ export class UserDataManage {
 
   constructor(userName: string) {
     this.userName = userName
-    const syncDataPath = path.join(global.lxDataPath, File.serverDataPath)
+    const syncDataPath = path.join(global.sDataPath, File.serverDataPath)
     this.userDir = syncDataPath
     this.devicesFilePath = path.join(this.userDir, File.userDevicesJSON)
     this.devicesInfo = fs.existsSync(this.devicesFilePath) ? JSON.parse(fs.readFileSync(this.devicesFilePath).toString()) : { userName, clients: {} }
@@ -148,7 +148,7 @@ export class UserDataManage {
 }
 // type UserDataManages = Map<string, UserDataManage>
 
-// export const createUserDataManage = (user: LX.UserConfig) => {
+// export const createUserDataManage = (user: S.UserConfig) => {
 //   const manage = Object.create(userDataManage) as typeof userDataManage
 //   manage.userDir = user.dataPath
 // }

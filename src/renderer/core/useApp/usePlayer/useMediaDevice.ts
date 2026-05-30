@@ -60,7 +60,7 @@ export default () => {
       window.app_event.playerDeviceChanged()
 
       if (appSetting['player.isMediaDeviceRemovedStopPlay'] && isPlay.value) {
-        window.lx.isPlayedStop = true
+        window.s.isPlayedStop = true
         pause()
       }
     }

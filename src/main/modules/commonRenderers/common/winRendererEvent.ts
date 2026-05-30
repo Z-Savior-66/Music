@@ -7,15 +7,15 @@ export const registerRendererEvents = (sendEvent: <T = any>(name: string, params
     sendEvent(CMMON_EVENT_NAME.deeplink, link)
   }
   const sendSystemThemeChange = () => {
-    sendEvent(CMMON_EVENT_NAME.theme_change, global.lx.theme)
+    sendEvent(CMMON_EVENT_NAME.theme_change, global.s.theme)
   }
 
-  global.lx.event_app.on('deeplink', sendDeeplink)
-  global.lx.event_app.on('theme_change', sendSystemThemeChange)
+  global.s.event_app.on('deeplink', sendDeeplink)
+  global.s.event_app.on('theme_change', sendSystemThemeChange)
 
   return () => {
-    global.lx.event_app.off('deeplink', sendDeeplink)
-    global.lx.event_app.off('theme_change', sendSystemThemeChange)
+    global.s.event_app.off('deeplink', sendDeeplink)
+    global.s.event_app.off('theme_change', sendSystemThemeChange)
   }
 }
 

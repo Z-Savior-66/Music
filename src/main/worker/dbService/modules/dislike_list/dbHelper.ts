@@ -13,17 +13,17 @@ import {
  */
 export const queryDislikeList = () => {
   const queryStatement = createQueryStatement()
-  return queryStatement.all() as LX.DBService.DislikeInfo[]
+  return queryStatement.all() as S.DBService.DislikeInfo[]
 }
 
 /**
  * 批量插入不喜欢歌曲并刷新顺序
  * @param infos 列表
  */
-export const insertDislikeList = async(infos: LX.DBService.DislikeInfo[]) => {
+export const insertDislikeList = async(infos: S.DBService.DislikeInfo[]) => {
   const db = getDB()
   const insertStatement = createInsertStatement()
-  db.transaction((infos: LX.DBService.DislikeInfo[]) => {
+  db.transaction((infos: S.DBService.DislikeInfo[]) => {
     for (const info of infos) insertStatement.run(info)
   })(infos)
 }
@@ -32,11 +32,11 @@ export const insertDislikeList = async(infos: LX.DBService.DislikeInfo[]) => {
  * 覆盖并批量插入不喜欢歌曲并刷新顺序
  * @param infos 列表
  */
-export const overwirteDislikeList = async(infos: LX.DBService.DislikeInfo[]) => {
+export const overwirteDislikeList = async(infos: S.DBService.DislikeInfo[]) => {
   const db = getDB()
   const clearStatement = createClearStatement()
   const insertStatement = createInsertStatement()
-  db.transaction((infos: LX.DBService.DislikeInfo[]) => {
+  db.transaction((infos: S.DBService.DislikeInfo[]) => {
     clearStatement.run()
     for (const info of infos) insertStatement.run(info)
   })(infos)
@@ -58,10 +58,10 @@ export const overwirteDislikeList = async(infos: LX.DBService.DislikeInfo[]) => 
 //  * 批量更新不喜欢歌曲
 //  * @param urlInfo 列表
 //  */
-// export const updateDislikeList = async(infos: LX.DBService.DislikeInfo[]) => {
+// export const updateDislikeList = async(infos: S.DBService.DislikeInfo[]) => {
 //   const db = getDB()
 //   const updateStatement = createUpdateStatement()
-//   db.transaction((infos: LX.DBService.DislikeInfo[]) => {
+//   db.transaction((infos: S.DBService.DislikeInfo[]) => {
 //     for (const info of infos) updateStatement.run(info)
 //   })(infos)
 // }

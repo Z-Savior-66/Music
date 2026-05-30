@@ -2,8 +2,8 @@ import { globalShortcut } from 'electron'
 import { log } from '@common/utils'
 
 export const handleKeyDown = (key: string) => {
-  if (!global.lx.hotKey.enable) return
-  global.lx.event_app.hot_key_down({ type: 'global', key })
+  if (!global.s.hotKey.enable) return
+  global.s.event_app.hot_key_down({ type: 'global', key })
 }
 
 const transformedKeyRxp = /(^|\+)[a-z]/g
@@ -13,8 +13,8 @@ export const transformedKey = (key: string): string => {
   return key.replace('mod', 'CommandOrControl').replace(transformedKeyRxp, l => l.toUpperCase())
 }
 
-export const registerHotkey = ({ key, info }: LX.RegisterKeyInfo): boolean => {
-  let targetKey = global.lx.hotKey.state.get(key)
+export const registerHotkey = ({ key, info }: S.RegisterKeyInfo): boolean => {
+  let targetKey = global.s.hotKey.state.get(key)
   if (targetKey?.status) return true
   const transKey = transformedKey(key)
   // console.log('Register key:', transKey)
@@ -25,7 +25,7 @@ export const registerHotkey = ({ key, info }: LX.RegisterKeyInfo): boolean => {
       status: false,
       info,
     }
-    global.lx.hotKey.state.set(key, targetKey)
+    global.s.hotKey.state.set(key, targetKey)
   }
   const status = targetKey.status = globalShortcut.isRegistered(transKey)
     ? false
@@ -39,16 +39,16 @@ export const unRegisterHotkey = (key: string) => {
   let transKey = transformedKey(key)
   // console.log('Unregister key:', transKey)
   globalShortcut.unregister(transKey)
-  global.lx.hotKey.state.delete(key)
+  global.s.hotKey.state.delete(key)
 }
 
 export const unRegisterHotkeyAll = () => {
-  global.lx.hotKey.state.clear()
+  global.s.hotKey.state.clear()
   globalShortcut.unregisterAll()
 }
 
 
-const handleRegisterHotkey = (data: LX.RegisterKeyInfo) => {
+const handleRegisterHotkey = (data: S.RegisterKeyInfo) => {
   let ret = registerHotkey(data)
   if (!ret) log.info('Register hot key failed:', data.key)
 }
@@ -56,12 +56,12 @@ const handleRegisterHotkey = (data: LX.RegisterKeyInfo) => {
 
 export const init = (isForce = false) => {
   unRegisterHotkeyAll()
-  if (!isForce && !global.lx.hotKey.config.global.enable) return
-  // global.lx.hotKey.state = {}
-  // console.log(global.lx.hotKey.config.global.keys)
-  for (const key of Object.keys(global.lx.hotKey.config.global.keys)) {
+  if (!isForce && !global.s.hotKey.config.global.enable) return
+  // global.s.hotKey.state = {}
+  // console.log(global.s.hotKey.config.global.keys)
+  for (const key of Object.keys(global.s.hotKey.config.global.keys)) {
     try {
-      handleRegisterHotkey({ key, info: global.lx.hotKey.config.global.keys[key] })
+      handleRegisterHotkey({ key, info: global.s.hotKey.config.global.keys[key] })
     } catch (err) {
       log.info(err)
     }

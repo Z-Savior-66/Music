@@ -21,7 +21,7 @@ vi.stubGlobal('document', {
 })
 
 vi.stubGlobal('window', {
-  lxData: {} as any,
+  sData: {} as any,
   requestIdleCallback: vi.fn(),
   addEventListener: vi.fn(),
 })
@@ -32,7 +32,7 @@ vi.stubGlobal('window', {
 describe('store/list/listManage/state', () => {
   beforeEach(async () => {
     vi.resetModules()
-    window.lxData = {} as any
+    window.sData = {} as any
   })
 
   it('defaultList 应使用默认初始值', async () => {
@@ -61,7 +61,7 @@ describe('store/list/listManage/state', () => {
 
   it('userLists 应支持添加用户列表', async () => {
     const { userLists } = await import('../list/listManage/state')
-    const newList: LX.List.UserListInfo = {
+    const newList: S.List.UserListInfo = {
       id: 'user_list_1',
       name: '我的歌单',
       source: 'local',
@@ -83,7 +83,7 @@ describe('store/list/listManage/state', () => {
 describe('store/list/state', () => {
   beforeEach(async () => {
     vi.resetModules()
-    window.lxData = {} as any
+    window.sData = {} as any
   })
 
   it('默认应从 listManage 导出 defaultList', async () => {

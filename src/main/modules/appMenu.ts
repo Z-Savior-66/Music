@@ -16,7 +16,7 @@ export default () => {
             label: '退出',
             accelerator: 'Command+Q',
             click() {
-              global.lx.isSkipTrayQuit = true
+              global.s.isSkipTrayQuit = true
               app.quit()
             },
           },
