@@ -50,6 +50,7 @@ const vueRule = {
   'vue/max-attributes-per-line': 'off',
   'vue/singleline-html-element-content-newline': 'off',
   'vue/use-v-on-exact': 'off',
+  '@typescript-eslint/no-unused-vars': 'off',
 }
 
 exports.base = {
