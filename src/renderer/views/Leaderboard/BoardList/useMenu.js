@@ -6,10 +6,6 @@ export default ({
   emit,
   list,
 }) => {
-  // const menuControl = reactive({
-  //   play: true,
-  //   collect: true,
-  // })
   const t = useI18n()
   const menuLocation = reactive({ x: 0, y: 0 })
   const isShowMenu = ref(false)

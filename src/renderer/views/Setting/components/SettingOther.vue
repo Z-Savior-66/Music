@@ -104,7 +104,6 @@ export default {
 
     const cacheSize = ref('0 B')
     const isDisabledResourceCacheClear = ref(false)
-    // const isDisabledListCacheClear = ref(false)
     const refreshCacheSize = () => {
       void getCacheSize().then(size => {
         cacheSize.value = sizeFormate(size)

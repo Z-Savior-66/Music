@@ -1,6 +1,4 @@
 import { ref } from '@common/utils/vueTools'
-// import { useI18n } from '@renderer/plugins/i18n'
-// import { } from '@renderer/store/search/state'
 import { getAndSetListDetail } from '@renderer/store/leaderboard/action'
 import { listDetailInfo } from '@renderer/store/leaderboard/state'
 import { playSongListDetail } from '../action'

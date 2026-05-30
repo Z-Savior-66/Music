@@ -1,7 +1,4 @@
-// import { httpFetch } from '../../request'
-// import { weapi } from './utils/crypto'
 import { sizeFormate, formatPlayTime } from '../../index'
-// import musicDetailApi from './musicDetail'
 import { eapiRequest } from './utils/index'
 
 export default {
@@ -10,13 +7,6 @@ export default {
   page: 0,
   allPage: 1,
   musicSearch(str, page, limit) {
-    // const searchRequest = eapiRequest('/api/cloudsearch/pc', {
-    //   s: str,
-    //   type: 1, // 1: 单曲, 10: 专辑, 100: 歌手, 1000: 歌单, 1002: 用户, 1004: MV, 1006: 歌词, 1009: 电台, 1014: 视频
-    //   limit,
-    //   total: page == 1,
-    //   offset: limit * (page - 1),
-    // })
     const searchRequest = eapiRequest('/api/search/song/list/page', {
       keyword: str,
       needCorrect: '1',
@@ -36,7 +26,6 @@ export default {
     return arr.join('、')
   },
   handleResult(rawList) {
-    // console.log(rawList)
     if (!rawList) return []
     return rawList.map(item => {
       item = item.baseInfo.simpleSongData
@@ -95,10 +84,8 @@ export default {
     if (++retryNum > 3) return Promise.reject(new Error('try max num'))
     if (limit == null) limit = this.limit
     return this.musicSearch(str, page, limit).then(result => {
-      // console.log(result)
       if (!result || result.code !== 200) return this.search(str, page, limit, retryNum)
       let list = this.handleResult(result.data.resources || [])
-      // console.log(list)
 
       if (list == null) return this.search(str, page, limit, retryNum)
 
@@ -113,7 +100,6 @@ export default {
         total: this.total,
         source: 'wy',
       }
-      // return result.data
     })
   },
 }

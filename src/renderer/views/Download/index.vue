@@ -68,7 +68,6 @@
 </template>
 
 <script>
-// import { checkPath, openDirInExplorer, openUrl } from '@common/utils/electron'
 
 import { ref } from '@common/utils/vueTools'
 import useListInfo from './useListInfo'

@@ -6,10 +6,7 @@ import musicSearch from './musicSearch'
 import songList from './songList'
 import hotSearch from './hotSearch'
 import comment from './comment'
-// import tipSearch from './tipSearch'
-
 const wy = {
-  // tipSearch,
   leaderboard,
   musicSearch,
   songList,

@@ -11,15 +11,6 @@ export const createMainWorker = () => {
   return Comlink.wrap<LX.WorkerMainTypes>(worker)
 }
 
-// export const createWorker = <T>(url: string): Comlink.Remote<T> => {
-//   // @ts-expect-error
-//   const worker: Worker = new Worker(new URL(url, import.meta.url))
-//   return Comlink.wrap<T>(worker)
-//   // worker.addEventListener('message', (event: MessageEvent) => {
-
-//   // })
-// }
-
 export type DownloadTypes = Comlink.Remote<LX.WorkerDownloadTypes>
 export const createDownloadWorker = () => {
   const worker: Worker = new Worker(new URL(

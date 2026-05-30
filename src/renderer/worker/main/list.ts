@@ -1,5 +1,3 @@
-// import { throttle } from '@common/utils'
-
 import { SPLIT_CHAR } from '@common/constants'
 import { filterFileName, sortInsert, similar, arrPushByPosition, arrShuffle } from '@common/utils/common'
 import { joinPath, saveStrToFile } from '@common/utils/nodejs'
@@ -129,8 +127,6 @@ export type SortFieldType = 'up' | 'down' | 'random'
  * @returns
  */
 export const sortListMusicInfo = async(list: LX.Music.MusicInfo[], sortType: SortFieldType, fieldName: SortFieldName, localeId: string) => {
-  // console.log(sortType, fieldName, localeId)
-  // const locale = new Intl.Locale(localeId)
   switch (sortType) {
     case 'random':
       arrShuffle(list)
