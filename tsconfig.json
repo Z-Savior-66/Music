@@ -6,6 +6,7 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
+    "ignoreDeprecations": "6.0",
     "outDir": "./dist",
     "baseUrl": "./src",
     "paths": {
