@@ -53,10 +53,7 @@ publish/utils/githubToken.js
 src/**/*-internal.js
 
 # IDE 配置
-.vscode/*
-!.vscode/
-!.vscode/launch.json
-!.vscode/tasks.json
+.vscode/
 .trae/
 .codex/
 
