@@ -204,7 +204,19 @@ const logs = [
 
   // https://github.com/electron/electron/issues/32133
   '"Electron sandbox_bundle.js script failed to run"',
+  '"Electron sandboxed_renderer.bundle.js script failed to run"',
   '"TypeError: object null is not iterable (cannot read property Symbol(Symbol.iterator))",',
+  'Object is not iterable (cannot read property Symbol(Symbol.iterator))',
+  'object is not iterable (cannot read property Symbol(Symbol.iterator))',
+  'Error invoking remote method',
+  'WebContents does not exist',
+
+  // DevTools 内部请求
+  'Request Autofill.enable failed',
+  'Request Autofill.setAddresses failed',
+
+  // Deprecated API 警告
+  'session.getAllExtensions',
 ]
 function electronLog(data, color) {
   let log = data.toString()
