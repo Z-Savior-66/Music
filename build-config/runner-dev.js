@@ -187,10 +187,23 @@ function startElectron() {
 
   electronProcess = spawn(electron, args)
 
+  let mainDebuggerReady = false
+  let rendererDebuggerReady = false
+  let debuggerReadyLogged = false
+  function markDebuggerReady(log) {
+    if (log.includes('Debugger listening')) mainDebuggerReady = true
+    if (log.includes('DevTools listening')) rendererDebuggerReady = true
+    if (!debuggerReadyLogged && mainDebuggerReady && rendererDebuggerReady) {
+      debuggerReadyLogged = true
+      console.log('[dev] ready for debugger')
+    }
+  }
+
   electronProcess.stdout.on('data', data => {
     electronLog(data, 'blue')
   })
   electronProcess.stderr.on('data', data => {
+    markDebuggerReady(data.toString())
     electronLog(data, 'red')
   })
 
