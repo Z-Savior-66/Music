@@ -30,9 +30,7 @@
                 <img v-if="bgImg" loading="lazy" decoding="async" :class="$style.img" :src="bgImg" alt="Background Image">
                 <svg-icon v-else :class="$style.icon" name="plus" />
                 <button :class="$style.removeBtn" type="button" @click.stop="removeBgImg">
-                  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 212.982 212.982" space="preserve">
-                    <use xlink:href="#icon-delete" />
-                  </svg>
+                  <svg-icon size="100%" name="delete" />
                 </button>
               </div>
               <div :class="$style.label">{{ $t('theme_edit_modal__bg_image') }}</div>
@@ -67,19 +65,13 @@
               <span>{{ $t('theme_edit_modal__control_btn') }}</span>
               <div :class="$style.controlBtn">
                 <button type="button" :class="$style.hide">
-                  <svg :class="$style.controlBtnIcon" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="80%" viewBox="0 0 30.727 30.727" space="preserve">
-                    <use xlink:href="#icon-window-hide" />
-                  </svg>
+                  <svg-icon :class="$style.controlBtnIcon" size="80%" name="window-hide" />
                 </button>
                 <button type="button" :class="$style.min">
-                  <svg :class="$style.controlBtnIcon" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="100%" viewBox="0 0 24 24" space="preserve">
-                    <use xlink:href="#icon-window-minimize" />
-                  </svg>
+                  <svg-icon :class="$style.controlBtnIcon" size="100%" name="window-minimize" />
                 </button>
                 <button type="button" :class="$style.close">
-                  <svg :class="$style.controlBtnIcon" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="100%" viewBox="0 0 24 24" space="preserve">
-                    <use xlink:href="#icon-window-close" />
-                  </svg>
+                  <svg-icon :class="$style.controlBtnIcon" size="100%" name="window-close" />
                 </button>
               </div>
             </div>

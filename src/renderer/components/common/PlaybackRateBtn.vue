@@ -1,9 +1,7 @@
 <template>
   <material-popup-btn :class="$style.btnContent">
     <button :class="[$style.btn, { [$style.active]: playbackRate != 1 }]" :aria-label="`${$t('player__playback_rate')}${playbackRate}x`">
-      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="100%" viewBox="0 0 24 24" space="preserve">
-        <use xlink:href="#icon-plex" />
-      </svg>
+      <svg-icon size="100%" name="plex" />
     </button>
     <template #content>
       <div :class="$style.setting">
@@ -67,29 +65,32 @@ const updatePreservesPitch = (enabled) => {
   cursor: pointer;
   background-color: transparent;
   border: none;
-  width: 24px;
+  width: 30px;
+  height: 30px;
   display: flex;
   flex-flow: column nowrap;
   padding: 0;
 
-  svg {
+  :global(.svg-icon) {
+    width: 20px;
+    height: 20px;
     transition: opacity @transition-fast;
     opacity: .5;
     // filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.2));
   }
   &:hover {
-    svg {
+    :global(.svg-icon) {
       opacity: .9;
     }
   }
   &:active {
-    svg {
+    :global(.svg-icon) {
       opacity: 1;
     }
   }
 
   &.active {
-    svg {
+    :global(.svg-icon) {
       color: var(--color-primary);
       opacity: .8;
     }

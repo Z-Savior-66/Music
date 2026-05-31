@@ -1,9 +1,7 @@
 <template>
   <material-popup-btn :class="$style.btnContent">
     <button :class="$style.btn" :aria-label="isMute ? $t('player__volume_muted') : `${$t('player__volume')}${parseInt(volume * 100)}%`" @wheel="handleWheel">
-      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="100%" viewBox="0 0 24 24" space="preserve">
-        <use :xlink:href="icon" />
-      </svg>
+      <svg-icon size="100%" :name="icon" />
     </button>
     <template #content>
       <div :class="$style.setting">
@@ -68,12 +66,15 @@ const icon = computed(() => {
   cursor: pointer;
   background-color: transparent;
   border: none;
-  width: 24px;
+  width: 30px;
+  height: 30px;
   display: flex;
   flex-flow: column nowrap;
   padding: 0;
 
-  svg {
+  :global(.svg-icon) {
+    width: 20px;
+    height: 20px;
     transition: opacity @transition-fast;
     opacity: .6;
     filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.2));

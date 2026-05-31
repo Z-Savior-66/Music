@@ -7,9 +7,7 @@
             <div v-show="showContent" :class="$style.content" :style="contentStyle" @click.stop>
               <header :class="$style.header">
                 <button v-if="closeBtn" type="button" @click="close">
-                  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 212.982 212.982" space="preserve">
-                    <use xlink:href="#icon-delete" />
-                  </svg>
+                  <svg-icon size="100%" name="delete" />
                 </button>
               </header>
               <slot />

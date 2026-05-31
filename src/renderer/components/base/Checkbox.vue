@@ -6,9 +6,7 @@
     >
     <label :for="id" :class="$style.content">
       <div :class="$style.container" :role="need ? 'radio' : 'checkbox'" tabindex="0" :aria-label="ariaLabel || label" :aria-checked="checked" :aria-disabled="disabled" @keydown.enter.space.stop.prevent="handleToggle">
-        <svg version="1.1" :class="$style.icon" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" width="100%" viewBox="0 32 448 448" space="preserve">
-          <use xlink:href="#icon-check-true" />
-        </svg>
+        <svg-icon :class="$style.icon" size="100%" name="check-true" />
       </div>
       <slot v-if="label == null" />
       <span v-else :class="$style.label">
@@ -159,6 +157,8 @@ export default {
   height: 1em;
   cursor: pointer;
   display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--color-primary);
   // border: 1px solid #ccc;
   &:after {
@@ -174,6 +174,10 @@ export default {
   }
 }
 .icon {
+  position: relative;
+  z-index: 1;
+  width: 88%;
+  height: 88%;
   transition: 0.3s ease;
   transition-property: transform;
   transform: scale(0);

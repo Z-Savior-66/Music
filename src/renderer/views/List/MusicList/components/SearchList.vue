@@ -13,9 +13,7 @@
             >
             <button type="button" @click="handleHide">
               <slot>
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="70%" viewBox="0 0 212.982 212.982" space="preserve">
-                  <use xlink:href="#icon-delete" />
-                </svg>
+                <svg-icon size="70%" name="delete" />
               </slot>
             </button>
           </div>

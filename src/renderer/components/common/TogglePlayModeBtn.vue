@@ -1,72 +1,28 @@
 <template>
   <material-popup-btn ref="btn_ref" :class="$style.btnContent">
     <button :class="$style.btn" :aria-label="nextTogglePlayName">
-      <svg
-        v-if="appSetting['player.togglePlayMethod'] == 'listLoop'"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        xlink="http://www.w3.org/1999/xlink"
-        height="80%" viewBox="0 0 24 24" space="preserve"
-      >
-        <use xlink:href="#icon-list-loop" />
-      </svg>
-      <svg
-        v-else-if="appSetting['player.togglePlayMethod'] == 'random'"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        xlink="http://www.w3.org/1999/xlink"
-        width="100%" viewBox="0 0 24 24" space="preserve"
-      >
-        <use xlink:href="#icon-list-random" />
-      </svg>
-      <svg
-        v-else-if="appSetting['player.togglePlayMethod'] == 'list'"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        xlink="http://www.w3.org/1999/xlink"
-        width="100%" viewBox="0 0 32 32" space="preserve"
-      >
-        <use xlink:href="#icon-list-order" />
-      </svg>
-      <svg
-        v-else-if="appSetting['player.togglePlayMethod'] == 'singleLoop'"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        xlink="http://www.w3.org/1999/xlink"
-        width="100%" viewBox="0 0 24 24" space="preserve"
-      >
-        <use xlink:href="#icon-single-loop" />
-      </svg>
-      <svg v-else version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="100%" viewBox="0 0 32 32" space="preserve">
-        <use xlink:href="#icon-single" />
-      </svg>
+      <svg-icon v-if="appSetting['player.togglePlayMethod'] == 'listLoop'" size="80%" name="list-loop" />
+      <svg-icon v-else-if="appSetting['player.togglePlayMethod'] == 'random'" size="100%" name="list-random" />
+      <svg-icon v-else-if="appSetting['player.togglePlayMethod'] == 'list'" size="100%" name="list-order" />
+      <svg-icon v-else-if="appSetting['player.togglePlayMethod'] == 'singleLoop'" size="100%" name="single-loop" />
+      <svg-icon v-else size="100%" name="single" />
     </button>
     <template #content>
       <div :class="$style.setting">
         <button :class="$style.btn" :aria-label="$t('player__play_toggle_mode_list_loop')" @click="toggleMode('listLoop')">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 24 24" space="preserve">
-            <use xlink:href="#icon-list-loop" />
-          </svg>
+          <svg-icon size="100%" name="list-loop" />
         </button>
         <button :class="$style.btn" :aria-label="$t('player__play_toggle_mode_random')" @click="toggleMode('random')">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="100%" viewBox="0 0 24 24" space="preserve">
-            <use xlink:href="#icon-list-random" />
-          </svg>
+          <svg-icon size="100%" name="list-random" />
         </button>
         <button :class="$style.btn" :aria-label="$t('player__play_toggle_mode_list')" @click="toggleMode('list')">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="100%" viewBox="0 0 32 32" space="preserve">
-            <use xlink:href="#icon-list-order" />
-          </svg>
+          <svg-icon size="100%" name="list-order" />
         </button>
         <button :class="$style.btn" :aria-label="$t('player__play_toggle_mode_single_loop')" @click="toggleMode('singleLoop')">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="100%" viewBox="0 0 24 24" space="preserve">
-            <use xlink:href="#icon-single-loop" />
-          </svg>
+          <svg-icon size="100%" name="single-loop" />
         </button>
         <button :class="$style.btn" :aria-label="$t('player__play_toggle_mode_off')" @click="toggleMode('none')">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="100%" viewBox="0 0 32 32" space="preserve">
-            <use xlink:href="#icon-single" />
-          </svg>
+          <svg-icon size="100%" name="single" />
         </button>
       </div>
     </template>
@@ -111,23 +67,26 @@ const toggleMode = (mode) => {
   cursor: pointer;
   background-color: transparent;
   border: none;
-  width: 24px;
+  width: 30px;
+  height: 30px;
   display: flex;
   flex-flow: column nowrap;
   padding: 0;
 
-  svg {
+  :global(.svg-icon) {
+    width: 20px;
+    height: 20px;
     transition: opacity @transition-fast;
     opacity: .6;
     filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.2));
   }
   &:hover {
-    svg {
+    :global(.svg-icon) {
       opacity: .9;
     }
   }
   &:active {
-    svg {
+    :global(.svg-icon) {
       opacity: 1;
     }
   }

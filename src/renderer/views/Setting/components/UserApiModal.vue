@@ -13,8 +13,7 @@ material-modal(:show="modelValue" bg-close teleport="#view" @close="handleClose"
           div
             base-checkbox(:id="`user_api_${api.id}`" v-model="api.allowShowUpdateAlert" :class="$style.checkbox" :label="$t('user_api__allow_show_update_alert')" @change="handleChangeAllowUpdateAlert(api, $event)")
         base-btn(:class="$style.listBtn" outline :aria-label="$t('user_api__btn_remove')" @click.stop="handleRemove(index)")
-          svg(v-once version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 0 212.982 212.982" space="preserve")
-            use(xlink:href="#icon-delete")
+          svg-icon(name="delete")
     div(v-else :class="$style.content")
       div(:class="$style.noitem") {{ $t('user_api__noitem') }}
     div(:class="$style.note")

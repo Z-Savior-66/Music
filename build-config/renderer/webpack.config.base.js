@@ -84,7 +84,6 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        exclude: path.join(__dirname, '../../src/renderer/assets/svgs'),
         type: 'asset',
         parser: {
           dataUrlCondition: {
@@ -94,20 +93,6 @@ module.exports = {
         generator: {
           filename: 'imgs/[name]-[contenthash:8][ext]',
         },
-      },
-      {
-        test: /\.svg$/,
-        include: path.join(__dirname, '../../src/renderer/assets/svgs'),
-        use: [
-          {
-            loader: 'svg-sprite-loader',
-            options: {
-              symbolId: 'icon-[name]',
-            },
-          },
-          'svg-transform-loader',
-          'svgo-loader',
-        ],
       },
       {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)$/,

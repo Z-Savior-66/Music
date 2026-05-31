@@ -2,17 +2,11 @@
   <div :class="$style.controlBtn">
     <!-- <common-volume-bar /> -->
     <button :class="$style.titleBtn" :aria-label="$t('player__add_music_to')" @click="addMusicTo">
-      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="90%" viewBox="0 0 512 512" space="preserve">
-        <use xlink:href="#icon-add-2" />
-      </svg>
+      <svg-icon size="90%" name="add-2" />
     </button>
     <button :class="$style.titleBtn" :aria-label="toggleDesktopLyricBtnTitle" @click="toggleDesktopLyric" @contextmenu="toggleLockDesktopLyric">
-      <svg v-show="appSetting['desktopLyric.enable']" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 512 512" space="preserve">
-        <use xlink:href="#icon-desktop-lyric-on" />
-      </svg>
-      <svg v-show="!appSetting['desktopLyric.enable']" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 512 512" space="preserve">
-        <use xlink:href="#icon-desktop-lyric-off" />
-      </svg>
+      <svg-icon v-show="appSetting['desktopLyric.enable']" size="100%" name="desktop-lyric-on" />
+      <svg-icon v-show="!appSetting['desktopLyric.enable']" size="100%" name="desktop-lyric-off" />
     </button>
     <common-volume-btn />
     <common-toggle-play-mode-btn />
@@ -70,8 +64,8 @@ export default {
 
 .titleBtn {
   flex: none;
-  height: 32px;
-  width: 32px;
+  height: 30px;
+  width: 30px;
   transition: @transition-fast;
   transition-property: background-color, color, opacity;
   // color: var(--color-button-font);
@@ -87,7 +81,9 @@ export default {
   opacity: .6;
   cursor: pointer;
 
-  svg {
+  :global(.svg-icon) {
+    width: 20px;
+    height: 20px;
     filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.2));
   }
   &:hover {

@@ -31,9 +31,7 @@
             <div class="list-item-cell no-select" :class="$style.num" style="flex: 0 0 5%;">
               <transition name="play-active">
                 <div v-if="playTaskId == item.id" :class="$style.playIcon">
-                  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="50%" viewBox="0 0 512 512" space="preserve">
-                    <use xlink:href="#icon-play-outline" />
-                  </svg>
+                  <svg-icon size="50%" name="play-outline" />
                 </div>
                 <div v-else class="num">{{ index + 1 }}</div>
               </transition>

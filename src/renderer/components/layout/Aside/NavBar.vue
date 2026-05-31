@@ -3,9 +3,7 @@
     <ul :class="$style.list" role="toolbar">
       <li v-for="item in menus" :key="item.to" :class="$style.navItem" role="presentation">
         <router-link :class="[$style.link, {[$style.active]: $route.meta.name == item.name}]" role="tab" :aria-selected="$route.meta.name == item.name" :to="item.to" :aria-label="item.tips">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" :viewBox="item.iconSize" :height="item.size" :width="item.size" space="preserve">
-            <use :xlink:href="item.icon" />
-          </svg>
+          <svg-icon :size="item.size" :name="item.icon" />
         </router-link>
       </li>
     </ul>
@@ -168,43 +166,49 @@ export default {
   .mixin-ellipsis-1();
   &:before {
     .mixin-after();
-    left: -@spacing-xs;
+    left: 0;
     top: 50%;
-    width: 3px;
-    height: 56%;
+    width: 4px;
+    height: 62%;
     background-color: var(--color-primary);
     border-radius: 4px;
-    transform: translate(-100%, -50%);
-    transition: transform @transition-fast;
+    opacity: 0;
+    transform: translate(-8px, -50%);
+    transition: @transition-fast;
+    transition-property: opacity, transform;
   }
 
   &.active {
     // border-left-color: @color-theme-active;
     color: var(--color-primary);
-    background-color: var(--color-primary-light-900-alpha-300);
-    box-shadow: inset 0 0 0 1px var(--color-primary-alpha-900);
+    background-color: var(--color-primary-alpha-800);
+    box-shadow:
+      inset 0 0 0 1px var(--color-primary-alpha-700),
+      0 6px 18px var(--color-primary-alpha-900);
 
     &:before {
+      opacity: 1;
       transform: translate(0, -50%);
     }
 
     &:hover {
-      background-color: var(--color-primary-light-900-alpha-400);
+      background-color: var(--color-primary-alpha-700);
     }
   }
 
 
   &:hover {
-    color: var(--color-nav-font);
+    color: var(--color-primary);
 
     &:not(.active) {
-      opacity: .8;
-      background-color: var(--color-primary-light-900-alpha-200);
+      opacity: 1;
+      background-color: var(--color-primary-alpha-900);
+      box-shadow: inset 0 0 0 1px var(--color-primary-alpha-900);
     }
   }
   &:active:not(.active) {
-    opacity: .6;
-    background-color: var(--color-primary-light-900-alpha-300);
+    opacity: .8;
+    background-color: var(--color-primary-alpha-800);
   }
 }
 

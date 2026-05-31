@@ -9,9 +9,7 @@
         <dl v-if="appSetting['search.isShowHistorySearch'] && historyList.length" :class="$style.noitemList">
           <dt :class="$style.noitemListTitle">
             <span>{{ $t('history_search') }}</span><span :class="$style.historyClearBtn" :aria-label="$t('history_clear')" @click="clearHistoryList">
-              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 512 512" space="preserve">
-                <use xlink:href="#icon-eraser" />
-              </svg></span>
+              <svg-icon size="100%" name="eraser" /></span>
           </dt>
           <dd v-for="(item, index) in historyList" :key="index + item" :class="$style.noitemListItem" :aria-label="$t('history_remove')" @contextmenu="removeHistoryWord(index)" @click="handleSearch(item)">{{ item }}</dd>
         </dl>

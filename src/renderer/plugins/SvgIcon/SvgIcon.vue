@@ -1,33 +1,37 @@
 <template>
-  <svg class="svg-icon" aria-hidden="true">
-    <use :xlink:href="id" />
-  </svg>
+  <component
+    :is="iconComponent"
+    class="svg-icon"
+    aria-hidden="true"
+    :size="size"
+    :stroke-width="strokeWidth"
+  />
 </template>
 
-<script>
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { getIconComponent } from './iconMap'
 
-export default {
-  name: 'SvgIcon',
-  props: {
-    name: {
-      type: String,
-      required: true,
-    },
-  },
-  computed: {
-    id() {
-      return `#icon-${this.name}`
-    },
-  },
-}
+const props = withDefaults(defineProps<{
+  name: string
+  size?: number | string
+  strokeWidth?: number | string
+}>(), {
+  size: '1.2em',
+  strokeWidth: 2,
+})
+
+const iconName = computed(() => props.name.replace(/^#icon-/, ''))
+const iconComponent = computed(() => getIconComponent(iconName.value))
 </script>
 
 <style>
 .svg-icon {
-  width: 1.2em;
-  height: 1.2em;
-  vertical-align: -0.25em;
-  fill: currentColor;
+  display: block;
+  flex: none;
+  vertical-align: middle;
+  fill: none;
+  stroke: currentColor;
   overflow: hidden;
 }
 </style>

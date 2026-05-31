@@ -1,44 +1,28 @@
 <template>
   <div :class="$style.btns">
     <button v-if="playBtn" type="button" :aria-label="$t('list__play')" @contextmenu.capture.stop @click.stop="handleClick('play')">
-      <svg v-once version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 287.386 287.386" space="preserve">
-        <use xlink:href="#icon-testPlay" />
-      </svg>
+      <svg-icon size="100%" name="testPlay" />
     </button>
     <button v-if="listAddBtn" type="button" :aria-label="$t('list__add_to')" @contextmenu.capture.stop @click.stop="handleClick('listAdd')">
-      <svg v-once version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 42 42" space="preserve">
-        <use xlink:href="#icon-addTo" />
-      </svg>
+      <svg-icon size="100%" name="addTo" />
     </button>
     <button v-if="downloadBtn && appSetting['download.enable']" type="button" :aria-label="$t('list__download')" @contextmenu.capture.stop @click.stop="handleClick('download')">
-      <svg v-once version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 475.078 475.077" space="preserve">
-        <use xlink:href="#icon-download" />
-      </svg>
+      <svg-icon size="100%" name="download" />
     </button>
     <button v-if="startBtn" type="button" :aria-label="$t('list__start')" @contextmenu.capture.stop @click.stop="handleClick('start')">
-      <svg v-once version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 1024 1024" space="preserve">
-        <use xlink:href="#icon-play" />
-      </svg>
+      <svg-icon size="100%" name="play" />
     </button>
     <button v-if="pauseBtn" type="button" :aria-label="$t('list__pause')" @contextmenu.capture.stop @click.stop="handleClick('pause')">
-      <svg v-once version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 1024 1024" space="preserve">
-        <use xlink:href="#icon-pause" />
-      </svg>
+      <svg-icon size="100%" name="pause" />
     </button>
     <button v-if="fileBtn" type="button" :aria-label="$t('list__file')" @contextmenu.capture.stop @click.stop="handleClick('file')">
-      <svg v-once version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="-61 0 512 512" space="preserve">
-        <use xlink:href="#icon-musicFile" />
-      </svg>
+      <svg-icon size="100%" name="musicFile" />
     </button>
     <button v-if="searchBtn" type="button" :aria-label="$t('list__search')" @contextmenu.capture.stop @click.stop="handleClick('search')">
-      <svg v-once version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 30.239 30.239" space="preserve">
-        <use xlink:href="#icon-search" />
-      </svg>
+      <svg-icon size="100%" name="search" />
     </button>
     <button v-if="removeBtn" type="button" :aria-label="$t('list__remove')" @click.stop="handleClick('remove')">
-      <svg v-once version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 212.982 212.982" space="preserve">
-        <use xlink:href="#icon-delete" />
-      </svg>
+      <svg-icon size="100%" name="delete" />
     </button>
   </div>
 </template>

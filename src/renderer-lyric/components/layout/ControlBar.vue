@@ -3,53 +3,31 @@
     <transition enter-active-class="animated-fast fadeIn" leave-active-class="animated fadeOut">
       <div v-show="!isShowThemeList" :class="$style.btns" @mousedown="handleLyricMouseDown" @touchstart="handleLyricTouchStart">
         <button :class="$style.btn" :title="$t('desktop_lyric__close')" @click="handleClose">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="20px" viewBox="0 0 24 24" space="preserve">
-            <use xlink:href="#icon-close" />
-          </svg>
+          <svg-icon size="20px" name="close" />
         </button>
         <button :class="$style.btn" :title="$t('desktop_lyric__' + (setting['desktopLyric.isLock'] ? 'unlock' : 'lock'))" @click="handleLock">
-          <svg v-if="setting['desktopLyric.isLock']" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="20px" viewBox="0 0 24 24" space="preserve">
-            <use xlink:href="#icon-unlock" />
-          </svg>
-          <svg v-else version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="20px" viewBox="0 0 24 24" space="preserve">
-            <use xlink:href="#icon-lock" />
-          </svg>
+          <svg-icon v-if="setting['desktopLyric.isLock']" size="20px" name="unlock" />
+          <svg-icon v-else size="20px" name="lock" />
         </button>
         <button :class="$style.btn" :title="$t('desktop_lyric__font_increase')" @click="handleFontChange('increase', 1)">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="20px" viewBox="0 0 24 24" space="preserve">
-            <use xlink:href="#icon-font-increase" />
-          </svg>
+          <svg-icon size="20px" name="font-increase" />
         </button>
         <button :class="$style.btn" :title="$t('desktop_lyric__font_decrease')" @click="handleFontChange('decrease', 1)">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="20px" viewBox="0 0 24 24" space="preserve">
-            <use xlink:href="#icon-font-decrease" />
-          </svg>
+          <svg-icon size="20px" name="font-decrease" />
         </button>
         <button :class="$style.btn" :title="$t('desktop_lyric__opacity_increase')" @click="handleOpactiyChange('increase', 10)" @contextmenu="handleOpactiyChange('increase', 2)">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="20px" viewBox="0 0 24 24" space="preserve">
-            <use xlink:href="#icon-opactiy-increase" />
-          </svg>
+          <svg-icon size="20px" name="opactiy-increase" />
         </button>
         <button :class="$style.btn" :title="$t('desktop_lyric__opacity_decrease')" @click="handleOpactiyChange('decrease', 10)" @contextmenu="handleOpactiyChange('decrease', 2)">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="20px" viewBox="0 0 24 24" space="preserve">
-            <use xlink:href="#icon-opactiy-decrease" />
-          </svg>
+          <svg-icon size="20px" name="opactiy-decrease" />
         </button>
         <button :class="$style.btn" :title="$t('desktop_lyric__' + (setting['desktopLyric.style.isZoomActiveLrc'] ? 'lrc_active_zoom_off' : 'lrc_active_zoom_on'))" @click="handleZoomLrc">
-          <svg v-if="setting['desktopLyric.style.isZoomActiveLrc']" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="20px" viewBox="0 0 24 24" space="preserve">
-            <use xlink:href="#icon-vibrate-off" />
-          </svg>
-          <svg v-else version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="20px" viewBox="0 0 24 24" space="preserve">
-            <use xlink:href="#icon-vibrate" />
-          </svg>
+          <svg-icon v-if="setting['desktopLyric.style.isZoomActiveLrc']" size="20px" name="vibrate-off" />
+          <svg-icon v-else size="20px" name="vibrate" />
         </button>
         <button :class="$style.btn" :title="$t('desktop_lyric__' + (setting['desktopLyric.isAlwaysOnTop'] ? 'win_top_off' : 'win_top_on'))" @click="handleAlwaysOnTop">
-          <svg v-if="setting['desktopLyric.isAlwaysOnTop']" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="20px" viewBox="0 0 24 24" space="preserve">
-            <use xlink:href="#icon-top-off" />
-          </svg>
-          <svg v-else version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="20px" viewBox="0 0 24 24" space="preserve">
-            <use xlink:href="#icon-top-on" />
-          </svg>
+          <svg-icon v-if="setting['desktopLyric.isAlwaysOnTop']" size="20px" name="top-off" />
+          <svg-icon v-else size="20px" name="top-on" />
         </button>
       </div>
     </transition>

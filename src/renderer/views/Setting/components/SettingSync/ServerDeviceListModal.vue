@@ -10,8 +10,7 @@ material-modal(:show="modelValue" bg-close teleport="#view" @close="$emit('updat
             | {{ device.name }}
           span(:class="$style.desc") {{ $t('setting__sync_server_device_list_time', { time: device.lastConnectDate }) }}
         base-btn(:class="$style.listBtn" outline :aria-label="$t('setting__sync_server_device_list_btn_remove')" @click.stop="handleRemove(index)")
-          svg(v-once version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 0 212.982 212.982" space="preserve")
-            use(xlink:href="#icon-delete")
+          svg-icon(name="delete")
     div(v-else :class="$style.content")
       div(:class="$style.noitem") {{ $t('setting__sync_server_device_list_noitem') }}
   div(:class="$style.footer")

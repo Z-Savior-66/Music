@@ -50,9 +50,6 @@ import NavBar from './NavBar.vue'
   font-weight: bold;
   letter-spacing: 0;
   font-size: 16px;
-  border-radius: @radius-panel;
-  background-color: var(--color-primary-light-900-alpha-200);
-  box-shadow: inset 0 0 0 1px var(--color-primary-alpha-900);
   display: flex;
   align-items: center;
   justify-content: center;

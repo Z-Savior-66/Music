@@ -71,9 +71,6 @@ body {
   #body {
     border-radius: @radius-border;
   }
-  #right {
-    margin-right: 0;
-  }
   #root {
     box-shadow: 0 0 @shadow-app rgba(0, 0, 0, 0.5);
     border-radius: @radius-border;
@@ -87,24 +84,24 @@ body {
   }
 
   #right {
-    margin: 0;
+    margin: @spacing-sm @spacing-sm @spacing-sm 0;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    border-top: 0;
-    border-right: 0;
-    border-bottom: 0;
+    border-top: 1px solid var(--color-primary-alpha-900);
+    border-right: 1px solid var(--color-primary-alpha-900);
+    border-bottom: 1px solid var(--color-primary-alpha-900);
   }
 }
 .fullscreen {
   background-color: var(--color-content-background);
 
   #right {
-    margin: 0;
+    margin: @spacing-sm @spacing-sm @spacing-sm 0;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    border-top: 0;
-    border-right: 0;
-    border-bottom: 0;
+    border-top: 1px solid var(--color-primary-alpha-900);
+    border-right: 1px solid var(--color-primary-alpha-900);
+    border-bottom: 1px solid var(--color-primary-alpha-900);
   }
 }
 

@@ -16,22 +16,14 @@
     </div>
     <div :class="$style.playControl">
       <div :class="$style.playBtn" :aria-label="$t('player__prev')" @click="playPrev()">
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 1024 1024" space="preserve">
-          <use xlink:href="#icon-prevMusic" />
-        </svg>
+        <svg-icon size="100%" name="prevMusic" />
       </div>
       <div :class="$style.playBtn" :aria-label="isPlay ? $t('player__pause') : $t('player__play')" @click="togglePlay">
-        <svg v-if="isPlay" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 1024 1024" space="preserve">
-          <use xlink:href="#icon-pause" />
-        </svg>
-        <svg v-else :class="$style.playIcon" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 1024 1024" space="preserve">
-          <use xlink:href="#icon-play" />
-        </svg>
+        <svg-icon v-if="isPlay" size="100%" name="pause" />
+        <svg-icon v-else :class="$style.playIcon" size="100%" name="play" />
       </div>
       <div :class="$style.playBtn" :aria-label="$t('player__next')" @click="playNext()">
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 1024 1024" space="preserve">
-          <use xlink:href="#icon-nextMusic" />
-        </svg>
+        <svg-icon size="100%" name="nextMusic" />
       </div>
     </div>
   </div>
@@ -114,8 +106,9 @@ const {
   color: var(--color-button-font);
 }
 .playBtn {
-  height: 40%;
-  padding: 5px;
+  width: 42px;
+  height: 42px;
+  padding: 0;
   cursor: pointer;
   flex: none;
   // transition: @transition-normal;
@@ -128,8 +121,9 @@ const {
   +.playBtn {
     margin-left: 10px;
   }
-  svg {
-    fill: currentColor;
+  :global(.svg-icon) {
+    width: 24px;
+    height: 24px;
     filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.2));
   }
   &:hover {

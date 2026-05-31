@@ -19,9 +19,7 @@
                 <svg-icon name="share" />
               </button>
               <button type="button" :class="$style.btn" @click="handlePlay(item)">
-                <svg v-once version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="50%" viewBox="0 0 287.386 287.386" space="preserve">
-                  <use xlink:href="#icon-testPlay" />
-                </svg>
+                <svg-icon size="50%" name="testPlay" />
               </button>
             </div>
           </div>

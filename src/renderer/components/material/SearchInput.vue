@@ -19,16 +19,12 @@
         >
         <transition enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
           <button v-show="text" type="button" @click="handleClearList">
-            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 24 24" space="preserve">
-              <use xlink:href="#icon-window-close" />
-            </svg>
+            <svg-icon size="100%" name="window-close" />
           </button>
         </transition>
         <button type="button" :disabled="disabled" @click="handleSearch">
           <slot>
-            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 30.239 30.239" space="preserve">
-              <use xlink:href="#icon-search" />
-            </svg>
+            <svg-icon size="100%" name="search" />
           </slot>
         </button>
       </div>

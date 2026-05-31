@@ -3,23 +3,17 @@
     <ul>
       <li v-if="page == 1" :class="$style.disabled">
         <span>
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 451.846 451.847" space="preserve">
-            <use xlink:href="#icon-left" />
-          </svg>
+          <svg-icon size="100%" name="left" />
         </span>
       </li>
       <li v-else>
         <button type="button" :aria-label="$t('pagination__prev')" @click="handleClick(page - 1)">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 451.846 451.847" space="preserve">
-            <use xlink:href="#icon-left" />
-          </svg>
+          <svg-icon size="100%" name="left" />
         </button>
       </li>
       <li v-if="maxPage > btnLength && page > pageEvg+1" :class="$style.first">
         <button type="button" :aria-label="$t('pagination__page', { num: 1 })" @click="handleClick(1)">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 451.846 451.847" space="preserve">
-            <use xlink:href="#icon-first" />
-          </svg>
+          <svg-icon size="100%" name="first" />
         </button>
       </li>
       <li v-for="p in pages" :key="p" :class="{[$style.active] : p == page}">
@@ -28,22 +22,16 @@
       </li>
       <li v-if="maxPage > btnLength && maxPage - page > pageEvg" :class="$style.last">
         <button type="button" :aria-label="$t('pagination__page', { num: maxPage })" @click="handleClick(maxPage)">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 451.846 451.847" space="preserve">
-            <use xlink:href="#icon-last" />
-          </svg>
+          <svg-icon size="100%" name="last" />
         </button>
       </li>
       <li v-if="page == maxPage" :class="$style.disabled">
         <span>
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 451.846 451.847" space="preserve">
-            <use xlink:href="#icon-right" />
-          </svg></span>
+          <svg-icon size="100%" name="right" /></span>
       </li>
       <li v-else>
         <button type="button" :aria-label="$t('pagination__next')" @click="handleClick(page + 1)">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 451.846 451.847" space="preserve">
-            <use xlink:href="#icon-right" />
-          </svg>
+          <svg-icon size="100%" name="right" />
         </button>
       </li>
     </ul>

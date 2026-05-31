@@ -2,19 +2,15 @@
 div(:class="$style.header")
   div(ref="dom_btns" :class="$style.controBtn")
     button(type="button" :class="$style.hide" :aria-label="$t('player__hide_detail_tip')" ignore-tip :title="$t('player__hide_detail_tip')" @click="hide")
-      svg(:class="$style.controBtnIcon" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="80%" viewBox="0 0 30.727 30.727" space="preserve")
-        use(xlink:href="#icon-window-hide")
+      svg-icon(:class="$style.controBtnIcon" size="80%" name="window-hide")
     button(type="button" :class="$style.fullscreenExit" :aria-label="$t('fullscreen_exit')" ignore-tip :title="$t('fullscreen_exit')" @click="fullscreenExit")
-      svg(:class="$style.controBtnIcon" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="100%")
-        use(xlink:href="#icon-fullscreen-exit")
+      svg-icon(:class="$style.controBtnIcon" size="100%" name="fullscreen-exit")
     button(type="button" :class="$style.min" :aria-label="$t('min')" ignore-tip :title="$t('min')" @click="minWindow")
-      svg(:class="$style.controBtnIcon" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="100%" viewBox="0 0 24 24" space="preserve")
-        use(xlink:href="#icon-window-minimize")
+      svg-icon(:class="$style.controBtnIcon" size="100%" name="window-minimize")
 
     //- button(type="button" :class="$style.max" @click="max")
     button(type="button" :class="$style.close" :aria-label="$t('close')" ignore-tip :title="$t('close')" @click="closeWindow")
-      svg(:class="$style.controBtnIcon" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="100%" viewBox="0 0 24 24" space="preserve")
-        use(xlink:href="#icon-window-close")
+      svg-icon(:class="$style.controBtnIcon" size="100%" name="window-close")
 </template>
 
 

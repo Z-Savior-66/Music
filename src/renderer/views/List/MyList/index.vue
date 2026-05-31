@@ -4,14 +4,10 @@
       <h2 :class="$style.listsTitle">{{ $t('my_list') }}</h2>
       <div :class="$style.headerBtns">
         <button :class="$style.listsAdd" :aria-label="$t('lists__new_list_btn')" @click="isShowNewList = true">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="70%" viewBox="0 0 24 24" space="preserve">
-            <use xlink:href="#icon-list-add" />
-          </svg>
+          <svg-icon size="70%" name="list-add" />
         </button>
         <button :class="$style.listsAdd" :aria-label="$t('list_update_modal__title')" @click="isShowListUpdateModal = true">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="transform: rotate(45deg);" height="70%" viewBox="0 0 24 24" space="preserve">
-            <use xlink:href="#icon-refresh" />
-          </svg>
+          <svg-icon style="transform: rotate(45deg);" size="70%" name="refresh" />
         </button>
       </div>
     </div>
@@ -22,9 +18,7 @@
         @contextmenu="handleListsItemRigthClick($event, -2)" @click="handleListToggle(defaultList.id)"
       >
         <!-- <div v-if="defaultList.id == listId" :class="$style.activeIcon">
-          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="40%" viewBox="0 0 451.846 451.847" space="preserve">
-            <use xlink:href="#icon-right" />
-          </svg>
+          <svg-icon size="40%" name="right" />
         </div> -->
         <span :class="$style.listsLabel">
           <transition name="list-active">
