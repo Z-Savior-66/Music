@@ -2,11 +2,13 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "isolatedModules": true,
+    "noEmit": true,
+    "rootDir": "..",
     "paths": {
-      "@common/*": ["common/*"],
-      "@lyric/*": ["renderer-lyric/*"],
-      "@static/*": ["static/*"],
-      "@root/*": ["./*"],
+      "@common/*": ["../common/*"],
+      "@lyric/*": ["./*"],
+      "@static/*": ["../static/*"],
+      "@root/*": ["../*"],
     },
     "typeRoots": [
       "./types"

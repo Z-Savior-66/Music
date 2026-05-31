@@ -5,10 +5,10 @@
       "./types"
     ],
     "paths": {
-      "@common/*": ["common/*"],
-      "@main/*": ["main/*"],
-      "@static/*": ["static/*"],
-      "@/*": ["./*"],
+      "@common/*": ["../common/*"],
+      "@main/*": ["./*"],
+      "@static/*": ["../static/*"],
+      "@/*": ["../*"],
     },
   },
 }

@@ -47,6 +47,9 @@ module.exports = {
           options: {
             appendTsSuffixTo: [/\.vue$/],
             onlyCompileBundledFiles: true,
+            compilerOptions: {
+              noEmit: false,
+            },
           },
         },
         parser: {

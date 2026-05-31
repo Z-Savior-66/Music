@@ -2,11 +2,14 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "isolatedModules": true,
+    "noEmit": true,
+    "rootDir": "..",
     "paths": {
-      "@common/*": ["common/*"],
-      "@renderer/*": ["renderer/*"],
-      "@static/*": ["static/*"],
-      "@root/*": ["./*"],
+      "@common/*": ["../common/*"],
+      "@renderer/*": ["./*"],
+      "@static/*": ["../static/*"],
+      "@root/*": ["../*"],
+      "music-metadata/lib/type": ["../../node_modules/music-metadata/lib/type.d.ts"],
     },
     "typeRoots": [
       "./types"
