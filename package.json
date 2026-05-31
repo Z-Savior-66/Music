@@ -205,6 +205,8 @@
     "semver": "latest",
     "braces": "latest",
     "node-gyp-build": "latest",
+    "@electron/rebuild": "4.0.4",
+    "node-gyp": "12.3.0",
     "micromatch": "latest",
     "http-cache-semantics": "latest"
   }

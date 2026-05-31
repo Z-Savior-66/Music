@@ -1,0 +1,47 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "附加 Electron 主进程",
+      "type": "pwa-node",
+      "request": "attach",
+      "address": "localhost",
+      "port": 5858,
+      "timeout": 60000,
+      "restart": true,
+      "sourceMaps": true,
+      "outFiles": [
+        "${workspaceFolder}/dist/**/*.js"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "preLaunchTask": "启动开发服务"
+    },
+    {
+      "name": "附加 Electron 渲染进程",
+      "type": "pwa-chrome",
+      "request": "attach",
+      "address": "localhost",
+      "port": 9222,
+      "timeout": 60000,
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "webpack:///./src/*": "${workspaceFolder}/src/*",
+        "webpack:///src/*": "${workspaceFolder}/src/*",
+        "webpack:///*": "${workspaceFolder}/*"
+      }
+    }
+  ],
+  "compounds": [
+    {
+      "name": "调试 Electron 应用",
+      "configurations": [
+        "附加 Electron 主进程",
+        "附加 Electron 渲染进程"
+      ],
+      "stopAll": true
+    }
+  ]
+}
