@@ -2,7 +2,7 @@
 div(:class="$style.header")
   div(ref="dom_btns" :class="$style.controBtn")
     button(ref="dom_hide_btn" type="button" :class="$style.hide" :aria-label="$t('player__hide_detail_tip')" ignore-tip :title="$t('player__hide_detail_tip')" @click="hide")
-      svg-icon(:class="$style.controBtnIcon" size="35%" name="window-hide")
+      svg-icon(:class="$style.controBtnIcon" size="60%" name="window-hide")
     button(ref="dom_fullscreen_btn" type="button" :class="$style.fullscreenExit" :aria-label="$t('fullscreen_exit')" ignore-tip :title="$t('fullscreen_exit')" @click="fullscreenExit")
       svg-icon(:class="$style.controBtnIcon" size="60%" name="fullscreen-exit")
     button(type="button" :class="$style.min" :aria-label="$t('min')" ignore-tip :title="$t('min')" @click="minWindow")

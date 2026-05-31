@@ -135,7 +135,12 @@ body {
   box-shadow: @shadow-panel;
   min-width: 0;
 }
-#toolbar, #player {
+#toolbar {
+  flex: none;
+  min-width: 0;
+  overflow: visible;
+}
+#player {
   flex: none;
   min-width: 0;
   overflow: hidden;
@@ -147,7 +152,6 @@ body {
   min-height: 0;
   min-width: 0;
   overflow: hidden;
-  background-color: var(--color-content-background);
 }
 
 .view-container {

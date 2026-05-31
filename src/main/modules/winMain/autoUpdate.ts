@@ -142,6 +142,10 @@ const checkUpdate = () => {
     handleSendEvent({ type: WIN_MAIN_RENDERER_EVENT_NAME.update_error, info: 'failed' })
   } else {
     autoUpdater.autoDownload = global.s.appSetting['common.tryAutoUpdate']
-    void autoUpdater.checkForUpdates()
+    void autoUpdater.checkForUpdates().catch(err => {
+      const message = err instanceof Error ? err.message : String(err)
+      sendStatusToWindow(`Error in auto-updater: ${message}`)
+      handleSendEvent({ type: WIN_MAIN_RENDERER_EVENT_NAME.update_error, info: message })
+    })
   }
 }

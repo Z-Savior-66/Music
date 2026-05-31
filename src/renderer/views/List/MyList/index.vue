@@ -368,15 +368,18 @@ export default {
   }
 }
 .activeIcon {
+  position: absolute;
+  left: 8px;
+  top: 50%;
   height: .9em;
   width: .9em;
-  margin-left: -0.45em;
+  margin-top: -0.45em;
   vertical-align: -0.05em;
 }
 .listsLabel {
   display: block;
   height: @lists-item-height;
-  padding: 0 @spacing-sm;
+  padding: 0 @spacing-sm 0 22px;
   font-size: 13px;
   line-height: @lists-item-height;
   .mixin-ellipsis-1();

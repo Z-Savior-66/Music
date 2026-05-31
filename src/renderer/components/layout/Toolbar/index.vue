@@ -1,6 +1,6 @@
 <template>
   <div :class="[$style.toolbar, { [$style.fullscreen]: isFullscreen }, appSetting['common.controlBtnPosition'] == 'left' ? $style.controlBtnLeft : $style.controlBtnRight]">
-    <SearchInput />
+    <SearchInput :class="$style.searchInput" />
     <div v-if="appSetting['common.controlBtnPosition'] == 'left'" :class="$style.logo">L X</div>
     <ControlBtns v-else />
   </div>
@@ -19,6 +19,7 @@ import SearchInput from './SearchInput.vue'
 @import '@renderer/assets/styles/layout.less';
 
 .toolbar {
+  position: relative;
   display: flex;
   height: @height-toolbar;
   align-items: center;
@@ -28,7 +29,6 @@ import SearchInput from './SearchInput.vue'
   z-index: 2;
   box-sizing: border-box;
   border-bottom: 1px solid var(--color-primary-alpha-900);
-  background-color: var(--color-main-background);
 
   &.fullscreen {
     -webkit-app-region: no-drag;
@@ -63,6 +63,12 @@ import SearchInput from './SearchInput.vue'
   align-items: center;
   justify-content: center;
   // -webkit-app-region: no-drag;
+}
+
+.searchInput {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 </style>

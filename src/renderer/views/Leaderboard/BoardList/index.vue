@@ -148,15 +148,18 @@ defineExpose({ hideMenu: handleMenuClick })
   }
 }
 .activeIcon {
+  position: absolute;
+  left: 8px;
+  top: 50%;
   height: .9em;
   width: .9em;
-  margin-left: -0.45em;
+  margin-top: -0.45em;
   vertical-align: -0.05em;
 }
 .listsLabel {
   display: block;
   height: 100%;
-  padding: 0 @spacing-sm;
+  padding: 0 @spacing-sm 0 22px;
   font-size: 13px;
   line-height: 36px;
   .mixin-ellipsis-1();

@@ -14,12 +14,14 @@ import { isShowChangeLog, versionInfo } from '@renderer/store'
 import { getVersionInfo } from '@renderer/utils/update'
 import { dialog } from '@renderer/plugins/Dialog'
 import { appSetting } from '@renderer/store/setting'
+import { UPDATE_CHECK_TIMEOUT, shouldHandleUpdateCheckTimeout } from './updateCheckState'
 
 export default () => {
   let isShowedChangeLog = false
 
   // 更新超时定时器
   let updateTimeout: number | null = null
+  let checkUpdateTimeout: number | null = null
   const startUpdateTimeout = () => {
     if (window.s.isProd && !(isWin && process.arch.includes('arm'))) {
       updateTimeout = window.setTimeout(() => {
@@ -37,10 +39,32 @@ export default () => {
     }
   }
 
+  const startCheckUpdateTimeout = () => {
+    clearCheckUpdateTimeout()
+    if (!shouldHandleUpdateCheckTimeout({
+      status: versionInfo.status,
+      isProd: window.s.isProd,
+      isWinArm: isWin && process.arch.includes('arm'),
+    })) return
+    checkUpdateTimeout = window.setTimeout(() => {
+      checkUpdateTimeout = null
+      if (versionInfo.status != 'checking') return
+      void nextTick(() => {
+        showUpdateModal('error')
+      })
+    }, UPDATE_CHECK_TIMEOUT)
+  }
+
   const clearUpdateTimeout = () => {
     if (!updateTimeout) return
     clearTimeout(updateTimeout)
     updateTimeout = null
+  }
+
+  const clearCheckUpdateTimeout = () => {
+    if (!checkUpdateTimeout) return
+    clearTimeout(checkUpdateTimeout)
+    checkUpdateTimeout = null
   }
 
   const handleShowChangeLog = () => {
@@ -144,6 +168,7 @@ export default () => {
   }
 
   const rUpdateAvailable = onUpdateAvailable(({ params: info }) => {
+    clearCheckUpdateTimeout()
     // versionInfo.isDownloading = true
     // console.log(info)
     versionInfo.newVersion = {
@@ -160,6 +185,7 @@ export default () => {
     })
   })
   const rUpdateNotAvailable = onUpdateNotAvailable(({ params: info }) => {
+    clearCheckUpdateTimeout()
     clearUpdateTimeout()
     // versionInfo.newVersion = {
     //   version: info.version,
@@ -173,6 +199,7 @@ export default () => {
     })
   })
   const rUpdateError = onUpdateError((params) => {
+    clearCheckUpdateTimeout()
     clearUpdateTimeout()
     // versionInfo.status = 'error'
     void nextTick(() => {
@@ -183,6 +210,7 @@ export default () => {
     versionInfo.downloadProgress = progress
   })
   const rUpdateDownloaded = onUpdateDownloaded(({ params: info }) => {
+    clearCheckUpdateTimeout()
     clearUpdateTimeout()
     // versionInfo.status = 'downloaded'
     void nextTick(() => {
@@ -197,7 +225,16 @@ export default () => {
     }, 1000)
   })
 
+  watch(() => versionInfo.status, (status) => {
+    if (status == 'checking') {
+      startCheckUpdateTimeout()
+    } else {
+      clearCheckUpdateTimeout()
+    }
+  }, { immediate: true })
+
   onBeforeUnmount(() => {
+    clearCheckUpdateTimeout()
     clearUpdateTimeout()
     rUpdateAvailable()
     rUpdateNotAvailable()

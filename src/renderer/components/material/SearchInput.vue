@@ -18,7 +18,7 @@
           @contextmenu="handleContextMenu"
         >
         <transition enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
-          <button v-show="text" type="button" @click="handleClearList">
+          <button v-show="text" type="button" @mousedown.prevent @click="handleClearList">
             <svg-icon size="100%" name="window-close" />
           </button>
         </transition>
@@ -199,7 +199,7 @@ export default {
       if (this.disabled) return
       this.text = ''
       this.$emit('update:modelValue', this.text)
-      this.sendEvent('submit')
+      this.selectIndex = -1
     },
   },
 }

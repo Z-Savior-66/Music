@@ -264,6 +264,9 @@ const toggleTab = (id: SettingComponentName) => {
     }
 
     .help-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       padding: 0;
       margin: 0 0.4em;
       border: none;
@@ -276,7 +279,11 @@ const toggleTab = (id: SettingComponentName) => {
       }
     }
     .help-icon {
+      display: inline-block;
+      width: 1.2em;
+      height: 1.2em;
       margin: 0 0.4em;
+      vertical-align: -0.2em;
     }
   }
 }

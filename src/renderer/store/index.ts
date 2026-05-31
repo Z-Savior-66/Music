@@ -128,7 +128,7 @@ export const versionInfo = window.sData.versionInfo = reactive<{
   reCheck: false,
   isUnknown: false,
   isLatest: false,
-  status: 'checking',
+  status: 'idle',
   downloadProgress: null,
 })
 export const userApi = reactive<{

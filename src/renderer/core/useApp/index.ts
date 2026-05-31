@@ -1,6 +1,6 @@
 import { checkUpdate, getEnvParams, getViewPrevState, sendInited } from '@renderer/utils/ipc'
 
-import { proxy, isFullscreen, themeId } from '@renderer/store'
+import { proxy, isFullscreen, themeId, versionInfo } from '@renderer/store'
 import { appSetting } from '@renderer/store/setting'
 
 import useSync from './useSync'
@@ -71,7 +71,10 @@ export default () => {
       sendInited()
 
       handleListAutoUpdate()
-      if (window.s.isProd && appSetting['common.isAgreePact']) checkUpdate()
+      if (window.s.isProd && appSetting['common.isAgreePact']) {
+        versionInfo.status = 'checking'
+        checkUpdate()
+      }
     })
   })
 }
