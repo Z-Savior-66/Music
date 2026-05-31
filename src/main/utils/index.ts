@@ -137,7 +137,7 @@ export const updateSetting = (setting?: Partial<S.AppSetting>, isInit: boolean =
 export const initSetting = async() => {
   const electronStore_config = getStore(STORE_NAMES.APP_SETTINGS)
 
-  let setting = electronStore_config.get('setting') as S.AppSetting | undefined
+  let setting = electronStore_config.get<S.AppSetting | undefined>('setting')
 
   // migrate setting
   if (!setting) {
@@ -157,8 +157,8 @@ export const initSetting = async() => {
 export const initHotKey = async() => {
   const electronStore_hotKey = getStore(STORE_NAMES.HOTKEY)
 
-  let localConfig = electronStore_hotKey.get('local') as S.HotKeyConfig | null
-  let globalConfig = electronStore_hotKey.get('global') as S.HotKeyConfig | null
+  let localConfig = electronStore_hotKey.get<S.HotKeyConfig | null>('local')
+  let globalConfig = electronStore_hotKey.get<S.HotKeyConfig | null>('global')
 
   if (globalConfig) {
     // 移除v2.2.0及之前设置的全局媒体快捷键注册
@@ -210,7 +210,7 @@ export const openDevTools = (webContents: Electron.WebContents) => {
 
 let userThemes: S.Theme[]
 export const getAllThemes = () => {
-  userThemes ??= getStore(STORE_NAMES.THEME).get('themes') as (S.Theme[] | null) ?? []
+  userThemes ??= getStore(STORE_NAMES.THEME).get<S.Theme[] | null>('themes') ?? []
   return {
     themes,
     userThemes,
@@ -255,7 +255,7 @@ export const getTheme = () => {
   // themeId = 'black'
   let theme = themes.find(theme => theme.id == themeId)
   if (!theme) {
-    userThemes = getStore(STORE_NAMES.THEME).get('themes') as S.Theme[] | null ?? []
+    userThemes = getStore(STORE_NAMES.THEME).get<S.Theme[] | null>('themes') ?? []
     theme = userThemes.find(theme => theme.id == themeId)
     if (theme) {
       if (theme.config.extInfo['--background-image'] != 'none') {

@@ -30,6 +30,13 @@ exports.createThemeColors = (rgbaColor, fontRgbaColor, isDark, isDarkFont) => {
 
   colors['--color-theme'] = isDark ? colors['--color-primary-light-900'] : rgbaColor
 
+  colors['--color-text-primary'] = 'var(--color-font)'
+  colors['--color-text-secondary'] = 'var(--color-font-label)'
+  colors['--color-border-base'] = 'var(--color-primary-light-400-alpha-300)'
+  colors['--color-surface-hover'] = 'var(--color-primary-light-400-alpha-200)'
+  colors['--color-surface-active'] = 'var(--color-primary-light-400-alpha-300)'
+  colors['--color-focus-ring'] = 'var(--color-primary)'
+
   return { ...colors, ...createFontColors(fontRgbaColor, isDark, isDarkFont) }
 }
 

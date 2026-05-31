@@ -98,6 +98,7 @@ export default {
 
 .menu {
   flex: auto;
+  min-height: 0;
   // &.controlBtnLeft {
   //   display: flex;
   //   flex-flow: column nowrap;
@@ -108,6 +109,10 @@ export default {
 }
 .list {
   -webkit-app-region: no-drag;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: @spacing-xs;
+  padding: @spacing-xs 0;
   // margin-bottom: 15px;
   &:last-child {
     margin-bottom: 0;
@@ -124,18 +129,16 @@ export default {
 }
 .navItem {
   position: relative;
+  height: 48px;
   &:before {
-    content: '';
-    display: block;
-    width: 100%;
-    padding-bottom: 84%;
+    display: none;
   }
 }
 .link {
   position: absolute;
-  left: 0%;
-  top: 0%;
-  width: 100%;
+  left: @spacing-sm;
+  top: 0;
+  width: calc(100% - @spacing-md);
   height: 100%;
   // left: 15%;
   // top: 15%;
@@ -150,7 +153,7 @@ export default {
   // margin: 5px 0;
   // border-left: 5px solid transparent;
   transition: @transition-fast;
-  transition-property: background-color, opacity;
+  transition-property: background-color, color, opacity, box-shadow;
   color: var(--color-nav-font);
   cursor: pointer;
   // font-size: 11.5px;
@@ -159,31 +162,34 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: @radius-panel;
 
   // border-radius: @radius-border;
   .mixin-ellipsis-1();
   &:before {
     .mixin-after();
-    left: 0;
-    top: 0;
+    left: -@spacing-xs;
+    top: 50%;
     width: 3px;
-    height: 100%;
-    background-color: var(--color-primary-dark-200-alpha-700);
+    height: 56%;
+    background-color: var(--color-primary);
     border-radius: 4px;
-    transform: translateX(-100%);
+    transform: translate(-100%, -50%);
     transition: transform @transition-fast;
   }
 
   &.active {
     // border-left-color: @color-theme-active;
-    background-color: var(--color-primary-light-200-alpha-700);
+    color: var(--color-primary);
+    background-color: var(--color-primary-light-900-alpha-300);
+    box-shadow: inset 0 0 0 1px var(--color-primary-alpha-900);
 
     &:before {
-      transform: translateX(0);
+      transform: translate(0, -50%);
     }
 
     &:hover {
-      background-color: var(--color-primary-light-100-alpha-800);
+      background-color: var(--color-primary-light-900-alpha-400);
     }
   }
 
@@ -193,12 +199,12 @@ export default {
 
     &:not(.active) {
       opacity: .8;
-      background-color: var(--color-primary-light-300-alpha-700);
+      background-color: var(--color-primary-light-900-alpha-200);
     }
   }
   &:active:not(.active) {
     opacity: .6;
-      background-color: var(--color-primary-light-200-alpha-700);
+    background-color: var(--color-primary-light-900-alpha-300);
   }
 }
 

@@ -60,12 +60,13 @@ defineExpose({ hideMenu })
 
 
 <style lang="less" module>
+@import '@renderer/assets/styles/layout.less';
+
 .container {
-  position: absolute;
-  left: 0;
-  top: 0;
   width: 100%;
   height: 100%;
+  position: relative;
+  min-height: 0;
 }
 
 .list {

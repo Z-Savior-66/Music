@@ -255,15 +255,20 @@ export default {
 @lists-item-height: 36px;
 .lists {
   flex: none;
-  width: 16%;
+  width: 208px;
   display: flex;
   flex-flow: column nowrap;
+  min-width: 0;
+  padding: @spacing-xs 0 @spacing-md;
+  border-right: 1px solid var(--color-primary-alpha-900);
+  box-sizing: border-box;
 }
 .listHeader {
   position: relative;
   display: flex;
   flex-flow: row nowrap;
-  border-bottom: var(--color-list-header-border-bottom);
+  align-items: center;
+  padding: 0 @spacing-md @spacing-xs 0;
   &:hover {
     .listsAdd {
       opacity: 1;
@@ -272,9 +277,11 @@ export default {
 }
 .listsTitle {
   flex: auto;
-  font-size: 12px;
-  line-height: 38px;
-  padding: 0 10px;
+  color: var(--color-font);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 34px;
+  padding: 0 @spacing-sm;
   .mixin-ellipsis-1();
 }
 .headerBtns {
@@ -282,17 +289,17 @@ export default {
   display: flex;
 }
 .listsAdd {
-  // position: absolute;
-  // right: 0;
-  margin-top: 6px;
+  margin-top: 2px;
   background: none;
-  height: 30px;
+  height: 28px;
+  width: 28px;
   border: none;
   outline: none;
-  border-radius: @radius-border;
+  border-radius: @radius-control;
   cursor: pointer;
-  opacity: .1;
-  transition: opacity @transition-normal;
+  opacity: .45;
+  transition: @transition-ui;
+  transition-property: background-color, color, opacity;
   color: var(--color-button-font);
   svg {
     vertical-align: bottom;
@@ -301,6 +308,7 @@ export default {
     opacity: .7 !important;
   }
   &:hover {
+    background-color: var(--color-primary-light-900-alpha-300);
     opacity: .6 !important;
   }
 }
@@ -308,7 +316,8 @@ export default {
   flex: auto;
   min-width: 0;
   overflow-y: scroll !important;
-  // border-right: 1px solid rgba(0, 0, 0, 0.12);
+  padding-right: @spacing-md;
+  box-sizing: border-box;
 
   &.sortable {
     * {
@@ -328,18 +337,21 @@ export default {
 }
 .listsItem {
   position: relative;
-  transition: .3s ease;
-  transition-property: color, background-color, opacity;
+  margin: 2px 0;
+  border-radius: @radius-control;
+  transition: @transition-ui;
+  transition-property: color, background-color, box-shadow, opacity;
   background-color: transparent;
   &:not(.active) {
     &:hover {
-      background-color: var(--color-primary-background-hover);
+      background-color: var(--color-primary-light-900-alpha-300);
       cursor: pointer;
     }
   }
   &.active {
-    // background-color:
     color: var(--color-primary);
+    background-color: var(--color-primary-light-900-alpha-500);
+    box-shadow: inset 0 0 0 1px var(--color-primary-alpha-900);
   }
   &.selected {
     background-color: var(--color-primary-font-active);
@@ -351,7 +363,7 @@ export default {
     opacity: .5;
   }
   &.editing {
-    padding: 0 10px;
+    padding: 0 @spacing-sm;
     background-color: var(--color-primary-background-hover);
     .listsLabel {
       display: none;
@@ -370,7 +382,7 @@ export default {
 .listsLabel {
   display: block;
   height: @lists-item-height;
-  padding: 0 10px;
+  padding: 0 @spacing-sm;
   font-size: 13px;
   line-height: @lists-item-height;
   .mixin-ellipsis-1();
@@ -391,7 +403,7 @@ export default {
 }
 
 .listsNew {
-  padding: 0 10px;
+  padding: 0 @spacing-sm;
   background-color: var(--color-primary-background-hover) !important;
   .listsInput {
     display: block;

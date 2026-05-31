@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
+import type * as UtilsModule from '../utils'
 
 // ---------------------------------------------------------------------------
 // Mock electron（utils.ts 间接引用 rendererIpc -> electron）
@@ -23,9 +24,9 @@ vi.mock('@renderer/utils/ipc', () => ({
 // store/utils.ts
 // ---------------------------------------------------------------------------
 describe('store/utils', () => {
-  let utils: typeof import('../utils')
+  let utils: typeof UtilsModule
 
-  beforeEach(async () => {
+  beforeEach(async() => {
     vi.resetModules()
     ;(globalThis as any).window = {
       sData: {} as any,
@@ -68,7 +69,10 @@ describe('store/utils', () => {
   describe('copyTheme', () => {
     it('应深度复制主题对象', () => {
       const theme: S.Theme = {
-        id: 'custom', name: '自定义', isDark: false, isCustom: true,
+        id: 'custom',
+        name: '自定义',
+        isDark: false,
+        isCustom: true,
         config: { themeColors: { '--color-primary': '#ff0000' }, extInfo: { '--background-image': 'bg.jpg' } },
       }
       const copied = utils.copyTheme(theme)
@@ -81,7 +85,8 @@ describe('store/utils', () => {
     it('应在内置主题中查找', () => {
       const info: S.ThemeInfo = {
         themes: [{ id: 'green', name: '绿色', isDark: false, isCustom: false, config: { themeColors: {}, extInfo: {} } }],
-        userThemes: [], dataPath: '',
+        userThemes: [],
+        dataPath: '',
       }
       expect(utils.findTheme(info, 'green')!.id).toBe('green')
     })
@@ -101,7 +106,10 @@ describe('store/utils', () => {
   describe('buildThemeColors', () => {
     it('应合并 themeColors 和 extInfo', () => {
       const theme: S.Theme = {
-        id: 'test', name: '测试', isDark: false, isCustom: false,
+        id: 'test',
+        name: '测试',
+        isDark: false,
+        isCustom: false,
         config: { themeColors: { '--color-primary': '#ff0000' }, extInfo: { '--background-image': 'none' } },
       }
       const colors = utils.buildThemeColors(theme, '/data')
@@ -110,7 +118,10 @@ describe('store/utils', () => {
     })
     it('自定义主题应处理背景图片路径', () => {
       const theme: S.Theme = {
-        id: 'custom', name: '自定义', isDark: false, isCustom: true,
+        id: 'custom',
+        name: '自定义',
+        isDark: false,
+        isCustom: true,
         config: { themeColors: {}, extInfo: { '--background-image': 'custom_bg.jpg' } },
       }
       expect(utils.buildThemeColors(theme, '/data/themes')['--background-image']).toMatch(/^url\(/)

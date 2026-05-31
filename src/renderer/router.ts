@@ -7,7 +7,7 @@ const router = createRouter({
     {
       path: '/search',
       name: 'Search',
-      component: () => import('./views/Search/index.vue'),
+      component: async() => import('./views/Search/index.vue'),
       meta: {
         name: 'Search',
       },
@@ -15,7 +15,7 @@ const router = createRouter({
     {
       path: '/songList/list',
       name: 'SongList',
-      component: () => import('./views/songList/List/index.vue'),
+      component: async() => import('./views/songList/List/index.vue'),
       meta: {
         name: 'SongList',
       },
@@ -23,7 +23,7 @@ const router = createRouter({
     {
       path: '/songList/detail',
       name: 'SongListDetail',
-      component: () => import('./views/songList/Detail/index.vue'),
+      component: async() => import('./views/songList/Detail/index.vue'),
       meta: {
         name: 'SongList',
       },
@@ -31,7 +31,7 @@ const router = createRouter({
     {
       path: '/leaderboard',
       name: 'Leaderboard',
-      component: () => import('./views/Leaderboard/index.vue'),
+      component: async() => import('./views/Leaderboard/index.vue'),
       meta: {
         name: 'Leaderboard',
       },
@@ -39,7 +39,7 @@ const router = createRouter({
     {
       path: '/list',
       name: 'List',
-      component: () => import('./views/List/index.vue'),
+      component: async() => import('./views/List/index.vue'),
       meta: {
         name: 'List',
       },
@@ -47,7 +47,7 @@ const router = createRouter({
     {
       path: '/download',
       name: 'Download',
-      component: () => import('./views/Download/index.vue'),
+      component: async() => import('./views/Download/index.vue'),
       meta: {
         name: 'Download',
       },
@@ -55,7 +55,7 @@ const router = createRouter({
     {
       path: '/setting',
       name: 'Setting',
-      component: () => import('./views/Setting/index.vue'),
+      component: async() => import('./views/Setting/index.vue'),
       meta: {
         name: 'Setting',
       },

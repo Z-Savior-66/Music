@@ -64,7 +64,9 @@ onBeforeUnmount(() => {
   display: flex;
   align-self: flex-start;
   -webkit-app-region: no-drag;
-  height: 30px;
+  height: 34px;
+  overflow: hidden;
+  border-bottom-left-radius: @radius-control;
 
   .btn {
     display: flex;
@@ -72,20 +74,22 @@ onBeforeUnmount(() => {
     justify-content: center;
     position: relative;
     width: 46px;
-    height: 30px;
+    height: 34px;
     background: none;
     border: none;
     outline: none;
     padding: 1px;
     cursor: pointer;
     color: var(--color-font-label);
-    transition: background-color 0.2s ease-in-out;
+    transition: @transition-ui;
+    transition-property: background-color, color;
     &.hover {
       &.min, &.max {
         background-color: var(--color-button-background-hover);
       }
       &.close {
         background-color: var(--color-btn-close);
+        color: var(--color-button-font);
       }
     }
   }

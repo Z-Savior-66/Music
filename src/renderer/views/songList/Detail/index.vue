@@ -162,33 +162,36 @@ export default {
 @import '@renderer/assets/styles/layout.less';
 
 .container {
-  // position: absolute;
-  // left: 0;
-  // top: 0;
-  // width: 100%;
-  // height: 100%;
   display: flex;
   flex-flow: column nowrap;
+  height: 100%;
+  min-height: 0;
+  padding: @spacing-md @spacing-md 0;
+  box-sizing: border-box;
 }
 
 .songListHeader {
   flex: none;
   display: flex;
   flex-flow: row nowrap;
-  height: 80px;
+  min-height: 104px;
+  padding: @spacing-md;
+  border-radius: @radius-panel;
+  background-color: var(--color-primary-light-1000-alpha-500);
+  box-shadow: inset 0 0 0 1px var(--color-primary-alpha-900);
+  box-sizing: border-box;
 }
 .songListHeaderLeft {
   flex: none;
-  margin-left: 15px;
-  height: 100%;
+  height: 80px;
   aspect-ratio: 1 / 1;
   position: relative;
   overflow: hidden;
-  border-radius: 4px;
+  border-radius: @radius-cover;
   background-position: center;
   background-size: cover;
   opacity: .9;
-  box-shadow: 0 0 2px 0 rgba(0,0,0,.2);
+  box-shadow: @shadow-control;
 }
 .playNum {
   position: absolute;
@@ -205,13 +208,15 @@ export default {
 
 .songListHeaderMiddle {
   flex: auto;
-  padding: 2px 7px;
+  padding: 0 @spacing-md;
   min-width: 0;
   h3 {
     .mixin-ellipsis-1();
-    line-height: 1.2;
-    padding-bottom: 5px;
+    line-height: 1.4;
+    padding-bottom: @spacing-xs;
     color: var(--color-font);
+    font-size: 16px;
+    font-weight: 600;
   }
   p {
     .mixin-ellipsis(3);
@@ -224,18 +229,10 @@ export default {
   flex: none;
   display: flex;
   align-items: center;
-  padding-right: 15px;
+  gap: @spacing-xs;
 
   .headerRightBtn {
-    border-radius: 0;
-    &:first-child {
-      border-top-left-radius: 4px;
-      border-bottom-left-radius: 4px;
-    }
-    &:last-child {
-      border-top-right-radius: 4px;
-      border-bottom-right-radius: 4px;
-    }
+    border-radius: @radius-control;
   }
 }
 
@@ -244,7 +241,7 @@ export default {
   width: 100%;
   min-height: 0;
   flex: auto;
-  height: 100%;
+  margin-top: @spacing-md;
 }
 </style>
 

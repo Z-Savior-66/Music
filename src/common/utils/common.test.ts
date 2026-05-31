@@ -277,13 +277,13 @@ describe('similar', () => {
 // ---------------------------------------------------------------------------
 describe('sortInsert', () => {
   it('应向空数组插入元素', () => {
-    const arr: Array<{ num: number; data: string }> = []
+    const arr: Array<{ num: number, data: string }> = []
     sortInsert(arr, { num: 2, data: 'b' })
     expect(arr).toEqual([{ num: 2, data: 'b' }])
   })
 
   it('应保持数组有序', () => {
-    const arr: Array<{ num: number; data: string }> = []
+    const arr: Array<{ num: number, data: string }> = []
     sortInsert(arr, { num: 2, data: 'b' })
     sortInsert(arr, { num: 1, data: 'a' })
     sortInsert(arr, { num: 3, data: 'c' })
@@ -291,7 +291,7 @@ describe('sortInsert', () => {
   })
 
   it('相同值应插入到同值分组最前面', () => {
-    const arr: Array<{ num: number; data: string }> = [
+    const arr: Array<{ num: number, data: string }> = [
       { num: 1, data: 'a' },
       { num: 1, data: 'b' },
     ]

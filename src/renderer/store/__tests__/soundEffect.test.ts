@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
+import type * as SoundEffectModule from '../soundEffect'
 
 // ---------------------------------------------------------------------------
 // Mock IPC 层
@@ -45,9 +46,9 @@ const createConvolutionPreset = (id: string): S.SoundEffect.ConvolutionPreset =>
 // 测试套件
 // ---------------------------------------------------------------------------
 describe('store/soundEffect', () => {
-  let soundEffect: typeof import('../soundEffect')
+  let soundEffect: typeof SoundEffectModule
 
-  beforeEach(async () => {
+  beforeEach(async() => {
     vi.resetModules()
     mockGetEQPresetList.mockReset()
     mockSaveEQPresetList.mockReset()
@@ -59,7 +60,7 @@ describe('store/soundEffect', () => {
   // ---------- EQ Preset ----------
 
   describe('getUserEQPresetList', () => {
-    it('首次调用应通过 IPC 获取并缓存列表', async () => {
+    it('首次调用应通过 IPC 获取并缓存列表', async() => {
       const presets = [createEQPreset('eq1'), createEQPreset('eq2')]
       mockGetEQPresetList.mockResolvedValue(presets)
 
@@ -70,7 +71,7 @@ describe('store/soundEffect', () => {
       expect(result[1].id).toBe('eq2')
     })
 
-    it('后续调用应使用缓存列表，不再请求 IPC', async () => {
+    it('后续调用应使用缓存列表，不再请求 IPC', async() => {
       const presets = [createEQPreset('eq1')]
       mockGetEQPresetList.mockResolvedValue(presets)
 
@@ -79,7 +80,7 @@ describe('store/soundEffect', () => {
       expect(mockGetEQPresetList).toHaveBeenCalledTimes(1)
     })
 
-    it('返回的列表应是响应式的', async () => {
+    it('返回的列表应是响应式的', async() => {
       mockGetEQPresetList.mockResolvedValue([createEQPreset('eq1')])
       const result = await soundEffect.getUserEQPresetList()
       result.push(createEQPreset('eq2'))
@@ -88,7 +89,7 @@ describe('store/soundEffect', () => {
   })
 
   describe('saveUserEQPreset', () => {
-    it('应新增预设并保存', async () => {
+    it('应新增预设并保存', async() => {
       mockGetEQPresetList.mockResolvedValue([])
 
       await soundEffect.saveUserEQPreset(createEQPreset('new_eq'))
@@ -98,7 +99,7 @@ describe('store/soundEffect', () => {
       expect(savedList[0].id).toBe('new_eq')
     })
 
-    it('应更新已有预设', async () => {
+    it('应更新已有预设', async() => {
       const existing = createEQPreset('eq1')
       mockGetEQPresetList.mockResolvedValue([existing])
 
@@ -109,7 +110,7 @@ describe('store/soundEffect', () => {
       expect(savedList[0].name).toBe('Updated Name')
     })
 
-    it('未初始化时应自动初始化', async () => {
+    it('未初始化时应自动初始化', async() => {
       mockGetEQPresetList.mockResolvedValue([])
 
       await soundEffect.saveUserEQPreset(createEQPreset('auto_init'))
@@ -119,7 +120,7 @@ describe('store/soundEffect', () => {
   })
 
   describe('removeUserEQPreset', () => {
-    it('应删除存在的预设', async () => {
+    it('应删除存在的预设', async() => {
       mockGetEQPresetList.mockResolvedValue([
         createEQPreset('eq1'),
         createEQPreset('eq2'),
@@ -132,7 +133,7 @@ describe('store/soundEffect', () => {
       expect(savedList[0].id).toBe('eq2')
     })
 
-    it('删除不存在的预设不应保存', async () => {
+    it('删除不存在的预设不应保存', async() => {
       mockGetEQPresetList.mockResolvedValue([createEQPreset('eq1')])
 
       await soundEffect.removeUserEQPreset('nonexistent')
@@ -143,7 +144,7 @@ describe('store/soundEffect', () => {
   // ---------- Convolution Preset ----------
 
   describe('getUserConvolutionPresetList', () => {
-    it('首次调用应通过 IPC 获取并缓存列表', async () => {
+    it('首次调用应通过 IPC 获取并缓存列表', async() => {
       const presets = [createConvolutionPreset('conv1')]
       mockGetConvolutionPresetList.mockResolvedValue(presets)
 
@@ -153,7 +154,7 @@ describe('store/soundEffect', () => {
       expect(result[0].id).toBe('conv1')
     })
 
-    it('后续调用应使用缓存', async () => {
+    it('后续调用应使用缓存', async() => {
       mockGetConvolutionPresetList.mockResolvedValue([createConvolutionPreset('conv1')])
 
       await soundEffect.getUserConvolutionPresetList()
@@ -163,7 +164,7 @@ describe('store/soundEffect', () => {
   })
 
   describe('saveUserConvolutionPreset', () => {
-    it('应新增卷积预设并保存', async () => {
+    it('应新增卷积预设并保存', async() => {
       mockGetConvolutionPresetList.mockResolvedValue([])
 
       await soundEffect.saveUserConvolutionPreset(createConvolutionPreset('new_conv'))
@@ -173,7 +174,7 @@ describe('store/soundEffect', () => {
       expect(savedList[0].id).toBe('new_conv')
     })
 
-    it('应更新已有卷积预设', async () => {
+    it('应更新已有卷积预设', async() => {
       const existing = createConvolutionPreset('conv1')
       mockGetConvolutionPresetList.mockResolvedValue([existing])
 
@@ -186,7 +187,7 @@ describe('store/soundEffect', () => {
   })
 
   describe('removeUserConvolutionPreset', () => {
-    it('应删除存在的卷积预设', async () => {
+    it('应删除存在的卷积预设', async() => {
       mockGetConvolutionPresetList.mockResolvedValue([
         createConvolutionPreset('conv1'),
         createConvolutionPreset('conv2'),
@@ -199,7 +200,7 @@ describe('store/soundEffect', () => {
       expect(savedList[0].id).toBe('conv2')
     })
 
-    it('删除不存在的卷积预设不应保存', async () => {
+    it('删除不存在的卷积预设不应保存', async() => {
       mockGetConvolutionPresetList.mockResolvedValue([createConvolutionPreset('conv1')])
 
       await soundEffect.removeUserConvolutionPreset('nonexistent')

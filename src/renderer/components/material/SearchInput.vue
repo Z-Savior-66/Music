@@ -1,11 +1,12 @@
 <template>
   <div :class="$style.container">
-    <div :class="[$style.search, {[$style.active]: focus}, {[$style.big]: big}, {[$style.small]: small}]">
+    <div :class="[$style.search, {[$style.active]: focus}, {[$style.big]: big}, {[$style.small]: small}, {[$style.disabled]: disabled}]">
       <div :class="$style.form">
         <input
           ref="dom_input"
           v-model.trim="text"
           :placeholder="placeholder"
+          :disabled="disabled"
           @focus="handleFocus"
           @blur="handleBlur"
           @input="$emit('update:modelValue', text)"
@@ -23,7 +24,7 @@
             </svg>
           </button>
         </transition>
-        <button type="button" @click="handleSearch">
+        <button type="button" :disabled="disabled" @click="handleSearch">
           <slot>
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" height="100%" viewBox="0 0 30.239 30.239" space="preserve">
               <use xlink:href="#icon-search" />
@@ -81,6 +82,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['update:modelValue', 'event'],
   data() {
@@ -124,6 +129,7 @@ export default {
       eventHub[name](HOTKEY_COMMON.focusSearchInput.action, this.handleFocusInput)
     },
     handleFocusInput() {
+      if (this.disabled) return
       this.$refs.dom_input.focus()
     },
     handleTemplistClick(index) {
@@ -131,6 +137,7 @@ export default {
       this.sendEvent('listClick', index)
     },
     handleFocus() {
+      if (this.disabled) return
       this.focus = true
       this.sendEvent('focus')
     },
@@ -141,6 +148,7 @@ export default {
       }, 80)
     },
     handleSearch() {
+      if (this.disabled) return
       this.hideList()
       if (this.selectIndex < 0) {
         this.sendEvent('submit')
@@ -166,6 +174,7 @@ export default {
       })
     },
     handleKeyDown() {
+      if (this.disabled) return
       if (this.list.length) {
         this.selectIndex = this.selectIndex + 1 < this.list.length ? this.selectIndex + 1 : 0
       } else if (this.selectIndex > -1) {
@@ -173,6 +182,7 @@ export default {
       }
     },
     handleKeyUp() {
+      if (this.disabled) return
       if (this.list.length) {
         this.selectIndex = this.selectIndex - 1 < -1 ? this.list.length - 1 : this.selectIndex - 1
       } else if (this.selectIndex > -1) {
@@ -180,6 +190,7 @@ export default {
       }
     },
     handleContextMenu() {
+      if (this.disabled) return
       let str = clipboardReadText()
       str = str.trim()
       str = str.replace(/\t|\r\n|\n|\r/g, ' ')
@@ -189,6 +200,7 @@ export default {
       this.$emit('update:modelValue', this.text)
     },
     handleClearList() {
+      if (this.disabled) return
       this.text = ''
       this.$emit('update:modelValue', this.text)
       this.sendEvent('submit')
@@ -211,15 +223,22 @@ export default {
 .search {
   position: absolute;
   width: 100%;
-  border-radius: @form-radius;
-  transition: box-shadow .4s ease, background-color @transition-normal;
+  border: 1px solid transparent;
+  border-radius: @radius-control;
+  transition: border-color @transition-ui, box-shadow @transition-ui, background-color @transition-ui, opacity @transition-ui;
   display: flex;
   flex-flow: column nowrap;
   background-color: var(--color-primary-light-300-alpha-700);
 
+  &:hover {
+    background-color: var(--color-surface-hover);
+    border-color: var(--color-border-base);
+  }
+
   &.active {
     background-color: var(--color-primary-light-600-alpha-100);
-    box-shadow: 0 1px 5px 0 rgba(0,0,0,.2);
+    border-color: var(--color-focus-ring);
+    box-shadow: 0 0 0 2px var(--color-primary-alpha-100);
     .form {
       input {
         border-bottom-left-radius: 0;
@@ -230,6 +249,12 @@ export default {
       }
     }
   }
+
+  &.disabled {
+    opacity: .58;
+    pointer-events: none;
+  }
+
   .form {
     display: flex;
     height: @height-toolbar * 0.52;
@@ -237,8 +262,8 @@ export default {
     input {
       flex: auto;
       // border: 1px solid;
-      border-top-left-radius: 3px;
-      border-bottom-left-radius: 3px;
+      border-top-left-radius: @radius-control;
+      border-bottom-left-radius: @radius-control;
       background-color: transparent;
       // border-bottom: 2px solid var(--color-primary);
       // border-color: var(--color-primary);
@@ -247,12 +272,13 @@ export default {
 
       outline: none;
       // height: @height-toolbar * .7;
-      padding: 0 5px;
+      padding: 0 @spacing-sm;
       overflow: hidden;
       font-size: 13.5px;
       line-height: @height-toolbar * 0.52 + 5px;
+      color: var(--color-text-primary);
       &::placeholder {
-        color: var(--color-button-font);
+        color: var(--color-text-secondary);
         font-size: .98em;
       }
     }
@@ -264,45 +290,51 @@ export default {
       outline: none;
       cursor: pointer;
       height: 100%;
-      padding: 6px 7px;
+      min-width: 30px;
+      padding: @spacing-xs @spacing-sm;
       color: var(--color-button-font);
-      transition: background-color .2s ease;
+      transition: background-color @transition-ui, color @transition-ui;
 
       &:last-child {
-        border-top-right-radius: 3px;
-        border-bottom-right-radius: 3px;
+        border-top-right-radius: @radius-control;
+        border-bottom-right-radius: @radius-control;
       }
 
       &:hover {
-        background-color: var(--color-button-background-hover);
+        background-color: var(--color-surface-hover);
+        color: var(--color-text-primary);
       }
       &:active {
-        background-color: var(--color-button-background-active);
+        background-color: var(--color-surface-active);
+      }
+      &:disabled {
+        cursor: default;
       }
     }
   }
   .list {
     // background-color: @color-search-form-background;
     font-size: 13px;
-    transition: .3s ease;
+    transition: height @transition-ui;
     height: 0;
-    transition-property: height;
     overflow: hidden;
     li {
       cursor: pointer;
-      padding: 8px 5px;
-      transition: background-color .2s ease;
+      padding: @spacing-sm;
+      transition: background-color @transition-ui, color @transition-ui;
       line-height: 1.3;
+      color: var(--color-text-primary);
       span {
         .mixin-ellipsis-2();
       }
 
       &.select {
-        background-color: var(--color-primary-dark-100-alpha-700);
+        background-color: var(--color-surface-active);
+        color: var(--color-primary);
       }
       &:last-child {
-        border-bottom-left-radius: 3px;
-        border-bottom-right-radius: 3px;
+        border-bottom-left-radius: @radius-control;
+        border-bottom-right-radius: @radius-control;
       }
     }
   }
@@ -316,7 +348,7 @@ export default {
   .form {
     height: 30px;
     button {
-      padding: 6px 10px;
+      padding: @spacing-xs @spacing-md;
     }
   }
 }

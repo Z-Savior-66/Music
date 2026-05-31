@@ -112,8 +112,9 @@ export default {
 .pagination {
   display: inline-block;
   background-color: var(--color-button-background);
-  // border-top-left-radius: 8px;
-  border-radius: @radius-border;
+  border: 1px solid var(--color-border-base);
+  border-radius: @radius-control;
+  overflow: hidden;
   ul {
     display: flex;
     flex-flow: row nowrap;
@@ -124,25 +125,33 @@ export default {
       // color: var(--color-button-font);
       // border: .0625rem solid @theme_line;
       // border-radius: .3125rem;
-      transition: 0.4s ease;
-      transition-property: all;
       line-height: 1.2;
       display: flex;
+      position: relative;
       // border-right: none;
       svg {
         height: 1em;
       }
       span,
       button {
-        display: block;
-        padding: 7px 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 32px;
+        height: 32px;
+        box-sizing: border-box;
+        padding: @spacing-xs @spacing-sm;
         line-height: 1.2;
         color: var(--color-button-font);
         font-size: 13px;
+        transition: background-color @transition-ui, color @transition-ui, box-shadow @transition-ui;
       }
       &.active {
         span {
-          background-color: var(--color-button-background-selected);
+          background-color: var(--color-surface-active);
+          color: var(--color-primary);
+          font-weight: 600;
+          box-shadow: inset 0 -2px 0 var(--color-primary);
         }
       }
       button {
@@ -150,30 +159,35 @@ export default {
         border: none;
         cursor: pointer;
         outline: none;
-        transition: background-color .3s ease;
         &:hover {
-          background-color: var(--color-button-background-hover);
+          background-color: var(--color-surface-hover);
+          color: var(--color-text-primary);
         }
         &:active {
-          background-color: var(--color-button-background-active);
+          background-color: var(--color-surface-active);
+        }
+        &:focus-visible {
+          box-shadow: inset 0 0 0 2px var(--color-focus-ring);
         }
       }
       &.disabled {
         span {
-          opacity: .3;
+          opacity: .38;
+          cursor: default;
+          box-shadow: inset 0 0 0 1px transparent;
         }
       }
       &:first-child {
         span, button {
-          border-top-left-radius: @radius-border;
-          border-bottom-left-radius: @radius-border;
+          border-top-left-radius: @radius-control;
+          border-bottom-left-radius: @radius-control;
         }
         // border-right: .0625rem solid @theme_line;
       }
       &:last-child {
         span, button {
-          border-top-right-radius: @radius-border;
-          border-bottom-right-radius: @radius-border;
+          border-top-right-radius: @radius-control;
+          border-bottom-right-radius: @radius-control;
         }
         // border-right: .0625rem solid @theme_line;
       }

@@ -34,6 +34,8 @@ onMounted(() => {
 
 html {
   height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 html, body {
   box-sizing: border-box;
@@ -42,15 +44,18 @@ html, body {
 body {
   user-select: none;
   height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 #root {
   height: 100%;
+  width: 100%;
   position: relative;
   overflow: hidden;
   color: var(--color-font);
   background: var(--background-image) var(--background-image-position) no-repeat;
   background-size: var(--background-image-size);
-  transition: background-color @transition-normal;
+  transition: background-color @transition-normal, color @transition-normal;
   background-color: var(--color-content-background);
   box-sizing: border-box;
 }
@@ -66,6 +71,9 @@ body {
   #body {
     border-radius: @radius-border;
   }
+  #right {
+    margin-right: 0;
+  }
   #root {
     box-shadow: 0 0 @shadow-app rgba(0, 0, 0, 0.5);
     border-radius: @radius-border;
@@ -79,16 +87,24 @@ body {
   }
 
   #right {
+    margin: 0;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 0;
   }
 }
 .fullscreen {
   background-color: var(--color-content-background);
 
   #right {
+    margin: 0;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 0;
   }
 }
 
@@ -96,12 +112,17 @@ body {
   position: relative;
   display: flex;
   height: 100%;
+  width: 100%;
+  min-width: 0;
   background-color: var(--color-app-background);
+  isolation: isolate;
 }
 
 #left {
   flex: none;
   width: @width-app-left;
+  position: relative;
+  z-index: 2;
 }
 #right {
   flex: auto;
@@ -109,20 +130,27 @@ body {
   flex-flow: column nowrap;
   transition: background-color @transition-normal;
   background-color: var(--color-main-background);
-
-  border-top-left-radius: @radius-border;
-  border-bottom-left-radius: @radius-border;
+  margin: @spacing-sm @spacing-sm @spacing-sm 0;
+  border: 1px solid var(--color-primary-alpha-900);
+  border-left-color: var(--color-primary-light-700-alpha-300);
+  border-radius: @radius-panel;
   overflow: hidden;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: @shadow-panel;
+  min-width: 0;
 }
 #toolbar, #player {
   flex: none;
+  min-width: 0;
+  overflow: hidden;
 }
 #view {
   position: relative;
   flex: auto;
   // display: flex;
   min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  background-color: var(--color-content-background);
 }
 
 .view-container {

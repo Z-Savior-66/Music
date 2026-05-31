@@ -293,6 +293,9 @@ export default {
   display: flex;
   flex-flow: column nowrap;
   position: relative;
+  border-radius: @radius-panel;
+  background-color: var(--color-main-background);
+  box-shadow: inset 0 0 0 1px var(--color-primary-alpha-900);
 }
 
 .list {
@@ -306,6 +309,29 @@ export default {
   font-size: 14px;
 }
 
+.songList {
+  :global(.thead) {
+    padding: 0 @spacing-sm;
+    border-bottom: 1px solid var(--color-primary-alpha-900);
+    background-color: var(--color-primary-light-900-alpha-100);
+  }
+
+  :global(table th) {
+    line-height: 40px;
+    color: var(--color-font-label);
+    font-weight: 500;
+  }
+
+  :global(.list) {
+    padding: @spacing-xs @spacing-sm;
+    box-sizing: border-box;
+  }
+
+  :global(.list-item) {
+    border-radius: @radius-control;
+  }
+}
+
 .content {
   flex: auto;
   min-height: 0;
@@ -315,7 +341,7 @@ export default {
 
 .pagination {
   text-align: center;
-  padding: 15px 0;
+  padding: @spacing-md 0;
   // left: 50%;
   // transform: translateX(-50%);
 }
@@ -334,6 +360,7 @@ export default {
   p {
     font-size: 24px;
     color: var(--color-font-label);
+    letter-spacing: 0;
   }
 }
 

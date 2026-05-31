@@ -23,6 +23,12 @@ let electronProcess = null
 let hotMiddlewareRenderer
 let hotMiddlewareRendererLyric
 
+const overlayConfig = {
+  errors: true,
+  warnings: true,
+  runtimeErrors: error => !/ResizeObserver loop completed with undelivered notifications/.test(error?.message ?? ''),
+}
+
 
 function startRenderer() {
   return new Promise((resolve, reject) => {
@@ -57,7 +63,7 @@ function startRenderer() {
       },
       client: {
         logging: 'warn',
-        overlay: true,
+        overlay: overlayConfig,
       },
       setupMiddlewares(middlewares, devServer) {
         devServer.app.use(hotMiddlewareRenderer)
@@ -105,7 +111,7 @@ function startRendererLyric() {
       // },
       client: {
         logging: 'warn',
-        overlay: true,
+        overlay: overlayConfig,
       },
       setupMiddlewares(middlewares, devServer) {
         devServer.app.use(hotMiddlewareRenderer)

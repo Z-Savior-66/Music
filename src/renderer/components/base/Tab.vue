@@ -59,8 +59,9 @@ export default {
   display: flex;
   flex-flow: row nowrap;
   font-size: 12px;
-  gap: 25px;
-  padding: 0 15px;
+  gap: @spacing-xs;
+  padding: 0;
+  align-items: center;
 
   &.left {
     justify-content: flex-start;
@@ -74,18 +75,26 @@ export default {
 }
 .listItem {
   display: block;
-  // padding: 5px 15px;
+  padding: 0 @spacing-sm;
   cursor: pointer;
-  transition: color @transition-normal;
+  transition: @transition-ui;
+  transition-property: background-color, color, opacity, box-shadow;
+  border-radius: @radius-control;
+  color: var(--color-font-label);
+  min-height: 28px;
+  line-height: 28px;
 
 
   &:hover {
     color: var(--color-primary);
+    background-color: var(--color-primary-light-900-alpha-200);
   }
 
 
   &.active {
     color: var(--color-primary);
+    background-color: var(--color-primary-light-900-alpha-300);
+    box-shadow: inset 0 0 0 1px var(--color-primary-alpha-900);
     cursor: default;
 
     >.label {
@@ -101,11 +110,11 @@ export default {
 .label {
   display: block;
   position: relative;
-  padding: 4px 0;
+  padding: 0;
   &:after {
     .mixin-after();
     left: 0;
-    bottom: 0;
+    bottom: 3px;
     width: 100%;
     height: 2px;
     border-radius: 20px;

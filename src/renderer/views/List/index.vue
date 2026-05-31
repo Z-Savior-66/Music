@@ -67,6 +67,10 @@ export default {
   height: 100%;
   display: flex;
   position: relative;
+  min-height: 0;
+  gap: @spacing-md;
+  padding: @spacing-md @spacing-md 0;
+  box-sizing: border-box;
 }
 
 </style>

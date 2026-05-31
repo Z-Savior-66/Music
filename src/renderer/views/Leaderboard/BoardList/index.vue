@@ -111,21 +111,24 @@ defineExpose({ hideMenu: handleMenuClick })
   flex: auto;
   min-width: 0;
   overflow-y: scroll;
-  // overflow-y: scroll !important;
-  // border-right: 1px solid rgba(0, 0, 0, 0.12);
+  padding-right: @spacing-md;
+  box-sizing: border-box;
 }
 .listsItem {
   position: relative;
-  transition: .3s ease;
-  transition-property: color, background-color;
+  margin: 2px 0;
+  border-radius: @radius-control;
+  transition: @transition-ui;
+  transition-property: color, background-color, box-shadow;
   background-color: transparent;
   &:hover:not(.active) {
-    background-color: var(--color-primary-background-hover);
+    background-color: var(--color-primary-light-900-alpha-300);
     cursor: pointer;
   }
   &.active {
-    // background-color:
     color: var(--color-primary);
+    background-color: var(--color-primary-light-900-alpha-500);
+    box-shadow: inset 0 0 0 1px var(--color-primary-alpha-900);
   }
   &.selected {
     background-color: var(--color-primary-font-active);
@@ -153,7 +156,7 @@ defineExpose({ hideMenu: handleMenuClick })
 .listsLabel {
   display: block;
   height: 100%;
-  padding: 0 10px;
+  padding: 0 @spacing-sm;
   font-size: 13px;
   line-height: 36px;
   .mixin-ellipsis-1();

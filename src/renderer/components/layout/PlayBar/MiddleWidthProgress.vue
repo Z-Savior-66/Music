@@ -156,7 +156,7 @@ export default {
   flex-flow: row nowrap;
   align-items: center;
   contain: strict;
-  padding: 6px;
+  padding: @spacing-sm;
   z-index: 2;
   // box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
   * {
@@ -170,7 +170,7 @@ export default {
     width: 100%;
     height: 100%;
     background-color: var(--color-main-background);
-    opacity: .9;
+    opacity: .96;
     z-index: -1;
   }
 }
@@ -199,19 +199,19 @@ export default {
   //   fill: currentColor;
   // }
   img {
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+    box-shadow: @shadow-control;
     max-width: 100%;
     max-height: 100%;
     transition: @transition-normal;
     transition-property: border-color;
     // border-radius: 50%;
-    border-radius: @radius-border;
+    border-radius: @radius-cover;
     // border: 2px solid @color-theme_2-background_1;
   }
 
   .emptyPic {
     background-color: var(--color-primary-light-900-alpha-200);
-    border-radius: @radius-border;
+    border-radius: @radius-cover;
     width: 100%;
     height: 100%;
     display: flex;
@@ -229,7 +229,7 @@ export default {
 }
 
 .infoContent {
-  padding: 0 10px;
+  padding: 0 @spacing-md;
   flex: auto;
   display: flex;
   flex-flow: column nowrap;
@@ -274,7 +274,7 @@ export default {
   // width: 160px;
   position: relative;
   // padding-bottom: 6px;
-  margin: 0 8px;
+  margin: 0 @spacing-sm;
   padding: 8px 0;
   // height: 15px;
   // .progressBar {
@@ -294,30 +294,37 @@ export default {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  padding-left: 10px;
-  padding-right: 15px;
-  gap: 18px;
+  padding-left: @spacing-sm;
+  padding-right: @spacing-sm;
+  gap: @spacing-sm;
 }
 
 .playBtn {
   flex: none;
-  height: 52%;
+  width: 34px;
+  height: 34px;
   // margin-top: -2px;
   transition: @transition-fast;
-  transition-property: color, opacity;
+  transition-property: background-color, color, opacity;
   color: var(--color-button-font);
   opacity: 1;
   cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   svg {
+    height: 62%;
     fill: currentColor;
     filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.2));
   }
   &:hover {
-    opacity: 0.8;
+    background-color: var(--color-primary-light-900-alpha-200);
   }
   &:active {
-    opacity: 0.6;
+    opacity: 0.72;
+    background-color: var(--color-primary-light-900-alpha-300);
   }
 }
 

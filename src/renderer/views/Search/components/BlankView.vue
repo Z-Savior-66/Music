@@ -89,16 +89,18 @@ const handleSearch = (text) => {
   display: flex;
   flex-flow: column nowrap;
   // justify-content: center;
+  box-sizing: border-box;
 }
 .noitemListContainer {
-  padding: 3% 15px 15px;
+  padding: @spacing-lg @spacing-md @spacing-md;
   // margin-top: -20px;
   min-height: 250px;
   max-height: 94.7%;
+  box-sizing: border-box;
 }
 .noitemList {
   +.noitemList {
-    margin-top: 15px;
+    margin-top: @spacing-lg;
   }
 }
 .noitemHotSearchList {
@@ -106,26 +108,30 @@ const handleSearch = (text) => {
 }
 .noitemListTitle {
   color: var(--color-font);
-  padding: 5px 5px 8px;
+  padding: 0 @spacing-xs @spacing-sm;
   font-size: 14px;
+  font-weight: 600;
 }
 .noitemListItem {
   display: inline-block;
-  margin: 3px 5px;
-  background-color: var(--color-button-background);
-  padding: 7px 10px;
-  border-radius: @radius-progress-border;
-  transition: background-color @transition-normal;
+  margin: @spacing-xs;
+  background-color: var(--color-primary-light-900-alpha-300);
+  padding: 7px @spacing-md;
+  border-radius: @radius-control;
+  transition: @transition-ui;
+  transition-property: background-color, color, box-shadow;
   cursor: pointer;
-  color: var(--color-button-font);
+  color: var(--color-font);
   .mixin-ellipsis-1();
   max-width: 150px;
   font-size: 13px;
+  box-shadow: inset 0 0 0 1px var(--color-primary-alpha-900);
   &:hover {
-    background-color: var(--color-button-background-hover);
+    color: var(--color-primary);
+    background-color: var(--color-primary-light-900-alpha-500);
   }
   &:active {
-    background-color: var(--color-button-background-active);
+    background-color: var(--color-primary-light-900-alpha-700);
   }
 }
 .historyClearBtn {
@@ -161,6 +167,7 @@ const handleSearch = (text) => {
     text-align: center;
     white-space: pre-line;
     line-height: 34px;
+    letter-spacing: 0;
   }
 }
 </style>

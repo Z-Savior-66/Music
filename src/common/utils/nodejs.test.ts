@@ -2,14 +2,16 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import path from 'node:path'
 import fs from 'node:fs'
 import os from 'node:os'
+import type * as NodejsModule from '@common/utils/nodejs'
+import type * as UtilsModule from '@common/utils/index'
 
 // ---------------------------------------------------------------------------
 // nodejs.ts 纯函数测试
 // ---------------------------------------------------------------------------
 describe('common/utils/nodejs - path helpers', () => {
-  let nodejs: typeof import('@common/utils/nodejs')
+  let nodejs: typeof NodejsModule
 
-  beforeEach(async () => {
+  beforeEach(async() => {
     vi.resetModules()
     nodejs = await import('@common/utils/nodejs')
   })
@@ -53,29 +55,29 @@ describe('common/utils/nodejs - path helpers', () => {
 // nodejs.ts 异步函数测试（使用真实文件系统）
 // ---------------------------------------------------------------------------
 describe('common/utils/nodejs - async fs functions', () => {
-  let nodejs: typeof import('@common/utils/nodejs')
+  let nodejs: typeof NodejsModule
   const testDir = path.join(os.tmpdir(), 'savior-test-' + Date.now())
 
-  beforeEach(async () => {
+  beforeEach(async() => {
     vi.resetModules()
     nodejs = await import('@common/utils/nodejs')
     try { fs.rmSync(testDir, { recursive: true }) } catch {}
     fs.mkdirSync(testDir, { recursive: true })
   })
 
-  it('checkPath 应检测存在的路径', async () => {
+  it('checkPath 应检测存在的路径', async() => {
     expect(await nodejs.checkPath(testDir)).toBe(true)
   })
 
-  it('checkPath 应检测不存在的路径', async () => {
+  it('checkPath 应检测不存在的路径', async() => {
     expect(await nodejs.checkPath(path.join(testDir, 'nonexistent'))).toBe(false)
   })
 
-  it('checkPath 空字符串应返回 false', async () => {
+  it('checkPath 空字符串应返回 false', async() => {
     expect(await nodejs.checkPath('')).toBe(false)
   })
 
-  it('getFileStats 应获取文件状态', async () => {
+  it('getFileStats 应获取文件状态', async() => {
     const filePath = path.join(testDir, 'test.txt')
     fs.writeFileSync(filePath, 'test')
     const stats = await nodejs.getFileStats(filePath)
@@ -83,22 +85,22 @@ describe('common/utils/nodejs - async fs functions', () => {
     expect(stats!.isFile()).toBe(true)
   })
 
-  it('getFileStats 不存在的路径应返回 null', async () => {
+  it('getFileStats 不存在的路径应返回 null', async() => {
     const stats = await nodejs.getFileStats(path.join(testDir, 'nonexistent.txt'))
     expect(stats).toBeNull()
   })
 
-  it('getFileStats 空字符串应返回 null', async () => {
+  it('getFileStats 空字符串应返回 null', async() => {
     expect(await nodejs.getFileStats('')).toBeNull()
   })
 
-  it('createDir 应创建目录', async () => {
+  it('createDir 应创建目录', async() => {
     const newDir = path.join(testDir, 'subdir')
     await nodejs.createDir(newDir)
     expect(fs.existsSync(newDir)).toBe(true)
   })
 
-  it('readFile 应读取文件内容', async () => {
+  it('readFile 应读取文件内容', async() => {
     const filePath = path.join(testDir, 'readme.txt')
     fs.writeFileSync(filePath, 'hello world')
     const buf = await nodejs.readFile(filePath)
@@ -110,9 +112,9 @@ describe('common/utils/nodejs - async fs functions', () => {
 // common/utils/index.ts - 平台工具函数
 // ---------------------------------------------------------------------------
 describe('common/utils/index - platform helpers', () => {
-  let utils: typeof import('@common/utils/index')
+  let utils: typeof UtilsModule
 
-  beforeEach(async () => {
+  beforeEach(async() => {
     vi.resetModules()
     utils = await import('@common/utils/index')
   })

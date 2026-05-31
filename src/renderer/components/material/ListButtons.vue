@@ -104,32 +104,41 @@ export default {
 @import '@renderer/assets/styles/layout.less';
 
 .btns {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: @spacing-xs;
   line-height: 1.2;
 
   button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
     background-color: transparent;
     border: none;
-    border-radius: @form-radius;
-    margin-right: 5px;
+    border-radius: @radius-control;
     cursor: pointer;
-    padding: 4px 7px;
+    padding: @spacing-xs;
     color: var(--color-button-font);
     outline: none;
-    transition: background-color 0.2s ease;
+    transition: background-color @transition-ui, color @transition-ui, box-shadow @transition-ui;
     line-height: 0;
-    &:last-child {
-      margin-right: 0;
-    }
 
     svg {
       height: 16px;
     }
 
     &:hover {
-      background-color: var(--color-button-background-hover);
+      background-color: var(--color-surface-hover);
+      color: var(--color-text-primary);
     }
     &:active {
-      background-color: var(--color-button-background-active);
+      background-color: var(--color-surface-active);
+    }
+    &:focus-visible {
+      box-shadow: inset 0 0 0 2px var(--color-focus-ring);
     }
   }
 }

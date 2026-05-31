@@ -20,16 +20,16 @@ import NavBar from './NavBar.vue'
 @import '@renderer/assets/styles/layout.less';
 
 .aside {
-  // box-shadow: 0 0 5px rgba(0, 0, 0, .3);
   transition: @transition-normal;
   transition-property: background-color;
-  // background-color: @color-theme-sidebar;
-  // background-color: @color-aside-background;
-  // border-right: 2px solid var(--color-primary);
   -webkit-app-region: drag;
   -webkit-user-select: none;
   display: flex;
   flex-flow: column nowrap;
+  height: 100%;
+  padding: @spacing-sm 0;
+  box-sizing: border-box;
+  background-color: var(--color-app-background);
 
   &.fullscreen {
     -webkit-app-region: no-drag;
@@ -41,15 +41,21 @@ import NavBar from './NavBar.vue'
 
 .logo {
   box-sizing: border-box;
-  padding: 0 8%;
+  width: 38px;
   height: 50px;
-  color: var(--color-nav-font);
-  opacity: .8;
+  margin: 0 auto @spacing-sm;
+  color: var(--color-primary);
   flex: none;
   text-align: center;
-  line-height: 50px;
   font-weight: bold;
+  letter-spacing: 0;
   font-size: 16px;
+  border-radius: @radius-panel;
+  background-color: var(--color-primary-light-900-alpha-200);
+  box-shadow: inset 0 0 0 1px var(--color-primary-alpha-900);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   // -webkit-app-region: no-drag;
 }
 

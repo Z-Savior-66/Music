@@ -25,7 +25,7 @@
     </div>
     <div ref="dom_content_ref" class="scroll" :class="$style.setting">
       <dl>
-        <component :is="avtiveComponentName" />
+        <component :is="avtiveComponent" />
       </dl>
     </div>
   </div>
@@ -57,8 +57,43 @@ const route = useRoute()
 
 const dom_content_ref = ref<HTMLElement | null>(null)
 
+type SettingComponentName =
+  | 'SettingBasic'
+  | 'SettingPlay'
+  | 'SettingPlayDetail'
+  | 'SettingDesktopLyric'
+  | 'SettingSearch'
+  | 'SettingList'
+  | 'SettingDownload'
+  | 'SettingHotKey'
+  | 'SettingSync'
+  | 'SettingOpenAPI'
+  | 'SettingNetwork'
+  | 'SettingOdc'
+  | 'SettingBackup'
+  | 'SettingOther'
+  | 'SettingUpdate'
+
+const settingComponents: Record<SettingComponentName, unknown> = {
+  SettingBasic,
+  SettingPlay,
+  SettingPlayDetail,
+  SettingDesktopLyric,
+  SettingSearch,
+  SettingList,
+  SettingDownload,
+  SettingHotKey,
+  SettingSync,
+  SettingOpenAPI,
+  SettingNetwork,
+  SettingOdc,
+  SettingBackup,
+  SettingOther,
+  SettingUpdate,
+}
+
 interface TocItem {
-  id: string
+  id: SettingComponentName
   title: string
 }
 
@@ -82,11 +117,13 @@ const tocList = computed<TocItem[]>(() => {
   ]
 })
 
-const avtiveComponentName = ref(route.query.name && tocList.value.some(t => t.id == route.query.name)
-  ? route.query.name
+const avtiveComponentName = ref<SettingComponentName>(route.query.name && tocList.value.some(t => t.id == route.query.name)
+  ? route.query.name as SettingComponentName
   : tocList.value[0].id)
 
-const toggleTab = (id: string) => {
+const avtiveComponent = computed(() => settingComponents[avtiveComponentName.value])
+
+const toggleTab = (id: SettingComponentName) => {
   avtiveComponentName.value = id
   void nextTick(() => {
     dom_content_ref.value?.scrollTo({
@@ -104,75 +141,124 @@ const toggleTab = (id: string) => {
   display: flex;
   flex-flow: row nowrap;
   height: 100%;
+  min-height: 0;
+  gap: @spacing-md;
+  padding: @spacing-md @spacing-md 0;
   border-top: var(--color-list-header-border-bottom);
+  box-sizing: border-box;
 }
 
 .toc {
-  flex: 0 0 16%;
+  flex: 0 0 184px;
   overflow-y: scroll;
+  padding: @spacing-xs 0 @spacing-md;
+  border-right: 1px solid var(--color-primary-alpha-900);
+  box-sizing: border-box;
+}
+.tocList {
+  padding-right: @spacing-md;
+}
+.tocListItem {
+  + .tocListItem {
+    margin-top: 2px;
+  }
 }
 .tocH2 {
+  position: relative;
   line-height: 1.5;
   .mixin-ellipsis-1();
   font-size: 13px;
   color: var(--color-font);
-  padding: 8px 10px;
-  transition: @transition-fast;
-  transition-property: background-color, color;
+  padding: 8px 10px 8px 22px;
+  border-radius: @radius-control;
+  transition: @transition-ui;
+  transition-property: background-color, color, box-shadow;
 
   &:not(.active) {
     cursor: pointer;
     &:hover {
-      background-color: var(--color-button-background-hover);
+      color: var(--color-primary);
+      background-color: var(--color-primary-light-900-alpha-300);
     }
   }
   &.active {
     color: var(--color-primary);
+    background-color: var(--color-primary-light-900-alpha-500);
+    box-shadow: inset 0 0 0 1px var(--color-primary-alpha-900);
   }
 }
 .activeIcon {
+  position: absolute;
+  left: 8px;
+  top: 50%;
   height: .9em;
   width: .9em;
-  margin-left: -0.45em;
+  margin-top: -0.45em;
   vertical-align: -0.05em;
 }
 
 .setting {
-  padding: 0 15px 15px;
+  flex: 1 1 auto;
+  padding: @spacing-md @spacing-xl @spacing-xl;
   font-size: 14px;
   box-sizing: border-box;
   overflow-y: auto;
   height: 100%;
   position: relative;
-  width: 100%;
+  width: auto;
 
   :global {
-    dt {
-      border-left: 5px solid var(--color-primary-alpha-700);
-      padding: 3px 7px;
-      margin: 15px 0;
+    dl {
+      max-width: 940px;
+      padding-bottom: @spacing-xl;
+    }
 
-      + dd h3 {
-        margin-top: 0;
+    dt {
+      position: relative;
+      color: var(--color-font);
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 22px;
+      padding: 0 0 0 @spacing-md;
+      margin: 4px 0 @spacing-sm;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 2px;
+        width: 4px;
+        height: 18px;
+        border-radius: @radius-border;
+        background-color: var(--color-primary-alpha-500);
       }
     }
 
     dd {
+      margin: 0 0 @spacing-md;
+      padding: @spacing-md @spacing-lg;
+      border-radius: @radius-panel;
+      background-color: var(--color-primary-light-1000-alpha-500);
+      box-shadow: inset 0 0 0 1px var(--color-primary-alpha-900);
+      box-sizing: border-box;
+
       > div {
-        padding: 0 15px;
+        padding: 0;
       }
 
     }
     h3 {
-      font-size: 12px;
-      margin: 25px 0 15px;
+      color: var(--color-font);
+      font-size: 13px;
+      font-weight: 600;
+      margin: 0 0 @spacing-sm;
     }
     .p {
-      padding: 3px 0;
-      line-height: 1.3;
+      padding: 4px 0;
+      line-height: 1.5;
       .btn {
         + .btn {
-          margin-left: 10px;
+          margin-left: @spacing-sm;
         }
       }
     }

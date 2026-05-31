@@ -125,20 +125,27 @@ export default {
   display: flex;
   flex-flow: column nowrap;
   position: relative;
+  min-height: 0;
+  padding: @spacing-md @spacing-md 0;
+  box-sizing: border-box;
 }
 .header {
   flex: none;
   width: 100%;
   display: flex;
   flex-flow: row nowrap;
-  // padding-right: 5px;
-  // box-sizing: border-box;
-  padding-bottom: 5px;
+  align-items: center;
+  gap: @spacing-sm;
+  padding: 0 @spacing-xs @spacing-sm;
+  border-bottom: 1px solid var(--color-primary-alpha-900);
+  box-sizing: border-box;
 }
 .left {
   flex: auto;
   display: flex;
   flex-flow: row nowrap;
+  min-width: 0;
+  gap: @spacing-sm;
 }
 
 .btn {

@@ -18,7 +18,7 @@
           </thead>
         </table>
       </div>
-      <div v-if="list.length" ref="dom_listContent" :class="$style.content">
+      <div v-if="list.length" ref="dom_listContent" :class="$style.listBody">
         <base-virtualized-list
           ref="listRef" v-slot="{ item, index }" :list="list" key-name="id" :item-height="listItemHeight"
           container-class="scroll" content-class="list"
@@ -250,6 +250,9 @@ export default {
   height: 100%;
   display: flex;
   flex-flow: column nowrap;
+  min-height: 0;
+  padding: @spacing-md @spacing-md 0;
+  box-sizing: border-box;
 
   :global(.list-item) {
     &.active {
@@ -284,6 +287,34 @@ export default {
   display: flex;
   flex-flow: column nowrap;
   flex: auto;
+}
+
+.header {
+  flex: none;
+  padding: 0 @spacing-xs @spacing-sm;
+  border-bottom: 1px solid var(--color-primary-alpha-900);
+  box-sizing: border-box;
+}
+
+.thead {
+  flex: none;
+  margin: @spacing-sm 0 @spacing-xs;
+  border-radius: @radius-control;
+  background-color: var(--color-primary-light-1000-alpha-400);
+  box-shadow: inset 0 0 0 1px var(--color-primary-alpha-900);
+  overflow: hidden;
+}
+
+.listBody {
+  min-height: 0;
+  font-size: 14px;
+  display: flex;
+  flex-flow: column nowrap;
+  flex: auto;
+  border-radius: @radius-panel;
+  background-color: var(--color-primary-light-1000-alpha-300);
+  box-shadow: inset 0 0 0 1px var(--color-primary-alpha-900);
+  overflow: hidden;
 }
 
 .noItem {

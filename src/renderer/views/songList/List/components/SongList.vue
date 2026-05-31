@@ -106,7 +106,7 @@ defineExpose({
   flex-flow: column nowrap;
   font-size: 14px;
   box-sizing: border-box;
-  padding: 15px 15px 0;
+  padding: @spacing-sm @spacing-sm 0;
 
   ul {
     display: flex;
@@ -120,12 +120,15 @@ defineExpose({
   box-sizing: border-box;
   display: flex;
   // flex-flow: column nowrap;
-  // padding: 10px;
-  margin-bottom: 20px;
+  padding: @spacing-sm;
+  margin-bottom: @spacing-sm;
   cursor: pointer;
-  transition: opacity @transition-normal;
+  transition: @transition-ui;
+  transition-property: background-color, box-shadow, opacity;
+  border-radius: @radius-panel;
   &:hover {
-    opacity: .7;
+    background-color: var(--color-primary-light-900-alpha-200);
+    box-shadow: inset 0 0 0 1px var(--color-primary-alpha-900);
   }
 }
 .image {
@@ -134,12 +137,12 @@ defineExpose({
   display: flex;
   background-position: center;
   background-size: cover;
-  border-radius: 4px;
+  border-radius: @radius-cover;
   overflow: hidden;
   opacity: .9;
   aspect-ratio: 1 / 1;
 
-  box-shadow: 0 0 2px 0 rgba(0,0,0,.2);
+  box-shadow: @shadow-control;
 }
 .img {
   width: 100%;
@@ -149,7 +152,7 @@ defineExpose({
 
 .desc {
   flex: auto;
-  padding: 2px 15px 2px 7px;
+  padding: 2px @spacing-sm 2px @spacing-sm;
   overflow: hidden;
   h4 {
     font-size: 14px;
@@ -162,7 +165,7 @@ defineExpose({
 .songlist_info {
   display: flex;
   flex-flow: row nowrap;
-  gap: 15px;
+  gap: @spacing-sm;
   margin-top: 8px;
   font-size: 12px;
   .mixin-ellipsis-1();
@@ -194,7 +197,7 @@ defineExpose({
 }
 .pagination {
   text-align: center;
-  padding: 15px 0;
+  padding: @spacing-md 0;
   // left: 50%;
   // transform: translateX(-50%);
 }
@@ -213,6 +216,7 @@ defineExpose({
   p {
     font-size: 24px;
     color: var(--color-font-label);
+    letter-spacing: 0;
   }
 }
 

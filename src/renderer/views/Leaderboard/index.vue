@@ -92,6 +92,10 @@ export default {
   height: 100%;
   display: flex;
   position: relative;
+  min-height: 0;
+  gap: @spacing-md;
+  padding: @spacing-md @spacing-md 0;
+  box-sizing: border-box;
 }
 .header {
   flex: none;
@@ -116,9 +120,13 @@ export default {
 
 .lists {
   flex: none;
-  width: 14.8%;
+  width: 208px;
   display: flex;
   flex-flow: column nowrap;
+  min-width: 0;
+  padding: @spacing-xs 0 @spacing-md;
+  border-right: 1px solid var(--color-primary-alpha-900);
+  box-sizing: border-box;
 }
 .listsHeader {
   position: relative;
@@ -126,6 +134,7 @@ export default {
 
 .listsSelect {
   font-size: 12px;
+  padding: 0 @spacing-md @spacing-xs 0;
 
   &:hover {
     :global(.icon) {
@@ -138,12 +147,13 @@ export default {
     width: 100%;
   }
   :global(.label-content) {
-    background-color: transparent !important;
-    line-height: 38px;
-    height: 38px;
-    border-radius: 0;
+    background-color: var(--color-primary-light-900-alpha-300) !important;
+    line-height: 34px;
+    height: 34px;
+    border-radius: @radius-control;
+    box-shadow: inset 0 0 0 1px var(--color-primary-alpha-900);
     &:hover {
-      background: none !important;
+      background-color: var(--color-primary-light-900-alpha-500) !important;
     }
   }
   :global(.label) {
@@ -171,7 +181,6 @@ export default {
   }
   // line-height: 38px;
   // padding: 0 10px;
-  border-bottom: var(--color-list-header-border-bottom);
   flex: none;
 }
 
@@ -179,12 +188,12 @@ export default {
   position: relative;
   overflow: hidden;
   height: 100%;
-  flex: auto;
+  flex: 1 1 0;
   display: flex;
   flex-flow: column nowrap;
-  // .noItem {
-
-  // }
+  min-width: 0;
+  padding-bottom: @spacing-md;
+  box-sizing: border-box;
 }
 
 </style>

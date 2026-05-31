@@ -25,6 +25,12 @@ declare namespace S {
 
 
     '--color-theme': string
+    '--color-text-primary': string
+    '--color-text-secondary': string
+    '--color-border-base': string
+    '--color-surface-hover': string
+    '--color-surface-active': string
+    '--color-focus-ring': string
 
     '--color-primary': string
     '--color-primary-alpha-100': string

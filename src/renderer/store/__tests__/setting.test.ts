@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
+import type * as SettingModule from '../setting'
 
 // ---------------------------------------------------------------------------
 // 使用 globalThis 设置窗口 mock（避免 vi.stubGlobal 的全局污染）
@@ -12,9 +13,9 @@ vi.mock('@renderer/utils/ipc', () => ({
 // 测试套件
 // ---------------------------------------------------------------------------
 describe('store/setting', () => {
-  let setting: typeof import('../setting')
+  let setting: typeof SettingModule
 
-  beforeEach(async () => {
+  beforeEach(async() => {
     vi.resetModules()
     ;(globalThis as any).window = {
       sData: {},

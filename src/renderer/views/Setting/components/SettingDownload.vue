@@ -91,7 +91,7 @@ const handleChangeSavePath = () => {
 }
 
 const maxNums = new Array(6).fill(null).map((_, i) => ({ id: i + 1 }))
-const handleUpdateMaxNum = async({ id }) => {
+const handleUpdateMaxNum = async({ id }: { id: number }) => {
   if (id > 3) {
     if (!await dialog.confirm(window.i18n.t('setting__download_max_num_tip'))) return
   }

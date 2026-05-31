@@ -241,18 +241,18 @@ export default {
 .modal {
   width: 100%;
   height: 100%;
-  // background-color: rgba(0, 0, 0, .2);
-  // background-color: rgba(255, 255, 255, .6);
-  // background-color: var(--color-primary-light-600-alpha-900);
+  background-color: var(--color-primary-light-600-alpha-900);
   // backdrop-filter: blur(4px);
   // backdrop-filter: grayscale(70%);
   display: grid;
   align-items: center;
   justify-items: center;
+  padding: @spacing-xl;
+  box-sizing: border-box;
   // will-change: transform;
 
   &.filter {
-    backdrop-filter: grayscale(70%);
+    backdrop-filter: grayscale(70%) blur(2px);
   }
 
   // &:before {
@@ -269,13 +269,13 @@ export default {
 
 .content {
   position: relative;
-  border-radius: 4px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, .25);
+  border: 1px solid var(--color-border-base);
+  border-radius: @radius-panel;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, .18);
   overflow: hidden;
   // max-height: 80%;
   // max-width: 76%;
   min-width: 220px;
-  position: relative;
   display: flex;
   flex-flow: column nowrap;
   z-index: 100;
@@ -284,20 +284,23 @@ export default {
 
 .header {
   flex: none;
-  background-color: var(--color-primary-light-100-alpha-100);
+  background-color: var(--color-primary-light-300-alpha-900);
+  border-bottom: 1px solid var(--color-border-base);
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  height: 18px;
+  min-height: 24px;
 
   button {
     border: none;
     cursor: pointer;
-    padding: 4px 7px;
+    min-width: 30px;
+    height: 24px;
+    padding: @spacing-xs @spacing-sm;
     background-color: transparent;
-    color: var(--color-primary-dark-500-alpha-500);
+    color: var(--color-text-secondary);
     outline: none;
-    transition: background-color 0.2s ease;
+    transition: background-color @transition-ui, color @transition-ui;
     line-height: 0;
 
     svg {
@@ -305,10 +308,14 @@ export default {
     }
 
     &:hover {
-      background-color: var(--color-primary-dark-100-alpha-600);
+      background-color: var(--color-surface-hover);
+      color: var(--color-text-primary);
     }
     &:active {
-      background-color: var(--color-primary-dark-200-alpha-600);
+      background-color: var(--color-surface-active);
+    }
+    &:focus-visible {
+      box-shadow: inset 0 0 0 2px var(--color-focus-ring);
     }
   }
 }

@@ -55,12 +55,13 @@ export default {
 @import '@renderer/assets/styles/layout.less';
 
 .controlBtn {
-  padding-left: 20px;
-  padding-right: 10px;
+  padding-left: @spacing-md;
+  padding-right: @spacing-sm;
   flex: none;
   display: flex;
   flex-flow: row nowrap;
-  gap: 10px;
+  gap: @spacing-xs;
+  align-items: center;
 
   button {
     color: var(--color-button-font);
@@ -69,10 +70,10 @@ export default {
 
 .titleBtn {
   flex: none;
-  height: 100%;
-  width: 24px;
+  height: 32px;
+  width: 32px;
   transition: @transition-fast;
-  transition-property: color, opacity;
+  transition-property: background-color, color, opacity;
   // color: var(--color-button-font);
   display: flex;
   flex-flow: column nowrap;
@@ -80,8 +81,8 @@ export default {
   align-items: center;
   background-color: transparent;
   border: none;
-  width: 24px;
   padding: 0;
+  border-radius: 50%;
 
   opacity: .6;
   cursor: pointer;
@@ -91,9 +92,11 @@ export default {
   }
   &:hover {
     opacity: 1;
+    background-color: var(--color-primary-light-900-alpha-200);
   }
   &:active {
     opacity: 1;
+    background-color: var(--color-primary-light-900-alpha-300);
   }
 }
 
