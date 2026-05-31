@@ -47,7 +47,7 @@ const options = {
   publish: [
     {
       provider: 'github',
-      owner: 'weixiong520',
+      owner: 'Z-Savior-66',
       repo: 'Music',
     },
   ],
@@ -77,7 +77,7 @@ const winOptions = {
  */
 const linuxOptions = {
   linux: {
-    maintainer: 'S <weixiong520@users.noreply.github.com>',
+    maintainer: 'S <Z-Savior-66@users.noreply.github.com>',
     // artifactName: '${productName}-${version}.${env.ARCH}.${ext}',
     icon: './resources/icons',
     category: 'Utility;AudioVideo;Audio;Player;Music;',

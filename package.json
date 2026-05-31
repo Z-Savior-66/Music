@@ -90,7 +90,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/weixiong520/Music.git"
+    "url": "git+https://github.com/Z-Savior-66/Music.git"
   },
   "keywords": [
     "music-player",
@@ -99,13 +99,13 @@
   ],
   "author": {
     "name": "S",
-    "email": "weixiong520@users.noreply.github.com"
+    "email": "Z-Savior-66@users.noreply.github.com"
   },
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/weixiong520/Music/issues"
+    "url": "https://github.com/Z-Savior-66/Music/issues"
   },
-  "homepage": "https://github.com/weixiong520/Music",
+  "homepage": "https://github.com/Z-Savior-66/Music",
   "devDependencies": {
     "@babel/core": "^7.29.0",
     "@babel/eslint-parser": "^7.28.6",

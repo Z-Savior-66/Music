@@ -4,7 +4,7 @@ S-Music 是一个基于 Electron 和 Vue 3 的桌面音乐应用项目。
 
 ## 项目地址
 
-- GitHub 仓库：https://github.com/weixiong520/Music.git
+- GitHub 仓库：https://github.com/Z-Savior-66/Music.git
 
 ## 技术栈
 

@@ -14,7 +14,11 @@ import { isShowChangeLog, versionInfo } from '@renderer/store'
 import { getVersionInfo } from '@renderer/utils/update'
 import { dialog } from '@renderer/plugins/Dialog'
 import { appSetting } from '@renderer/store/setting'
-import { UPDATE_CHECK_TIMEOUT, shouldHandleUpdateCheckTimeout } from './updateCheckState'
+import {
+  UPDATE_CHECK_TIMEOUT,
+  shouldHandleUpdateCheckTimeout,
+  shouldLoadVersionInfoOnStartup,
+} from './updateCheckState'
 
 export default () => {
   let isShowedChangeLog = false
@@ -242,4 +246,16 @@ export default () => {
     rUpdateProgress()
     rUpdateDownloaded()
   })
+
+  if (shouldLoadVersionInfoOnStartup({
+    isProd: window.s.isProd,
+    isAgreePact: appSetting['common.isAgreePact'],
+  })) {
+    void handleGetVersionInfo().then((result) => {
+      versionInfo.reCheck = false
+      versionInfo.isUnknown = result.version == '0.0.0'
+      versionInfo.isLatest = !versionInfo.isUnknown && compareVer(versionInfo.version, result.version) >= 0
+      versionInfo.status = versionInfo.isUnknown ? 'error' : 'idle'
+    })
+  }
 }

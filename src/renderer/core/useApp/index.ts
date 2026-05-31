@@ -15,6 +15,7 @@ import usePlayer from './usePlayer'
 import useSettingSync from './useSettingSync'
 import { useRouter } from '@common/utils/vueRouter'
 import handleListAutoUpdate from './listAutoUpdate'
+import { shouldCheckUpdateOnStartup } from './updateCheckState'
 
 
 export default () => {
@@ -71,7 +72,10 @@ export default () => {
       sendInited()
 
       handleListAutoUpdate()
-      if (window.s.isProd && appSetting['common.isAgreePact']) {
+      if (shouldCheckUpdateOnStartup({
+        isProd: window.s.isProd,
+        isAgreePact: appSetting['common.isAgreePact'],
+      })) {
         versionInfo.status = 'checking'
         checkUpdate()
       }
