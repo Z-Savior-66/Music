@@ -11,6 +11,7 @@
     "paths": {
       "@common/*": ["./src/common/*"],
       "@renderer/*": ["./src/renderer/*"],
+      "@lyric/*": ["./src/renderer-lyric/*"],
       "@main/*": ["./src/main/*"],
       "@static/*": ["./src/static/*"],
       "@root/*": ["./src/*"],

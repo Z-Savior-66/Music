@@ -82,10 +82,10 @@ describe('store/setting', () => {
     })
 
     it('应合并多个设置项', () => {
-      setting.mergeSetting({ 'common.fontSize': 18, 'common.windowSizeId': 4, 'common.langId': 'zh-CN' })
+      setting.mergeSetting({ 'common.fontSize': 18, 'common.windowSizeId': 4, 'common.langId': 'zh-cn' })
       expect(setting.appSetting['common.fontSize']).toBe(18)
       expect(setting.appSetting['common.windowSizeId']).toBe(4)
-      expect(setting.appSetting['common.langId']).toBe('zh-CN')
+      expect(setting.appSetting['common.langId']).toBe('zh-cn')
     })
 
     it('空对象应不做任何变更', () => {
@@ -107,8 +107,8 @@ describe('store/setting', () => {
     })
 
     it('应支持保存多个设置项', () => {
-      setting.updateSetting({ 'common.fontSize': 18, 'common.langId': 'en' })
-      expect(mockSaveSetting).toHaveBeenCalledWith({ 'common.fontSize': 18, 'common.langId': 'en' })
+      setting.updateSetting({ 'common.fontSize': 18, 'common.langId': 'en-us' })
+      expect(mockSaveSetting).toHaveBeenCalledWith({ 'common.fontSize': 18, 'common.langId': 'en-us' })
     })
   })
 

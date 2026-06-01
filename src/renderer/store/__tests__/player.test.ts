@@ -123,6 +123,9 @@ describe('store/player/playbackRate', () => {
 describe('store/player/lyric', () => {
   beforeEach(async() => {
     vi.resetModules()
+    ;(globalThis as any).document = {
+      createElement: () => ({}),
+    }
   })
 
   it('lyric 应使用默认初始值', async() => {

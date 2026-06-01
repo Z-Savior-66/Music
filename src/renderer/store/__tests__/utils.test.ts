@@ -20,6 +20,13 @@ vi.mock('@renderer/utils/ipc', () => ({
   getThemes: mockGetThemes,
 }))
 
+const createTestTheme = (theme: Omit<S.Theme, 'isDarkFont' | 'config'> & {
+  config: {
+    themeColors: Partial<S.ThemeColors>
+    extInfo: Partial<S.Theme['config']['extInfo']>
+  }
+}): S.Theme => theme as S.Theme
+
 // ---------------------------------------------------------------------------
 // store/utils.ts
 // ---------------------------------------------------------------------------
@@ -68,13 +75,13 @@ describe('store/utils', () => {
 
   describe('copyTheme', () => {
     it('应深度复制主题对象', () => {
-      const theme: S.Theme = {
+      const theme = createTestTheme({
         id: 'custom',
         name: '自定义',
         isDark: false,
         isCustom: true,
         config: { themeColors: { '--color-primary': '#ff0000' }, extInfo: { '--background-image': 'bg.jpg' } },
-      }
+      })
       const copied = utils.copyTheme(theme)
       copied.config.themeColors['--color-primary'] = '#00ff00'
       expect(theme.config.themeColors['--color-primary']).toBe('#ff0000')
@@ -84,7 +91,7 @@ describe('store/utils', () => {
   describe('findTheme', () => {
     it('应在内置主题中查找', () => {
       const info: S.ThemeInfo = {
-        themes: [{ id: 'green', name: '绿色', isDark: false, isCustom: false, config: { themeColors: {}, extInfo: {} } }],
+        themes: [createTestTheme({ id: 'green', name: '绿色', isDark: false, isCustom: false, config: { themeColors: {}, extInfo: {} } })],
         userThemes: [],
         dataPath: '',
       }
@@ -93,7 +100,7 @@ describe('store/utils', () => {
     it('应在用户主题中查找', () => {
       const info: S.ThemeInfo = {
         themes: [],
-        userThemes: [{ id: 'my_theme', name: '我的主题', isDark: false, isCustom: true, config: { themeColors: {}, extInfo: {} } }],
+        userThemes: [createTestTheme({ id: 'my_theme', name: '我的主题', isDark: false, isCustom: true, config: { themeColors: {}, extInfo: {} } })],
         dataPath: '',
       }
       expect(utils.findTheme(info, 'my_theme')!.id).toBe('my_theme')
@@ -105,25 +112,25 @@ describe('store/utils', () => {
 
   describe('buildThemeColors', () => {
     it('应合并 themeColors 和 extInfo', () => {
-      const theme: S.Theme = {
+      const theme = createTestTheme({
         id: 'test',
         name: '测试',
         isDark: false,
         isCustom: false,
         config: { themeColors: { '--color-primary': '#ff0000' }, extInfo: { '--background-image': 'none' } },
-      }
+      })
       const colors = utils.buildThemeColors(theme, '/data')
       expect(colors['--color-primary']).toBe('#ff0000')
       expect(colors['--background-image']).toBe('none')
     })
     it('自定义主题应处理背景图片路径', () => {
-      const theme: S.Theme = {
+      const theme = createTestTheme({
         id: 'custom',
         name: '自定义',
         isDark: false,
         isCustom: true,
         config: { themeColors: {}, extInfo: { '--background-image': 'custom_bg.jpg' } },
-      }
+      })
       expect(utils.buildThemeColors(theme, '/data/themes')['--background-image']).toMatch(/^url\(/)
     })
   })

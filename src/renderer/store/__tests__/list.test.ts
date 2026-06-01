@@ -64,7 +64,7 @@ describe('store/list/listManage/state', () => {
     const newList: S.List.UserListInfo = {
       id: 'user_list_1',
       name: '我的歌单',
-      source: 'local',
+      locationUpdateTime: null,
     }
     userLists.push(newList)
     expect(userLists).toHaveLength(1)

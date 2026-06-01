@@ -21,11 +21,11 @@ window.s = {
     songlistPosition: 0,
   },
   restorePlayInfo: null,
-  worker: createWorkers(),
+  worker: createWorkers() as any,
   isProd: process.env.NODE_ENV == 'production',
   rootOffset: window.dt ? 0 : 8,
   apiInitPromise: [Promise.resolve(false), true, () => {}],
-}
+} as any
 
 window.sData = {}
 

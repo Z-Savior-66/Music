@@ -8,6 +8,13 @@ import {
   toOldMusicInfo,
 } from './tools'
 
+const toNewLocalMusicInfo = (oldInfo: any) => toNewMusicInfo(oldInfo) as S.Music.MusicInfoLocal
+const toNewKgMusicInfo = (oldInfo: any) => toNewMusicInfo(oldInfo) as S.Music.MusicInfo_kg
+const toNewTxMusicInfo = (oldInfo: any) => toNewMusicInfo(oldInfo) as S.Music.MusicInfo_tx
+const toNewMgMusicInfo = (oldInfo: any) => toNewMusicInfo(oldInfo) as S.Music.MusicInfo_mg
+const toNewOnlineMusicInfo = (oldInfo: any) => toNewMusicInfo(oldInfo) as S.Music.MusicInfo_online_common
+const fixOnlineMusicInfoQuality = (info: any) => fixNewMusicInfoQuality(info) as S.Music.MusicInfo_online_common
+
 // ---------------------------------------------------------------------------
 // filterMusicList
 // ---------------------------------------------------------------------------
@@ -60,7 +67,7 @@ describe('toNewMusicInfo', () => {
       filePath: '/music/song.mp3',
       ext: 'mp3',
     }
-    const result = toNewMusicInfo(oldInfo)
+    const result = toNewLocalMusicInfo(oldInfo)
     expect(result.id).toBe('local_/music/song.mp3')
     expect(result.name).toBe('Test Song')
     expect(result.singer).toBe('Test Artist')
@@ -83,7 +90,7 @@ describe('toNewMusicInfo', () => {
       albumName: 'Album',
       img: null,
     }
-    const result = toNewMusicInfo(oldInfo)
+    const result = toNewLocalMusicInfo(oldInfo)
     expect(result.meta.filePath).toBe('/music/song.flac')
     expect(result.meta.ext).toBe('flac')
   })
@@ -99,7 +106,7 @@ describe('toNewMusicInfo', () => {
       img: null,
       filePath: '/music/song.ogg',
     }
-    const result = toNewMusicInfo(oldInfo)
+    const result = toNewLocalMusicInfo(oldInfo)
     expect(result.meta.ext).toBe('ogg')
   })
 
@@ -115,7 +122,7 @@ describe('toNewMusicInfo', () => {
       filePath: '/music/song.wav',
       ext: undefined,
     }
-    const result = toNewMusicInfo(oldInfo)
+    const result = toNewLocalMusicInfo(oldInfo)
     expect(result.meta.ext).toBe('wav')
   })
 
@@ -131,7 +138,7 @@ describe('toNewMusicInfo', () => {
       filePath: undefined,
       ext: undefined,
     }
-    const result = toNewMusicInfo(oldInfo)
+    const result = toNewLocalMusicInfo(oldInfo)
     expect(result.meta.ext).toBe('')
   })
 
@@ -149,7 +156,7 @@ describe('toNewMusicInfo', () => {
       _types: { '128k': { size: '3.5M' } },
       albumId: 'album_01',
     }
-    const result = toNewMusicInfo(oldInfo)
+    const result = toNewKgMusicInfo(oldInfo)
     expect(result.id).toBe('kg_song_123_abc123hash')
     expect(result.name).toBe('KG Song')
     expect(result.singer).toBe('KG Artist')
@@ -176,7 +183,7 @@ describe('toNewMusicInfo', () => {
       songId: 999,
       albumMid: 'album_mid_val',
     }
-    const result = toNewMusicInfo(oldInfo)
+    const result = toNewTxMusicInfo(oldInfo)
     expect(result.id).toBe('tx_song_456')
     expect(result.meta.strMediaMid).toBe('str_media_mid_val')
     expect(result.meta.id).toBe(999)
@@ -200,7 +207,7 @@ describe('toNewMusicInfo', () => {
       mrcUrl: 'http://example.com/lyrics.mrc',
       trcUrl: 'http://example.com/lyrics.trc',
     }
-    const result = toNewMusicInfo(oldInfo)
+    const result = toNewMgMusicInfo(oldInfo)
     expect(result.id).toBe('mg_song_789')
     expect(result.meta.copyrightId).toBe('copyright_123')
     expect(result.meta.lrcUrl).toBe('http://example.com/lyrics.lrc')
@@ -221,10 +228,10 @@ describe('toNewMusicInfo', () => {
       _types: { flac32bit: { size: '30M' }, '128k': { size: '3M' } },
       albumId: 'kw_album',
     }
-    const result = toNewMusicInfo(oldInfo)
+    const result = toNewOnlineMusicInfo(oldInfo)
     // flac32bit 应被迁移到 flac24bit
     expect(result.meta._qualitys.flac24bit).toEqual({ size: '30M' })
-    expect(result.meta._qualitys.flac32bit).toBeUndefined()
+    expect((result.meta._qualitys as Record<string, unknown>).flac32bit).toBeUndefined()
     // qualitys 数组中的 type 也应被转换
     expect(result.meta.qualitys).toEqual([
       { type: 'flac24bit', size: '30M' },
@@ -253,9 +260,9 @@ describe('toNewMusicInfo', () => {
       },
       albumId: 'kw_album_2',
     }
-    const result = toNewMusicInfo(oldInfo)
+    const result = toNewOnlineMusicInfo(oldInfo)
     // 已有 flac24bit，flac32bit 应保留
-    expect(result.meta._qualitys.flac32bit).toEqual({ size: '50M' })
+    expect((result.meta._qualitys as Record<string, unknown>).flac32bit).toEqual({ size: '50M' })
     expect(result.meta._qualitys.flac24bit).toEqual({ size: '40M' })
   })
 })
@@ -434,9 +441,9 @@ describe('fixNewMusicInfoQuality', () => {
         albumId: 'album_01',
       },
     } as any
-    const result = fixNewMusicInfoQuality(info)
+    const result = fixOnlineMusicInfoQuality(info)
     expect(result.meta._qualitys.flac24bit).toEqual({ size: '30M' })
-    expect(result.meta._qualitys.flac32bit).toBeUndefined()
+    expect((result.meta._qualitys as Record<string, unknown>).flac32bit).toBeUndefined()
     expect(result.meta.qualitys).toEqual([
       { type: 'flac24bit', size: '30M' },
       { type: '128k', size: '3M' },
@@ -465,9 +472,9 @@ describe('fixNewMusicInfoQuality', () => {
         albumId: 'album_02',
       },
     } as any
-    const result = fixNewMusicInfoQuality(info)
+    const result = fixOnlineMusicInfoQuality(info)
     // flac32bit 应该保留
-    expect(result.meta._qualitys.flac32bit).toEqual({ size: '50M' })
+    expect((result.meta._qualitys as Record<string, unknown>).flac32bit).toEqual({ size: '50M' })
     expect(result.meta._qualitys.flac24bit).toEqual({ size: '40M' })
   })
 
@@ -487,7 +494,7 @@ describe('fixNewMusicInfoQuality', () => {
         albumId: 'album_03',
       },
     } as any
-    const result = fixNewMusicInfoQuality(info)
+    const result = fixOnlineMusicInfoQuality(info)
     expect(result.meta._qualitys).toEqual({ '128k': { size: '3M' } })
     expect(result.meta.qualitys).toEqual([{ type: '128k', size: '3M' }])
   })
