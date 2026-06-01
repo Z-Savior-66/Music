@@ -4,6 +4,7 @@ import zlib from 'zlib'
 import { createCipheriv, publicEncrypt, constants, randomBytes, createHash } from 'crypto'
 import { httpOverHttp, httpsOverHttp } from 'tunnel'
 import USER_API_RENDERER_EVENT_NAME from '../rendererEvent/name'
+import { normalizeUpdateUrl } from './preloadUtils'
 
 const sendMessage = (action, data, status, message) => {
   ipcRenderer.send(action, { data, status, message })
@@ -147,7 +148,7 @@ const handleInit = (context, info) => {
 const handleShowUpdateAlert = (data, resolve, reject) => {
   if (!data || typeof data != 'object') return reject(new Error('参数格式错误'))
   if (!data.log || typeof data.log != 'string') return reject(new Error('更新日志不能为空'))
-  if (data.updateUrl && !/^https?:\/\/[^\s$.?#].[^\s]*$/.test(data.updateUrl) && data.updateUrl.length > 1024) delete data.updateUrl
+  data.updateUrl = normalizeUpdateUrl(data.updateUrl)
   if (data.log.length > 1024) data.log = data.log.substring(0, 1024) + '...'
   sendMessage(USER_API_RENDERER_EVENT_NAME.showUpdateAlert, {
     log: data.log,
