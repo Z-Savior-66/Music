@@ -1,7 +1,7 @@
 <template>
   <div :class="[$style.aside, { [$style.fullscreen]: isFullscreen }]">
     <ControlBtns v-if="appSetting['common.controlBtnPosition'] == 'left'" />
-    <div v-else :class="$style.logo">S</div>
+    <div v-else :class="$style.logo">Lx</div>
     <NavBar />
   </div>
 </template>
@@ -49,7 +49,7 @@ import NavBar from './NavBar.vue'
   text-align: center;
   font-weight: bold;
   letter-spacing: 0;
-  font-size: 16px;
+  font-size: 22px;
   display: flex;
   align-items: center;
   justify-content: center;

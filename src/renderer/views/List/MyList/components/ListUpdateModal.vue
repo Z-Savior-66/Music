@@ -210,6 +210,7 @@ export default {
   font-size: 13px;
   line-height: 1.25;
   color: var(--color-font);
+  text-align: center;
 }
 
 .noItem {

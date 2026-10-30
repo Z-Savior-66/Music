@@ -2,7 +2,7 @@
   <div :class="$style.player">
     <div :class="$style.picContent" :aria-label="$t('player__pic_tip')" @contextmenu="handleToMusicLocation" @click="showPlayerDetail">
       <img v-if="musicInfo.pic" :src="musicInfo.pic" decoding="async" @error="imgError">
-      <div v-else :class="$style.emptyPic">S</div>
+      <div v-else :class="$style.emptyPic">Lx</div>
     </div>
     <div :class="$style.infoContent">
       <div :class="$style.title" :aria-label="title + $t('copy_tip')" @click="handleCopy(title)">
@@ -204,6 +204,8 @@ export default {
   }
 
   .emptyPic {
+    // Lx 比单字母宽，缩小字号避免在小尺寸封面上溢出
+    font-size: 0.7em;
     background-color: var(--color-primary-light-900-alpha-200);
     border-radius: @radius-cover;
     width: 100%;
