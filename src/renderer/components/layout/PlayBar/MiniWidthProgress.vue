@@ -204,8 +204,6 @@ export default {
   }
 
   .emptyPic {
-    // Lx 比单字母宽，缩小字号避免在小尺寸封面上溢出
-    font-size: 0.7em;
     background-color: var(--color-primary-light-900-alpha-200);
     border-radius: @radius-cover;
     width: 100%;
@@ -215,7 +213,8 @@ export default {
     justify-content: center;
     color: var(--color-primary-light-400-alpha-200);
     user-select: none;
-    font-size: 20px;
+    // 窄版封面约 36px，"Lx" 比单字母宽，字号需小于宽版
+    font-size: 14px;
     font-family: Consolas, "Courier New", monospace;
 
     span {

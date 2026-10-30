@@ -211,6 +211,8 @@ export default {
   line-height: 1.25;
   color: var(--color-font);
   text-align: center;
+  // 收窄英文等长文案的换行宽度，避免居中后单行过长、两侧留白不均
+  text-wrap: balance;
 }
 
 .noItem {

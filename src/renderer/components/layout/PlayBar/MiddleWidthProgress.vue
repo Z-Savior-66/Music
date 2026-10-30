@@ -211,7 +211,8 @@ export default {
     justify-content: center;
     color: var(--color-primary-light-400-alpha-200);
     user-select: none;
-    font-size: 20px;
+    // "Lx" 为双字符，字号略小于单字母时的 20px 以保持视觉尺寸
+    font-size: 16px;
     font-family: Consolas, "Courier New", monospace;
 
     span {

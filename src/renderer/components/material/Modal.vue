@@ -301,7 +301,7 @@ export default {
     transition: background-color @transition-ui, color @transition-ui;
     line-height: 0;
 
-    // 图标尺寸由 svg-icon 的 size 决定，这里只约束高度使其与按钮内容盒一致
+    // 宽度由 svg-icon 的 size="100%" 撑满按钮内宽，高度在这里固定为 16px，与按钮内容盒等高
     svg {
       height: 16px;
     }

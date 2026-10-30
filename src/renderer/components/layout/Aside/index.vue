@@ -41,6 +41,7 @@ import NavBar from './NavBar.vue'
 
 .logo {
   box-sizing: border-box;
+  // 宽度容纳双字母 "Lx"，22px 字号下仍有余量
   width: 38px;
   height: 50px;
   margin: 0 auto @spacing-sm;
