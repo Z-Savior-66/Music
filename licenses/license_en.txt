@@ -1,4 +1,4 @@
-This project is issued based on the Apache License 2.0 license. The following agreements are supplemental to the Apache License 2.0. In the event of a conflict, the following agreements shall prevail.
+This project is issued based on the Apache License 2.0 license. The following terms are supplemental notes for using this project and do not change the Apache License 2.0 grant of this project.
 
 DEFINITIONS:
 
@@ -48,5 +48,7 @@ DEFINITIONS:
 
 * If the agreement is updated, you will not be notified separately. You can check it out by visiting the project address.
 * The content of this agreement is translated from the Chinese version of the agreement.
+
+Original copyright (c) lyswhut; adapted for S Music.
 
 By: lyswhut

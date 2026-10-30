@@ -151,6 +151,14 @@ describe('store/player/lyric', () => {
     expect(lyric.lines).toHaveLength(0)
   })
 
+  it('setLines 空数组且当前有行时应清空', async() => {
+    const { lyric, setLines } = await import('../player/lyric')
+    setLines([{ text: 'line1', time: 1000, extendedLyrics: [], dom_line: document.createElement('div') }])
+    expect(lyric.lines).toHaveLength(1)
+    setLines([])
+    expect(lyric.lines).toHaveLength(0)
+  })
+
   it('setText/setOffset/setTempOffset 应更新对应属性', async() => {
     const { lyric, setText, setOffset, setTempOffset } = await import('../player/lyric')
     setText('Hello', 5)

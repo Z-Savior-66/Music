@@ -46,6 +46,7 @@ export default () => {
             data: {
               enable: appSetting['sync.enable'],
               port: appSetting['sync.server.port'],
+              bindLan: appSetting['sync.server.bindLan'],
             },
           }).catch(err => {
             console.log(err)
@@ -77,6 +78,7 @@ export default () => {
         data: {
           enable: appSetting['sync.enable'],
           port: appSetting['sync.server.port'],
+          bindLan: appSetting['sync.server.bindLan'],
         },
       })
     }

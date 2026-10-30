@@ -1,0 +1,28 @@
+S Music 第三方来源与版权归属说明
+==================================
+
+本项目是 lx-music-desktop（https://github.com/lyswhut/lx-music-desktop）的派生项目。
+lx-music-desktop 由 lyswhut 开发，以 Apache License 2.0 授权发布。
+本项目沿用其源码结构与部分实现，原项目的版权声明继续有效。
+
+上游版权声明
+------------
+
+Copyright (c) lyswhut
+Licensed under the Apache License, Version 2.0.
+原项目地址：https://github.com/lyswhut/lx-music-desktop
+
+运行时来源依赖
+--------------
+
+needle
+  来源：github:lyswhut/needle（上游 needle 项目的派生版本，上游作者 Fork, Ltd. / Tomas Pollak）
+  用途：本项目发起 HTTP 请求时的底层实现
+  许可：MIT（见 node_modules/needle/license.txt）
+
+说明
+----
+
+本文件随安装包一同分发，仅用于标注来源与授权信息。
+项目自身的完整授权条款见 LICENSE（Apache License 2.0），
+使用附加说明见 licenses/license_zh.txt 与 licenses/license_en.txt。

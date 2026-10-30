@@ -1,4 +1,4 @@
-import { setting } from '@lyric/store/state'
+import { setting, windowBounds } from '@lyric/store/state'
 import { onBeforeUnmount, onMounted } from '@common/utils/vueTools'
 import { setWindowBounds } from '@lyric/utils/ipc'
 
@@ -82,8 +82,9 @@ export default () => {
         break
     }
     // console.log(bounds)
-    bounds.w = window.innerWidth + bounds.w
-    bounds.h = window.innerHeight + bounds.h
+    // 以主进程回推的实际尺寸为基准，避免窗口被钳制后缩放基准漂移
+    bounds.w = windowBounds.width + bounds.w
+    bounds.h = windowBounds.height + bounds.h
     setWindowBounds(bounds)
   }
 

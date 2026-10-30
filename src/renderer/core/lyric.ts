@@ -147,6 +147,7 @@ export const setLyricOffset = (offset: number) => {
 
 export const setPlaybackRate = (rate: number) => {
   lrc.setPlaybackRate(rate)
+  sendDesktopLyricInfo({ action: 'set_playback_rate', data: rate })
 
   if (isPlay.value) {
     setTimeout(() => {
@@ -175,6 +176,20 @@ export const setLyric = () => {
         tlrc: musicInfo.tlrc,
         rlrc: musicInfo.rlrc,
         slrc: musicInfo.slrc,
+      },
+    })
+  } else {
+    // 切到无歌词的歌曲时必须显式清空，否则会残留上一首的歌词行
+    lrc.setLyric('')
+    setLines([])
+    setText('', 0)
+    sendDesktopLyricInfo({
+      action: 'set_lyric',
+      data: {
+        lrc: '',
+        tlrc: null,
+        rlrc: null,
+        slrc: null,
       },
     })
   }

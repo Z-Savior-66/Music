@@ -76,6 +76,7 @@ declare namespace S {
     }>
     | LyricAction<'set_offset', number>
     | LyricAction<'set_playbackRate', number>
+    | LyricAction<'set_playback_rate', number>
     | LyricAction<'set_play', number>
     | LyricAction<'set_pause'>
     | LyricAction<'set_stop'>
@@ -87,6 +88,14 @@ declare namespace S {
       y: number
       w: number
       h: number
+    }
+
+    /** 主进程回推的歌词窗口实际边界 */
+    interface Bounds {
+      x: number
+      y: number
+      width: number
+      height: number
     }
   }
 }

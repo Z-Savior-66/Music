@@ -30,7 +30,7 @@
 import useWindowSize from '@lyric/useApp/useWindowSize'
 import useHoverHide from '@lyric/useApp/useHoverHide'
 import { onMounted } from '@common/utils/vueTools'
-import { setting } from '@lyric/store/state'
+import { setting, windowBounds } from '@lyric/store/state'
 import { sendConnectMainWindowEvent } from '@lyric/utils/ipc'
 import useCommon from '@lyric/useApp/useCommon'
 import useLyric from '@lyric/useApp/useLyric'

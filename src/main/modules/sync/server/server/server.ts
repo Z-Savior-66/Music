@@ -362,7 +362,8 @@ export const stopServer = async() => {
   })
 }
 
-export const startServer = async(port: number) => {
+/** 默认仅监听本机，只有用户显式允许时才对外暴露局域网地址 */
+export const startServer = async(port: number, bindLan = false) => {
   // if (status.status) await handleStopServer()
   console.log('status.status', status.status, stopingServer)
   if (stopingServer) return
@@ -372,11 +373,12 @@ export const startServer = async(port: number) => {
   await initServerInfo()
 
   log.info('starting sync server')
-  await handleStartServer(port).then(() => {
+  await handleStartServer(port, bindLan ? '0.0.0.0' : '127.0.0.1').then(() => {
     console.log('sync server started')
     status.status = true
     status.message = ''
-    status.address = getAddress()
+    // 仅绑定本机时不展示局域网地址，避免误导用户以为能从其他设备连接
+    status.address = bindLan ? getAddress() : []
 
     void generateCode()
     codeTools.start()

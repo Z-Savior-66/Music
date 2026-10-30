@@ -656,6 +656,11 @@ declare global {
       'sync.server.port': '23332' | string
 
       /**
+       * 是否允许局域网访问同步服务
+       */
+      'sync.server.bindLan': boolean
+
+      /**
        * 最大备份快照数
        */
       'sync.server.maxSsnapshotNum': number

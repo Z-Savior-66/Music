@@ -20,6 +20,7 @@ import { getRandom } from '@renderer/utils/index'
 import { addListMusics, removeListMusics } from '@renderer/store/list/action'
 import { loveList } from '@renderer/store/list/state'
 import { addDislikeInfo } from '@renderer/core/dislikeList'
+import { createDelayRetry, type DelayRetryHandle } from './getUrlTrack'
 // import { checkMusicFileAvailable } from '@renderer/utils/music'
 
 let gettingUrlId = ''
@@ -63,27 +64,24 @@ const diffCurrentMusicInfo = (curMusicInfo: S.Music.MusicInfo | S.Download.ListI
   return gettingUrlId != createGettingUrlId(curMusicInfo) || curMusicInfo.id != playMusicInfo.musicInfo?.id || isPlay.value
 }
 
-let cancelDelayRetry: (() => void) | null = null
+let currentDelayRetry: DelayRetryHandle | null = null
+/**
+ * 判断重试等待期结束时目标歌曲是否仍是当前歌曲。
+ *
+ * 这里只看歌曲身份与取地址批次，不看播放状态：等待期内用户重新点击播放不应
+ * 让本该继续的重试被丢弃，而切歌后旧歌曲的请求必须彻底停止。
+ */
+const isSameMusicInfo = (curMusicInfo: S.Music.MusicInfo | S.Download.ListItem): boolean => {
+  return gettingUrlId == createGettingUrlId(curMusicInfo) && curMusicInfo.id == playMusicInfo.musicInfo?.id
+}
 const delayRetry = async(musicInfo: S.Music.MusicInfo | S.Download.ListItem, isRefresh = false): Promise<string | null> => {
-  // if (cancelDelayRetry) cancelDelayRetry()
-  return new Promise<string | null>((resolve, reject) => {
-    const time = getRandom(2, 6)
-    setAllStatus(window.i18n.t('player__getting_url_delay_retry', { time }))
-    const tiemout = setTimeout(() => {
-      getMusicPlayUrl(musicInfo, isRefresh, true).then((result) => {
-        cancelDelayRetry = null
-        resolve(result)
-      }).catch(async(err: any) => {
-        cancelDelayRetry = null
-        reject(err)
-      })
-    }, time * 1000)
-    cancelDelayRetry = () => {
-      clearTimeout(tiemout)
-      cancelDelayRetry = null
-      resolve(null)
-    }
-  })
+  // 同一时刻只保留最新一次重试，旧歌曲的等待期在切歌后不得继续生效
+  currentDelayRetry?.cancel()
+  const time = getRandom(2, 6)
+  const handle = createDelayRetry(async() => getMusicPlayUrl(musicInfo, isRefresh, true), time, () => isSameMusicInfo(musicInfo))
+  currentDelayRetry = handle
+  setAllStatus(window.i18n.t('player__getting_url_delay_retry', { time }))
+  return handle.promise
 }
 const getMusicPlayUrl = async(musicInfo: S.Music.MusicInfo | S.Download.ListItem, isRefresh = false, isRetryed = false): Promise<string | null> => {
   // this.musicInfo.url = await getMusicPlayUrl(targetSong, type)
@@ -127,7 +125,7 @@ const getMusicPlayUrl = async(musicInfo: S.Music.MusicInfo | S.Download.ListItem
 export const setMusicUrl = (musicInfo: S.Music.MusicInfo | S.Download.ListItem, isRefresh?: boolean) => {
   // if (appSetting['player.autoSkipOnError']) addLoadTimeout()
   if (!diffCurrentMusicInfo(musicInfo)) return
-  if (cancelDelayRetry) cancelDelayRetry()
+  if (currentDelayRetry) currentDelayRetry.cancel()
   gettingUrlId = createGettingUrlId(musicInfo)
   void getMusicPlayUrl(musicInfo, isRefresh).then((url) => {
     if (!url) return

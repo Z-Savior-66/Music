@@ -1,4 +1,4 @@
-import { setting, musicInfo, isPlay } from './state'
+import { setting, musicInfo, isPlay, windowBounds } from './state'
 import { updateSetting as saveSetting } from '@lyric/utils/ipc'
 
 export const initSetting = (newSetting: S.DesktopLyric.Config) => {
@@ -31,4 +31,11 @@ export const setMusicInfo = (_musicInfo: Partial<typeof musicInfo>) => {
 
 export const setIsPlay = (_status: boolean) => {
   isPlay.value = _status
+}
+
+export const setWindowBounds = (bounds: S.DesktopLyric.Bounds) => {
+  windowBounds.x = bounds.x
+  windowBounds.y = bounds.y
+  windowBounds.width = bounds.width
+  windowBounds.height = bounds.height
 }

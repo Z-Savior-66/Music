@@ -16,7 +16,7 @@ const options = {
   protocols: {
     name: 'savior-music-protocol',
     schemes: [
-      'saviormusic',
+      'smusic',
     ],
   },
   directories: {
@@ -91,7 +91,7 @@ const linuxOptions = {
         'Name[zh_CN]': 'S Music',
         'Name[zh_TW]': 'S Music',
         Encoding: 'UTF-8',
-        MimeType: 'x-scheme-handler/saviormusic',
+        MimeType: 'x-scheme-handler/smusic',
         StartupNotify: 'false',
       },
     },

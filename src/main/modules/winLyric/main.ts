@@ -2,8 +2,10 @@ import path from 'node:path'
 import { BrowserWindow } from 'electron'
 import { debounce, getPlatform, isLinux, isWin } from '@common/utils'
 import { initWindowSize, minHeight, minWidth } from './utils'
+import { normalizeBounds } from './bounds'
 import { mainSend } from '@common/mainIpc'
 import { encodePath } from '@common/utils/electron'
+import { WIN_LYRIC_RENDERER_EVENT_NAME } from '@common/ipcNames'
 
 // require('./event')
 // require('./rendererEvent')
@@ -15,6 +17,24 @@ const saveBoundsConfig = debounce((config: Partial<S.AppSetting>) => {
   global.s.event_app.update_config(config)
   if (isWinBoundsUpdateing) isWinBoundsUpdateing = false
 }, 500)
+
+/**
+ * 把窗口当前边界规范化后保存，并回推给歌词渲染进程。
+ *
+ * 回推是必须的：主进程可能对窗口做钳制（如限制在屏幕内），
+ * 渲染侧只有拿到真实尺寸才能让拖拽/缩放的基准保持准确。
+ */
+const saveAndSyncBounds = () => {
+  if (!browserWindow) return
+  const bounds = normalizeBounds(browserWindow.getBounds())
+  saveBoundsConfig({
+    'desktopLyric.x': bounds.x,
+    'desktopLyric.y': bounds.y,
+    'desktopLyric.width': bounds.width,
+    'desktopLyric.height': bounds.height,
+  })
+  mainSend(browserWindow, WIN_LYRIC_RENDERER_EVENT_NAME.set_bounds, bounds)
+}
 
 const winEvent = () => {
   if (!browserWindow) return
@@ -34,13 +54,7 @@ const winEvent = () => {
     // bounds = browserWindow.getBounds()
     // console.log('move', isWinBoundsUpdateing)
     if (isWinBoundsUpdateing) {
-      const bounds = browserWindow!.getBounds()
-      saveBoundsConfig({
-        'desktopLyric.x': bounds.x,
-        'desktopLyric.y': bounds.y,
-        'desktopLyric.width': bounds.width,
-        'desktopLyric.height': bounds.height,
-      })
+      saveAndSyncBounds()
     } else if (isWin) { // Linux 不允许将窗口设置出屏幕之外，MacOS未知，故只在Windows下执行强制设置
       // 非主动调整窗口触发的窗口位置变化将重置回设置值
       browserWindow!.setBounds({
@@ -56,13 +70,7 @@ const winEvent = () => {
     // bounds = browserWindow.getBounds()
     // console.log(bounds)
     isWinBoundsUpdateing = true
-    const bounds = browserWindow!.getBounds()
-    saveBoundsConfig({
-      'desktopLyric.x': bounds.x,
-      'desktopLyric.y': bounds.y,
-      'desktopLyric.width': bounds.width,
-      'desktopLyric.height': bounds.height,
-    })
+    saveAndSyncBounds()
   })
 
   // browserWindow.on('restore', () => {
@@ -160,11 +168,6 @@ export const closeWindow = () => {
 export const showWindow = () => {
   if (!browserWindow) return
   browserWindow.show()
-}
-
-export const setResizeable = (isResizeable: boolean) => {
-  if (!browserWindow) return
-  browserWindow.setResizable(isResizeable)
 }
 
 export const sendEvent = <T = any>(name: string, params?: T) => {

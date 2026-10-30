@@ -142,6 +142,7 @@ const defaultSetting: S.AppSetting = {
   'sync.mode': 'server',
   'sync.enable': false,
   'sync.server.port': '23332',
+  'sync.server.bindLan': false,
   'sync.server.maxSsnapshotNum': 5,
   'sync.client.host': '',
 

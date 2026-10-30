@@ -6,6 +6,8 @@ dd
     .p.small {{ $t('setting__sync_server_address', { address: sync.server.status.address.join(', ') || '' }) }}
     .p.small {{ $t('setting__sync_server_device', { devices: syncDevices }) }}
     .p.gap-top
+      base-checkbox(id="setting_sync_server_bind_lan" :model-value="appSetting['sync.server.bindLan']" :disabled="sync.enable" :label="$t('setting__sync_server_bind_lan')" @update:model-value="updateSetting({ 'sync.server.bindLan': $event })")
+    .p.gap-top
       .p.small {{ $t('setting__sync_server_port') }}
       div
         base-input.gap-left(:class="$style.portInput" :model-value="appSetting['sync.server.port']" :disabled="sync.enable" type="number" :placeholder="$t('setting__sync_server_port_tip')" @update:model-value="setSyncServerPort")

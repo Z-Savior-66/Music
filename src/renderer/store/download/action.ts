@@ -17,6 +17,7 @@ import { arrPush, arrUnshift, joinPath } from '@renderer/utils'
 import { DOWNLOAD_STATUS } from '@common/constants'
 import { proxy } from '../index'
 import { buildSavePath } from './utils'
+import { pauseTasks } from './pauseTasks'
 
 const waitingUpdateTasks = new Map<string, S.Download.ListItem>()
 let timer: NodeJS.Timeout | null = null
@@ -311,7 +312,7 @@ const handleStartTask = async(downloadInfo: S.Download.ListItem) => {
 const startTask = async(downloadInfo: S.Download.ListItem) => {
   setStatus(downloadInfo, DOWNLOAD_STATUS.RUN)
   runingTask.set(downloadInfo.id, downloadInfo)
-  void handleStartTask(downloadInfo)
+  await handleStartTask(downloadInfo)
 }
 
 const getStartTask = (list: S.Download.ListItem[]): S.Download.ListItem | null => {
@@ -388,18 +389,15 @@ export const startDownloadTasks = async(list: S.Download.ListItem[]) => {
  * @param list
  */
 export const pauseDownloadTasks = async(list: S.Download.ListItem[]) => {
-  for (const downloadInfo of list) {
-    switch (downloadInfo.status) {
-      case DOWNLOAD_STATUS.RUN:
-        void window.s.worker.download.pauseTask(downloadInfo.id)
-        runingTask.delete(downloadInfo.id)
-      case DOWNLOAD_STATUS.WAITING:
-      case DOWNLOAD_STATUS.ERROR:
-        setStatus(downloadInfo, DOWNLOAD_STATUS.PAUSE)
-      default:
-        break
-    }
-  }
+  await pauseTasks(
+    list,
+    async(id) => { await window.s.worker.download.pauseTask(id) },
+    (id) => {
+      runingTask.delete(id)
+      const downloadInfo = list.find(item => item.id == id)
+      if (downloadInfo) setStatus(downloadInfo, DOWNLOAD_STATUS.PAUSE)
+    },
+  )
   void checkStartTask()
 }
 

@@ -20,7 +20,7 @@ export default () => {
   mainHandle<S.Sync.SyncServiceActions, any>(WIN_MAIN_RENDERER_EVENT_NAME.sync_action, async({ params: data }) => {
     switch (data.action) {
       case 'enable_server':
-        data.data.enable ? await startServer(parseInt(data.data.port)) : await stopServer()
+        data.data.enable ? await startServer(parseInt(data.data.port), data.data.bindLan === true) : await stopServer()
         return
       case 'enable_client':
         data.data.enable ? await connectServer(data.data.host, data.data.authCode) : await disconnectServer()

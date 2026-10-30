@@ -584,6 +584,7 @@
   "setting__sync_server_device_list_title": "已認證裝置",
   "setting__sync_server_mode": "服務端模式（由於資料是明文傳輸，請在受信任的網路下使用）",
   "setting__sync_server_port": "同步埠設定",
+  "setting__sync_server_bind_lan": "允許區域網路內的裝置連接",
   "setting__sync_server_port_tip": "請輸入同步服務埠號",
   "setting__sync_server_refresh_code": "重新獲取連線碼",
   "setting__sync_server_show_device_list": "已認證裝置清單",

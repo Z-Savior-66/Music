@@ -68,7 +68,7 @@
     "up": "cross-env ELECTRON_GET_USE_PROXY=true GLOBAL_AGENT_HTTPS_PROXY=http://127.0.0.1:2081 npm i"
   },
   "browserslist": [
-    "Electron 22.3.0"
+    "Electron 37.6.1"
   ],
   "engines": {
     "node": ">= 22",
@@ -199,15 +199,15 @@
   },
   "overrides": {
     "got": "^11",
-    "json5": "latest",
-    "node-abi": "latest",
-    "minimatch": "latest",
-    "semver": "latest",
-    "braces": "latest",
-    "node-gyp-build": "latest",
+    "json5": "2.2.3",
+    "node-abi": "4.26.0",
+    "minimatch": "10.2.0",
+    "semver": "7.7.4",
+    "braces": "3.0.3",
+    "node-gyp-build": "4.8.4",
     "@electron/rebuild": "4.0.4",
     "node-gyp": "12.3.0",
-    "micromatch": "latest",
-    "http-cache-semantics": "latest"
+    "micromatch": "4.0.8",
+    "http-cache-semantics": "4.2.0"
   }
 }

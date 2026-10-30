@@ -1,5 +1,6 @@
 import { onMounted, onBeforeUnmount } from '@common/utils/vueTools'
-import { setWindowBounds, setWindowResizeable } from '@lyric/utils/ipc'
+import { setWindowBounds } from '@lyric/utils/ipc'
+import { windowBounds } from '@lyric/store/state'
 import { isWin } from '@common/utils'
 
 export default () => {
@@ -15,10 +16,8 @@ export default () => {
     winEvent.isMsDown = true
     winEvent.msDownX = x
     winEvent.msDownY = y
-    winEvent.windowW = window.innerWidth
-    winEvent.windowH = window.innerHeight
-    // https://github.com/lyswhut/s-music-desktop/issues/2244
-    if (isWin) setWindowResizeable(false)
+    winEvent.windowW = windowBounds.width
+    winEvent.windowH = windowBounds.height
   }
   const handleLyricMouseDown = event => {
     console.log(event.target, event.currentTarget)
@@ -34,7 +33,6 @@ export default () => {
   }
   const handleMouseMsUp = () => {
     winEvent.isMsDown = false
-    if (isWin) setWindowResizeable(true)
   }
 
   const handleMove = (x, y) => {
@@ -51,8 +49,8 @@ export default () => {
       setWindowBounds({
         x: x - winEvent.msDownX,
         y: y - winEvent.msDownY,
-        w: window.innerWidth,
-        h: window.innerHeight,
+        w: windowBounds.width,
+        h: windowBounds.height,
       })
     }
   }

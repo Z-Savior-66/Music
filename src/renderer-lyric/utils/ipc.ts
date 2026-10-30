@@ -18,12 +18,17 @@ export const onSettingChanged = (listener: S.IpcRendererEventListenerParams<Part
 export const setWindowBounds = (bounds: S.DesktopLyric.NewBounds) => {
   rendererSend<S.DesktopLyric.NewBounds>(WIN_LYRIC_RENDERER_EVENT_NAME.set_win_bounds, bounds)
 }
-let previousResizable: boolean | null = null
-export const setWindowResizeable = (resizable: boolean) => {
-  if (previousResizable === resizable) return
-  previousResizable = resizable
-  // https://github.com/electron/electron/issues/48352
-  // rendererSend<boolean>(WIN_LYRIC_RENDERER_EVENT_NAME.set_win_resizeable, resizable)
+/**
+ * 监听主进程回推的实际窗口边界。
+ *
+ * 窗口被拖动/缩放后，主进程会规范化尺寸并回推，渲染侧据此更新布局用的尺寸，
+ * 避免两边各算一套导致缩放时跳动。
+ */
+export const onWindowBoundsChanged = (listener: S.IpcRendererEventListenerParams<S.DesktopLyric.Bounds>): RemoveListener => {
+  rendererOn<S.DesktopLyric.Bounds>(WIN_LYRIC_RENDERER_EVENT_NAME.set_bounds, listener)
+  return () => {
+    rendererOff(WIN_LYRIC_RENDERER_EVENT_NAME.set_bounds, listener)
+  }
 }
 
 export const sendConnectMainWindowEvent = () => {

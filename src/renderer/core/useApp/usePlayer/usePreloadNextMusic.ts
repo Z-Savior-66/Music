@@ -6,6 +6,7 @@ import { musicInfo } from '@renderer/store/player/state'
 import { getNextPlayMusicInfo, resetRandomNextMusicInfo } from '@renderer/core/player'
 import { getMusicUrl } from '@renderer/core/music'
 import { appSetting } from '@renderer/store/setting'
+import { withTimeout } from './checkAudioUrl'
 
 let audio: HTMLAudioElement
 const initAudio = () => {
@@ -59,22 +60,27 @@ const resetPreloadInfo = () => {
 const preloadNextMusicUrl = async(curTime: number) => {
   if (preloadMusicInfo.isLoading || curTime - preloadMusicInfo.preProgress < 3) return
   preloadMusicInfo.isLoading = true
-  console.log('preload next music url')
-  const info = await getNextPlayMusicInfo()
-  if (info) {
-    preloadMusicInfo.info = info
-    const url = await getMusicUrl({ musicInfo: info.musicInfo }).catch(() => '')
-    if (url) {
-      console.log('preload url', url)
-      const result = await checkMusicUrl(url)
-      if (!result) {
-        const url = await getMusicUrl({ musicInfo: info.musicInfo, isRefresh: true }).catch(() => '')
-        void checkMusicUrl(url)
-        console.log('preload url refresh', url)
+  try {
+    console.log('preload next music url')
+    const info = await getNextPlayMusicInfo()
+    if (info) {
+      preloadMusicInfo.info = info
+      const url = await getMusicUrl({ musicInfo: info.musicInfo }).catch(() => '')
+      if (url) {
+        console.log('preload url', url)
+        // 网络异常时 canplay/error 事件可能永不触发，超时按不可用处理
+        const result = await withTimeout(checkMusicUrl(url), false, 10000)
+        if (!result) {
+          const url = await getMusicUrl({ musicInfo: info.musicInfo, isRefresh: true }).catch(() => '')
+          void withTimeout(checkMusicUrl(url), false, 10000)
+          console.log('preload url refresh', url)
+        }
       }
     }
+  } finally {
+    // 任何异常都不能让标志位停在 true，否则之后再也不预加载
+    preloadMusicInfo.isLoading = false
   }
-  preloadMusicInfo.isLoading = false
 }
 
 export default () => {

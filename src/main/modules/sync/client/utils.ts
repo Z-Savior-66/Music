@@ -94,20 +94,7 @@ export const decryptMsg = async(keyInfo: S.Sync.ClientKeyInfo, enMsg: string): P
 }
 
 
-export const parseUrl = (host: string): S.Sync.Client.UrlInfo => {
-  const url = new URL(host)
-  let hostPath = url.host + url.pathname
-  let href = url.href
-  if (hostPath.endsWith('/')) hostPath = hostPath.replace(/\/$/, '')
-  if (href.endsWith('/')) href = href.replace(/\/$/, '')
-
-  return {
-    wsProtocol: url.protocol == 'https:' ? 'wss:' : 'ws:',
-    httpProtocol: url.protocol,
-    hostPath,
-    href,
-  }
-}
+export { parseSyncUrl as parseUrl } from './parseUrl'
 
 
 export const sendStatus = (status: S.Sync.ClientStatus) => {

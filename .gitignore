@@ -26,3 +26,9 @@ coverage/
 build/
 dist/
 publish/assets/
+
+# Superpowers 本地工作目录
+.superpowers/
+
+# 发布凭证，仅保留示例文件
+publish/utils/cosConfig.js

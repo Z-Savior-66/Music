@@ -584,6 +584,7 @@
   "setting__sync_server_device_list_title": "Certified device",
   "setting__sync_server_mode": "Server Mode (Please use it on a trusted network as data is transmitted in plaintext)",
   "setting__sync_server_port": "Sync Port",
+  "setting__sync_server_bind_lan": "Allow connections from LAN",
   "setting__sync_server_port_tip": "Please enter a port number",
   "setting__sync_server_refresh_code": "Refresh connection code",
   "setting__sync_server_show_device_list": "List of certified devices",

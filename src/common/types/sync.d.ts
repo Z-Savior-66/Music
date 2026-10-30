@@ -4,6 +4,8 @@ declare namespace S {
     interface EnableServer {
       enable: boolean
       port: string
+      /** 是否允许局域网设备访问；旧渲染进程不传时按 false 处理 */
+      bindLan?: boolean
     }
     interface EnableClient {
       enable: boolean

@@ -87,6 +87,19 @@ export const setting = shallowReactive<S.DesktopLyric.Config>({
 // export const status = ref<Status>('stopped')
 export const isPlay = ref(false)
 
+/**
+ * 窗口的当前实际尺寸，由主进程在移动/缩放后回推。
+ *
+ * 渲染侧的拖拽与缩放计算都以它为基准：主进程可能钳制窗口位置或尺寸，
+ * 只读 `window.innerWidth/innerHeight` 会与实际窗口产生偏差，导致缩放跳动。
+ */
+export const windowBounds = shallowReactive<S.DesktopLyric.Bounds>({
+  x: 0,
+  y: 0,
+  width: window.innerWidth,
+  height: window.innerHeight,
+})
+
 export const musicInfo = shallowReactive<{
   id: string | null
   name: string

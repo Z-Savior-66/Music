@@ -9,6 +9,7 @@ import {
 } from '@renderer/utils/ipc'
 import { appSetting } from '@renderer/store/setting'
 import { langS2T, toNewMusicInfo, toOldMusicInfo } from '@renderer/utils'
+import { buildS2tLyric } from './s2tLyric'
 import { requestMsg } from '@renderer/utils/message'
 import { apis } from '@renderer/utils/musicSdk/api-source'
 
@@ -83,43 +84,7 @@ export const buildLyricInfo = async(lyricInfo: MakeOptional<S.Player.LyricInfo, 
     return { ...lyricInfo, rawlrcInfo: { ...lyricInfo } }
   }
 
-  if (appSetting['player.isS2t']) {
-    const tasks = [
-      lyricInfo.lyric ? langS2T(lyricInfo.lyric) : Promise.resolve(''),
-      lyricInfo.tlyric ? langS2T(lyricInfo.tlyric) : Promise.resolve(''),
-      lyricInfo.rlyric ? langS2T(lyricInfo.rlyric) : Promise.resolve(''),
-      lyricInfo.slyric ? langS2T(lyricInfo.slyric) : Promise.resolve(''),
-    ]
-    if (lyricInfo.rawlrcInfo) {
-      tasks.push(lyricInfo.lyric ? langS2T(lyricInfo.lyric) : Promise.resolve(''))
-      tasks.push(lyricInfo.tlyric ? langS2T(lyricInfo.tlyric) : Promise.resolve(''))
-      tasks.push(lyricInfo.rlyric ? langS2T(lyricInfo.rlyric) : Promise.resolve(''))
-      tasks.push(lyricInfo.slyric ? langS2T(lyricInfo.slyric) : Promise.resolve(''))
-    }
-    return Promise.all(tasks).then(([lyric, tlyric, rlyric, slyric, lyric_raw, tlyric_raw, rlyric_raw, slyric_raw]) => {
-      const rawlrcInfo = lyric_raw ? {
-        lyric: lyric_raw,
-        tlyric: tlyric_raw,
-        rlyric: rlyric_raw,
-        slyric: slyric_raw,
-      } : {
-        lyric,
-        tlyric,
-        rlyric,
-        slyric,
-      }
-      return {
-        lyric,
-        tlyric,
-        rlyric,
-        slyric,
-        rawlrcInfo,
-      }
-    })
-  }
-
-  // @ts-expect-error
-  return lyricInfo.rawlrcInfo ? lyricInfo : { ...lyricInfo, rawlrcInfo: { ...lyricInfo } }
+  return buildS2tLyric(lyricInfo, langS2T)
 }
 
 export const getCachedLyricInfo = async(musicInfo: S.Music.MusicInfo): Promise<S.Player.LyricInfo | null> => {

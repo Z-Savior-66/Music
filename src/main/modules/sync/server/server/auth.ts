@@ -10,12 +10,13 @@ import { getUserSpace, createClientKeyInfo } from '../user'
 import { toMD5 } from '../utils'
 import { getComputerName } from '../../utils'
 import { SYNC_CODE } from '@common/constants_sync'
+import { createAuthLimiter } from './authLimiter'
 
-const requestIps = new Map<string, number>()
+const limiter = createAuthLimiter()
 
 const getAvailableIP = (req: http.IncomingMessage) => {
-  let ip = getIP(req)
-  return ip && (requestIps.get(ip) ?? 0) < 10 ? ip : null
+  const ip = getIP(req)
+  return ip && !limiter.isBlocked(ip) ? ip : null
 }
 
 const verifyByKey = (encryptMsg: string, userId: string) => {
@@ -86,10 +87,15 @@ export const authCode = async(req: http.IncomingMessage, res: http.ServerRespons
       }
     }
 
-    if (code != 200) {
-      const num = requestIps.get(ip) ?? 0
-      // if (num > 20) return
-      requestIps.set(ip, num + 1)
+    if (code == 200) {
+      limiter.recordSuccess(ip)
+    } else {
+      limiter.recordFailure(ip)
+      // 失败次数达到上限后立即拒绝，避免同 IP 继续尝试
+      if (limiter.isBlocked(ip)) {
+        code = 403
+        msg = SYNC_CODE.msgBlockedIp
+      }
     }
   } else {
     code = 403
@@ -115,15 +121,17 @@ const verifyConnection = (encryptMsg: string, userId: string) => {
   return text == SYNC_CODE.msgConnect
 }
 export const authConnect = async(req: http.IncomingMessage) => {
-  let ip = getAvailableIP(req)
+  const ip = getAvailableIP(req)
   if (ip) {
     const query = querystring.parse((req.url!).split('?')[1])
     const i = query.i
     const t = query.t
-    if (typeof i == 'string' && typeof t == 'string' && verifyConnection(t, i)) return
+    if (typeof i == 'string' && typeof t == 'string' && verifyConnection(t, i)) {
+      limiter.recordSuccess(ip)
+      return
+    }
 
-    const num = requestIps.get(ip) ?? 0
-    requestIps.set(ip, num + 1)
+    limiter.recordFailure(ip)
   }
   throw new Error('failed')
 }

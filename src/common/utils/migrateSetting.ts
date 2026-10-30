@@ -134,9 +134,10 @@ export default (setting: any): Partial<S.AppSetting> => {
     setting.version = '2.0.0'
   }
 
-  // 迁移 v2.2.0 之前的设置数据
+  // 迁移 v2.1.0 之前的设置数据
   if (compareVer(setting.version, '2.1.0') < 0) {
-    setting['sync.erver.port'] = setting['sync.port']
+    // 旧配置未必带扁平 sync.port，缺省时保持原状，避免用 undefined 覆盖端口
+    if (setting['sync.port'] !== undefined) setting['sync.server.port'] = setting['sync.port']
     setting.version = '2.1.0'
   }
 

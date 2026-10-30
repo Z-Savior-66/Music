@@ -584,6 +584,7 @@
   "setting__sync_server_device_list_title": "已认证设备",
   "setting__sync_server_mode": "服务端模式（由于数据是明文传输，请在受信任的网络下使用）",
   "setting__sync_server_port": "同步端口设置",
+  "setting__sync_server_bind_lan": "允许局域网内的设备连接",
   "setting__sync_server_port_tip": "请输入同步服务端口号",
   "setting__sync_server_refresh_code": "刷新连接码",
   "setting__sync_server_show_device_list": "已认证设备列表",

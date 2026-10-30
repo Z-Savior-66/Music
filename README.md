@@ -105,4 +105,6 @@ S-music/
 
 ## 许可证
 
-本项目当前沿用仓库中的 `LICENSE` 文件。
+本项目以 Apache License 2.0 授权发行，完整条款见仓库中的 `LICENSE` 文件。
+
+本项目基于 [lx-music-desktop](https://github.com/lyswhut/lx-music-desktop)（作者 lyswhut，Apache-2.0）派生，原项目的版权声明继续有效；来源归属与第三方依赖说明见 `licenses/NOTICE`，使用附加说明见 `licenses/license_zh.txt` 与 `licenses/license_en.txt`。
