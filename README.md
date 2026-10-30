@@ -1,6 +1,6 @@
-# S
+# Lx
 
-S-Music 是一个基于 Electron 和 Vue 3 的桌面音乐应用项目。
+Lx-Music 是一个基于 Electron 和 Vue 3 的桌面音乐应用项目。
 
 ## 项目地址
 
@@ -8,10 +8,17 @@ S-Music 是一个基于 Electron 和 Vue 3 的桌面音乐应用项目。
 
 ## 技术栈
 
-- Electron
+- Electron 37
 - Vue 3
-- Webpack
+- Webpack 5
 - Less
+
+## 测试与代码规范
+
+```bash
+npx vitest run   # 单元测试
+npm run lint     # ESLint 检查
+```
 
 ## 开发环境
 
@@ -36,6 +43,24 @@ npm run pack
 - Windows 打包依赖 Visual Studio Build Tools。
 - 需要安装 `使用 C++ 的桌面开发` 工作负载。
 
+## 代理环境
+
+`dp` / `up` 两个脚本用于在代理下执行打包与依赖安装，代理地址不再写死在 `package.json` 中，改为运行时读取：
+
+1. 环境变量 `HTTPS_PROXY` / `https_proxy` / `HTTP_PROXY` / `http_proxy`（按此顺序取第一个非空值）；
+2. 项目根目录的 `.env.local` 或 `.env`（只识别上述代理变量与 `NO_PROXY`，不覆盖已存在的环境变量）。
+
+```bash
+# 设置代理后使用
+npm run up   # 代理下安装依赖
+npm run dp   # 代理下执行打包
+
+# 或写入项目根目录 .env
+# HTTPS_PROXY=http://127.0.0.1:7890
+```
+
+未检测到代理地址时脚本会直接报错并提示，不会静默直连；确实不需要代理时请直接执行 `npm install` / `npm run pack`，或设置 `DP_NO_PROXY=1`。
+
 ## 项目结构
 
 ```text
@@ -48,12 +73,15 @@ S-music/
 │  ├─ main/                  # 主进程构建配置
 │  ├─ renderer/              # 主渲染进程构建配置
 │  ├─ renderer-lyric/        # 桌面歌词渲染进程构建配置
-│  └─ renderer-scripts/      # 渲染侧脚本构建配置
+│  ├─ renderer-scripts/      # 渲染侧脚本构建配置
+│  └─ withProxy.js           # dp / up 脚本的代理读取与命令转发
 ├─ dist/                     # 编译后的前后端产物
 │  ├─ media/                 # 音频资源输出
 │  ├─ static/                # 静态资源输出
 │  ├─ theme_images/          # 主题图片输出
 │  └─ userApi/               # 用户 API 页面产物
+├─ docs/                     # 设计与实施计划文档
+│  └─ superpowers/plans/     # 按日期归档的实施计划
 ├─ licenses/                 # 许可证资源
 ├─ publish/                  # 发布脚本与版本描述文件
 │  └─ utils/                 # 发布流程辅助脚本
@@ -95,16 +123,8 @@ S-music/
       └─ images/             # 图片资源
 ```
 
-## 当前状态
-
-- 已完成仓库初始化并推送到 GitHub
-- 已统一应用品牌、打包名称与更新源
-- 已移除设置页中的“关于”入口
-- 本地开发环境可正常启动
-- Windows 安装包可正常构建
-
 ## 许可证
 
 本项目以 Apache License 2.0 授权发行，完整条款见仓库中的 `LICENSE` 文件。
 
-本项目基于 [lx-music-desktop](https://github.com/lyswhut/lx-music-desktop)（作者 lyswhut，Apache-2.0）派生，原项目的版权声明继续有效；来源归属与第三方依赖说明见 `licenses/NOTICE`，使用附加说明见 `licenses/license_zh.txt` 与 `licenses/license_en.txt`。
+本项目基于 [lx-music-desktop](https://github.com/lyswhut/lx-music-desktop)（作者 lyswhut，Apache-2.0）派生，原项目的版权声明继续有效。
