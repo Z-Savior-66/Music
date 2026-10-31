@@ -166,6 +166,10 @@ const handleSearch = (text) => {
     white-space: pre-line;
     line-height: 34px;
     letter-spacing: 0;
+    &:lang(zh-Hans), &:lang(zh-Hant) {
+      letter-spacing: 0.4em;
+      padding-left: 0.4em;
+    }
   }
 }
 </style>

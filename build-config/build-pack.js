@@ -10,13 +10,13 @@ const afterPack = require('./build-after-pack')
 */
 const options = {
   appId: 'com.savior.music.desktop',
-  productName: 'S Music',
+  productName: 'Lx Music',
   beforePack,
   afterPack,
   protocols: {
-    name: 'savior-music-protocol',
+    name: 'lx-music-protocol',
     schemes: [
-      'smusic',
+      'lxmusic',
     ],
   },
   directories: {
@@ -68,7 +68,7 @@ const winOptions = {
     allowToChangeInstallationDirectory: true,
     // differentialPackage: true,
     license: './licenses/license.rtf',
-    shortcutName: 'S Music',
+    shortcutName: 'Lx Music',
   },
 }
 /**
@@ -87,11 +87,11 @@ const linuxOptions = {
       // https://specifications.freedesktop.org/desktop-entry-spec/latest/example.html
       // https://developer.gnome.org/documentation/guidelines/maintainer/integrating.html#desktop-files
       entry: {
-        Name: 'S Music',
-        'Name[zh_CN]': 'S Music',
-        'Name[zh_TW]': 'S Music',
+        Name: 'Lx Music',
+        'Name[zh_CN]': 'Lx Music',
+        'Name[zh_TW]': 'Lx Music',
         Encoding: 'UTF-8',
-        MimeType: 'x-scheme-handler/smusic',
+        MimeType: 'x-scheme-handler/lxmusic',
         StartupNotify: 'false',
       },
     },
@@ -128,7 +128,7 @@ const macOptions = {
         path: '/Applications',
       },
     ],
-    title: 'S Music v${version}',
+    title: 'Lx Music v${version}',
   },
 }
 
@@ -174,31 +174,31 @@ const createTarget = {
   win(arch, packageType) {
     switch (packageType) {
       case 'setup':
-        winOptions.artifactName = `S-music-v\${version}-${arch}-Setup.\${ext}`
+        winOptions.artifactName = `lx-music-v\${version}-${arch}-Setup.\${ext}`
         return {
           buildOptions: { win: ['nsis'] },
           options: winOptions,
         }
       case 'green':
-        winOptions.artifactName = `S-music-v\${version}-win_${arch}-green.\${ext}`
+        winOptions.artifactName = `lx-music-v\${version}-win_${arch}-green.\${ext}`
         return {
           buildOptions: { win: ['7z'] },
           options: winOptions,
         }
       case 'win7_setup':
-        winOptions.artifactName = `S-music-v\${version}-win7_${arch}-Setup.\${ext}`
+        winOptions.artifactName = `lx-music-v\${version}-win7_${arch}-Setup.\${ext}`
         return {
           buildOptions: { win: ['nsis'] },
           options: winOptions,
         }
       case 'win7_green':
-        winOptions.artifactName = `S-music-v\${version}-win7_${arch}-green.\${ext}`
+        winOptions.artifactName = `lx-music-v\${version}-win7_${arch}-green.\${ext}`
         return {
           buildOptions: { win: ['7z'] },
           options: winOptions,
         }
       case 'portable':
-        winOptions.artifactName = `S-music-v\${version}-${arch}-portable.\${ext}`
+        winOptions.artifactName = `lx-music-v\${version}-${arch}-portable.\${ext}`
         return {
           buildOptions: { win: ['portable'] },
           options: winOptions,

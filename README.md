@@ -64,7 +64,7 @@ npm run dp   # 代理下执行打包
 ## 项目结构
 
 ```text
-S-music/
+Music/
 ├─ build/                    # 打包输出目录与自动更新发布文件
 │  ├─ Release/               # 原生模块与构建中间产物
 │  └─ win-unpacked/          # Windows 解包后的运行目录

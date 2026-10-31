@@ -342,7 +342,7 @@ export const scrollHorizontalReverseTo = (element: ScrollElement<HTMLElement>, t
   */
 let dom_title = document.getElementsByTagName('title')[0]
 export const setTitle = (title: string | null) => {
-  title ||= 'S Music'
+  title ||= 'Lx Music'
   dom_title.innerText = title
 }
 

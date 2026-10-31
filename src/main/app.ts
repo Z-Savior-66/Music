@@ -147,9 +147,9 @@ export const registerDeeplink = (startApp: () => void) => {
     // Set the path of electron.exe and your app.
     // These two additional parameters are only available on windows.
     // console.log(process.execPath, process.argv)
-    app.setAsDefaultProtocolClient('smusic', process.execPath, process.argv.slice(1))
+    app.setAsDefaultProtocolClient('lxmusic', process.execPath, process.argv.slice(1))
   } else {
-    app.setAsDefaultProtocolClient('smusic')
+    app.setAsDefaultProtocolClient('lxmusic')
   }
 
   // deep link

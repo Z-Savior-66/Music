@@ -2,7 +2,7 @@ This project is issued based on the Apache License 2.0 license. The following te
 
 DEFINITIONS:
 
-"This Project" refers to the S Music Desktop Edition (aka s-music-desktop) project. "User" refers to the user who signed this agreement. "Official Music Streaming Service" refers to collectively the official streaming service corresponding to the music source. "Copyrighted Data" refers to data including, but not limited to, pictures, audio, names, etc., for which others own the copyright.
+"This Project" refers to the Lx Music Desktop Edition (aka s-music-desktop) project. "User" refers to the user who signed this agreement. "Official Music Streaming Service" refers to collectively the official streaming service corresponding to the music source. "Copyrighted Data" refers to data including, but not limited to, pictures, audio, names, etc., for which others own the copyright.
 
 1. Data Source
 
@@ -49,6 +49,6 @@ DEFINITIONS:
 * If the agreement is updated, you will not be notified separately. You can check it out by visiting the project address.
 * The content of this agreement is translated from the Chinese version of the agreement.
 
-Original copyright (c) lyswhut; adapted for S Music.
+Original copyright (c) lyswhut; adapted for Lx Music.
 
 By: lyswhut
